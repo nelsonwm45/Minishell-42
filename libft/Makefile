@@ -32,10 +32,6 @@ FILES = ft_strlen.c \
 		ft_putstr_fd.c \
 		ft_putendl_fd.c \
 		ft_putnbr_fd.c \
-		ft_printf/ft_printf_func.c \
-		ft_printf/ft_printf_p_xX.c \
-		ft_printf/ft_printf_u.c \
-		ft_printf/ft_printf.c \
 		get_next_line/get_next_line_bonus.c \
 		get_next_line/get_next_line_utils_bonus.c \
 		ft_lstnew.c \
@@ -52,7 +48,7 @@ FILES = ft_strlen.c \
 		ft_greater.c \
 		ft_atoi_base.c \
 		ft_isspace.c \
-		ft_strchr_i.c 
+		ft_strchr_i.c
 
 NAME = libft.a
 
