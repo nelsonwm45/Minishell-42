@@ -27,8 +27,9 @@ LIBFT_PATH = ./libft/libft.a
 MINISHELL_PATH = $(OBJ_DIR)libft.a
 
 #------Command-------#
-CC = gcc $(CFLAGS)
+CC = gcc
 CFLAGS = -Werror -Wextra -Wall
+RLFLAGS = -L./readline -lreadline -lncurses
 FSAN = -fsanitize=address -g3
 LEAKS = Leaks --atExit --
 RM = rm -rf
@@ -44,12 +45,12 @@ OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
 all : execlib $(NAME)
 
 $(NAME) :$(OBJ_DIR) $(OBJ_FILES)
-	@echo $(GREEN)"--------- 🗃 Compiling Files 🗄----------\n"$(RESET)
+	@echo $(GREEN)"--------- 🗃 Compiling Files 🗄 ----------\n"$(RESET)
 	@cp $(LIBFT_PATH) $(OBJ_DIR)
 	@$(AR) $(MINISHELL_PATH) $(OBJ_FILES)
-	@$(CC) $(CFLAGS) $(HEADER) $(MINISHELL_PATH) -o $(NAME)
+	@$(CC) $(CFLAGS) $(HEADER) $(MINISHELL_PATH) $(RLFLAGS) -o $(NAME)
 	@echo $(GREEN)"------- 🎉 Files had been compiled 🎉 --------\n"$(RESET)
-	@echo $(GREEN)"-------- 📁 Your File Name is :"$(RESET)${RED}" $(NAME)"${END}${GREEN}"📂 --------\n"$(RESET)
+	@echo $(GREEN)"-------- 📁 Your File Name is :"$(RESET)${RED}" $(NAME) "${END}${GREEN}"📂 --------\n"$(RESET)
 
 clean :
 	@echo $(YELLOW)"----- 🧼 Grandma is trying to clean your files 🧹 ------\n"$(RESET)
@@ -69,7 +70,6 @@ fclean :clean
 re :fclean all
 
 execlib :
-	@echo $(GREEN)"--------- 🥚 Squeezing Libft Out 🐣 ----------\n"$(RESET)
 	@make -s -C $(LIBFT_DIR)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c
@@ -77,5 +77,10 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 
 $(OBJ_DIR) :
 	@mkdir -p $(OBJ_DIR)
+
+norm :
+	norminette ./header
+	norminette ./libft
+	norminette ./source
 
 .PHONY : all bonus clean fclean re execlib
