@@ -27,8 +27,9 @@ LIBFT_PATH = ./libft/libft.a
 MINISHELL_PATH = $(OBJ_DIR)libft.a
 
 #------Command-------#
-CC = gcc $(CFLAGS)
+CC = gcc
 CFLAGS = -Werror -Wextra -Wall
+RLFLAGS = -L./readline -lreadline -lncurses
 FSAN = -fsanitize=address -g3
 LEAKS = Leaks --atExit --
 RM = rm -rf
@@ -44,10 +45,10 @@ OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
 all : execlib $(NAME)
 
 $(NAME) :$(OBJ_DIR) $(OBJ_FILES)
-	@echo $(GREEN)"--------- 🗃 Compiling Files 🗄----------\n"$(RESET)
+	@echo $(GREEN)"--------- 🗃 Compiling Files 🗄 ----------\n"$(RESET)
 	@cp $(LIBFT_PATH) $(OBJ_DIR)
 	@$(AR) $(MINISHELL_PATH) $(OBJ_FILES)
-	@$(CC) $(CFLAGS) $(HEADER) $(MINISHELL_PATH) -o $(NAME)
+	@$(CC) $(CFLAGS) $(HEADER) $(MINISHELL_PATH) $(RLFLAGS) -o $(NAME)
 	@echo $(GREEN)"------- 🎉 Files had been compiled 🎉 --------\n"$(RESET)
 	@echo $(GREEN)"-------- 📁 Your File Name is :"$(RESET)${RED}" $(NAME)"${END}${GREEN}"📂 --------\n"$(RESET)
 

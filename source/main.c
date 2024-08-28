@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:51:36 by nchok             #+#    #+#             */
-/*   Updated: 2024/08/27 19:19:18 by nchok            ###   ########.fr       */
+/*   Updated: 2024/08/28 14:30:08 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,15 @@
 
 int main(int ac, char **av, char **env)
 {
+	char *line;
+
 	(void)ac;
 	(void)av;
 	(void)env;
-	printf("Hello\n");
+	while (1)
+	{
+		printf("42Minishell >");
+		line = readline(STDIN_FILENO);
+	}
 	return (0);
 }
