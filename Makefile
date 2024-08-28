@@ -50,7 +50,7 @@ $(NAME) :$(OBJ_DIR) $(OBJ_FILES)
 	@$(AR) $(MINISHELL_PATH) $(OBJ_FILES)
 	@$(CC) $(CFLAGS) $(HEADER) $(MINISHELL_PATH) $(RLFLAGS) -o $(NAME)
 	@echo $(GREEN)"------- 🎉 Files had been compiled 🎉 --------\n"$(RESET)
-	@echo $(GREEN)"-------- 📁 Your File Name is :"$(RESET)${RED}" $(NAME)"${END}${GREEN}"📂 --------\n"$(RESET)
+	@echo $(GREEN)"-------- 📁 Your File Name is :"$(RESET)${RED}" $(NAME) "${END}${GREEN}"📂 --------\n"$(RESET)
 
 clean :
 	@echo $(YELLOW)"----- 🧼 Grandma is trying to clean your files 🧹 ------\n"$(RESET)
@@ -70,7 +70,6 @@ fclean :clean
 re :fclean all
 
 execlib :
-	@echo $(GREEN)"--------- 🥚 Squeezing Libft Out 🐣 ----------\n"$(RESET)
 	@make -s -C $(LIBFT_DIR)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c
@@ -78,5 +77,10 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 
 $(OBJ_DIR) :
 	@mkdir -p $(OBJ_DIR)
+
+norm :
+	norminette ./header
+	norminette ./libft
+	norminette ./source
 
 .PHONY : all bonus clean fclean re execlib
