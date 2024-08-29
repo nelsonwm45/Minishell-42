@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:11:05 by nchok             #+#    #+#             */
-/*   Updated: 2024/08/28 16:13:47 by nchok            ###   ########.fr       */
+/*   Updated: 2024/08/29 16:37:26 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,9 @@
 
 /* Functions */
 void	print_welcome(void);
+int		same_str(char *s1, char *s2);
+
+
+/* Test */
 
 #endif
