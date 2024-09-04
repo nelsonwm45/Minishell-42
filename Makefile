@@ -13,9 +13,11 @@ WHITE='\033[0;97m'
 
 #------Program Name-----#
 NAME = minishell
+ARCH = $(shell uname -m)
+PWD = $(shell pwd)
 
 #------Header-------#
-HEADER = -I ./header/
+HEADER = -I ./header/ -I $(READLINE_INC_DIR)
 
 #----Directories-----#
 SRC_DIR = ./source/
@@ -26,10 +28,20 @@ LIBFT_DIR = ./libft/
 LIBFT_PATH = ./libft/libft.a
 MINISHELL_PATH = $(OBJ_DIR)libft.a
 
+#----Readline----#
+READLINE_URL = https://ftp.gnu.org/gnu/readline/readline-8.2.tar.gz
+READLINE_TAR_FILE = readline-8.2.tar.gz
+READLINE_SRC_DIR = readline-8.2/
+READLINE_DIR = readline/$(ARCH)/
+READLINE_LIB_DIR = $(READLINE_DIR)/lib
+READLINE_LIB = $(READLINE_LIB_DIR)/libreadline.a
+READLINE_INC_DIR = $(READLINE_DIR)/include
+RLLIB = -L $(READLINE_LIB_DIR)
+
 #------Command-------#
 CC = gcc
 CFLAGS = -Werror -Wextra -Wall
-RLFLAGS = -L./readline -lreadline -lncurses
+RLFLAGS = -lreadline -lncurses
 FSAN = -fsanitize=address -g3
 LEAKS = Leaks --atExit --
 RM = rm -rf
@@ -42,13 +54,13 @@ SRC_FILES	=	main.c \
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
 
 #----Rules & Dependencies-----#
-all : execlib $(NAME)
+all : execlib execrd  $(NAME)
 
 $(NAME) :$(OBJ_DIR) $(OBJ_FILES)
 	@echo $(GREEN)"--------- 🗃 Compiling Files 🗄 ----------\n"$(RESET)
 	@cp $(LIBFT_PATH) $(OBJ_DIR)
 	@$(AR) $(MINISHELL_PATH) $(OBJ_FILES)
-	@$(CC) $(CFLAGS) $(HEADER) $(MINISHELL_PATH) $(RLFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(HEADER) $(MINISHELL_PATH) $(RLLIB) $(RLFLAGS) -o $(NAME)
 	@echo $(GREEN)"------- 🎉 Files had been compiled 🎉 --------\n"$(RESET)
 	@echo $(GREEN)"-------- 📁 Your File Name is :"$(RESET)${RED}" $(NAME) "${END}${GREEN}"📂 --------\n"$(RESET)
 
@@ -58,7 +70,6 @@ clean :
 	@$(RM) $(MINISHELL_PATH)
 	@$(RM) $(OBJ_DIR)
 	@echo $(YELLOW)"------ ✅ All Object Files Had Been Cleaned ✅ -------\n"$(RESET)
-
 
 fclean :clean
 	@$(RM) $(NAME)
@@ -72,6 +83,25 @@ re :fclean all
 execlib :
 	@make -s -C $(LIBFT_DIR)
 
+execrd :
+		@echo $(GREEN)"Grandma is fetching readline...\n"$(RESET)
+		@curl -O "$(READLINE_URL)"
+		@echo $(GREEN)"Be patient yea, Grandma is compiling readline...\n"$(RESET)
+		@tar -xzf $(READLINE_TAR_FILE)
+		@rm -rf $(READLINE_TAR_FILE)
+		cd $(READLINE_SRC_DIR) && ./configure "--prefix=$(PWD)/$(READLINE_DIR)" \
+		&& make && make install && cd ..
+		@rm -rf $(READLINE_SRC_DIR)
+		@echo "#include <stdio.h>\n" > .tmp
+		@cat $(READLINE_INC_DIR)/readline/readline.h >> .tmp
+		@mv .tmp $(READLINE_INC_DIR)/readline/readline.h
+
+clean_readline:
+	@echo $(RED)"Removing readline library...\n"$(RESET)
+	@rm -rf readline/
+	@echo $(RED)"Removing readline sources...\n"$(RESET)
+	@rm -rf $(READLINE_SRC_DIR)
+
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
@@ -83,4 +113,4 @@ norm :
 	norminette ./libft
 	norminette ./source
 
-.PHONY : all bonus clean fclean re execlib
+.PHONY : all bonus clean fclean re execlib execrd

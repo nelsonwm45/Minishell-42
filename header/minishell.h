@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:11:05 by nchok             #+#    #+#             */
-/*   Updated: 2024/08/29 16:37:26 by nchok            ###   ########.fr       */
+/*   Updated: 2024/09/05 00:39:15 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include "./color.h"
 
 /* Standard Library */
+// # include "../readline/x86_64/include/readline/readline.h"
+// # include "../readline/x86_64/include/readline/history.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdio.h>
