@@ -84,9 +84,9 @@ execlib :
 	@make -s -C $(LIBFT_DIR)
 
 execrd :
-		@echo $(GREEN)"Grandma is fetching readline...\n"$(RESET)
+		@echo $(GREEN)"----- 👵🏻 Grandma is fetching readline ------\n"$(RESET)
 		@curl -O "$(READLINE_URL)"
-		@echo $(GREEN)"Be patient yea, Grandma is compiling readline...\n"$(RESET)
+		@echo $(GREEN)"------ 💤 Be patient yea, Grandma is compiling readline ------\n"$(RESET)
 		@tar -xzf $(READLINE_TAR_FILE)
 		@rm -rf $(READLINE_TAR_FILE)
 		cd $(READLINE_SRC_DIR) && ./configure "--prefix=$(PWD)/$(READLINE_DIR)" \
@@ -97,9 +97,9 @@ execrd :
 		@mv .tmp $(READLINE_INC_DIR)/readline/readline.h
 
 clean_readline:
-	@echo $(RED)"Removing readline library...\n"$(RESET)
+	@echo $(RED)"----- 🧻 Removing readline library -----\n"$(RESET)
 	@rm -rf readline/
-	@echo $(RED)"Removing readline sources...\n"$(RESET)
+	@echo $(RED)"------ 🧼 Removing readline sources -----\n"$(RESET)
 	@rm -rf $(READLINE_SRC_DIR)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c
@@ -113,4 +113,4 @@ norm :
 	norminette ./libft
 	norminette ./source
 
-.PHONY : all bonus clean fclean re execlib execrd
+.PHONY : all bonus clean fclean re execlib execrd clean_readline
