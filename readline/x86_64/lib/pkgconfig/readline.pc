@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 prefix=/mnt/c/Users/User/Desktop/Minishell-42/readline/x86_64
+=======
+prefix=/Users/nchok/Desktop/Minishell/readline/x86_64
+>>>>>>> 80ad481668b296828004f1b5047733513c55f2f5
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

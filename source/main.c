@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: hheng < hheng@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:51:36 by nchok             #+#    #+#             */
-/*   Updated: 2024/08/29 16:43:37 by nchok            ###   ########.fr       */
+/*   Updated: 2024/09/08 21:42:26 by hheng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int main(int ac, char **av, char **env)
 	(void)av;
 	(void)env;
 	print_welcome();
+
 	while (1)
 	{
 		line = readline("42Minishell-1.0$ ");
