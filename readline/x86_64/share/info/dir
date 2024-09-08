@@ -14,6 +14,11 @@ File: dir,	Node: Top	This is the top of the INFO tree
 
 * Menu:
 
+
+Libraries
+* History: (history).           The GNU history library API.
+* RLuserman: (rluserman).       The GNU readline library User's Manual.
+* Readline: (readline).         The GNU readline library API.
 Libraries
 * History: (history).           The GNU history library API.
 * RLuserman: (rluserman).       The GNU readline library User's Manual.

@@ -16,6 +16,7 @@
 /* Own Library */
 # include "../libft/libft.h"
 # include "./color.h"
+# include "./builtin.h"
 
 /* Standard Library */
 // # include "../readline/x86_64/include/readline/readline.h"
@@ -24,6 +25,7 @@
 # include <readline/history.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <errno.h>
 
 /* Functions */
 void	print_welcome(void);

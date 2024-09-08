@@ -49,6 +49,8 @@ AR = ar rcs
 
 #-----Files-----#
 SRC_FILES	=	main.c \
+            	# builtin_main.c \
+            	# builtin_func.c \
 
 
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
