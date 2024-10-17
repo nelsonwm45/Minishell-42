@@ -49,9 +49,13 @@ AR = ar rcs
 
 #-----Files-----#
 SRC_FILES	=	main.c \
-            	# builtin_main.c \
-            	# builtin_func.c \
-
+				env.c \
+				signal.c \
+				start_shell.c \
+				error.c \
+				read_token.c \
+				# builtin_main.c \
+				# builtin_func.c \
 
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
 
