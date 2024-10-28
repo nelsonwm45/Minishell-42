@@ -1,28 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/27 14:19:48 by nchok             #+#    #+#             */
-/*   Updated: 2024/10/28 15:43:06 by nchok            ###   ########.fr       */
+/*   Created: 2024/10/28 14:48:51 by nchok             #+#    #+#             */
+/*   Updated: 2024/10/28 15:38:23 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../header/minishell.h"
 
-void	sigint_handler(int sig)
+t_lexer	*create_node(char *str, t_token token_type)
 {
-	(void)sig;
-	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_redisplay();
+	t_lexer	*node;
+	static int	i = 0;
+
+	node = ft_calloc(1, sizeof(t_lexer));
+	if (!node)
+		return (NULL);
+	node->str = str;
+	node->token_type = token_type;
+	node->i = i++;
+	node->prev = NULL;
+	node->next = NULL;
+	return (node);
 }
 
-void	init_signal(t_general *utils)
+void	add_to_backlexerr(t_lexer *new, t_lexer **lexer_list)
 {
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, sigint_handler);
-	(void)utils;
+	t_lexer	*ptr;
+	
+	ptr = *lexer_list;
+	while (ptr->next != NULL)
+		ptr = ptr->next;
+	ptr->next = new;
 }

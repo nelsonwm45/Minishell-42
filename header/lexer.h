@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/27 14:19:48 by nchok             #+#    #+#             */
-/*   Updated: 2024/10/28 15:43:06 by nchok            ###   ########.fr       */
+/*   Created: 2024/10/28 14:52:28 by nchok             #+#    #+#             */
+/*   Updated: 2024/10/28 14:54:38 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../header/minishell.h"
+#ifndef LEXER_H
+# define LEXER_H
 
-void	sigint_handler(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
+# include "./minishell.h"
 
-void	init_signal(t_general *utils)
-{
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, sigint_handler);
-	(void)utils;
-}
+t_lexer	*create_node(char *str, t_token token_type);
+
+#endif

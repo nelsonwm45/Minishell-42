@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:15:41 by nchok             #+#    #+#             */
-/*   Updated: 2024/10/18 02:16:12 by nchok            ###   ########.fr       */
+/*   Updated: 2024/10/28 15:43:11 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	closed_quotes(char *line)
 	return (TRUE);
 }
 
-int	start_shell(t_env *utils)
+int	start_shell(t_general *utils)
 {
 	char	*line;
 
@@ -72,7 +72,7 @@ int	start_shell(t_env *utils)
 			add_history(line);
 		if (closed_quotes(utils->line) == FALSE)
 			error_message(2, utils);
-		if (read_token(utils) == 1)
+		if (read_token(utils) == 0)
 			error_message(1, utils);
 		if (same_str(line, "exit") == 1)
 			exit(EXIT_SUCCESS);

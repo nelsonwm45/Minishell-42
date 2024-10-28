@@ -47,17 +47,19 @@ typedef enum s_token
 /* Functions */
 // void	print_welcome(void);
 int		same_str(char *s1, char *s2);
-int		start_shell(t_env *utils);
+int		start_shell(t_general *utils);
 int		closed_quotes(char *line);
 int		find_next_quote(char *line, int *i, int *num_quote, char quote);
 
 /* Token */
-int		read_token(t_env *utils);
+int		read_token(t_general *utils);
+int		is_spaces(char c);
 int		remove_space(char *line, int *i);
 int		is_token(char c);
 t_token	get_token_type(int c);
-int		handle_token(char *str, int i);
-int		handle_word(char *str, int i);
+int		handle_token(char *str, int i, t_lexer **lexer_list);
+int		handle_word(char *str, int i, t_lexer **lexer_list);
+int		handle_quotes(int i, char *str, char quote);
 
 /* Test */
 

@@ -6,12 +6,26 @@
 /*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 02:16:40 by nchok             #+#    #+#             */
-/*   Updated: 2024/10/28 12:36:45 by nchok            ###   ########.fr       */
+/*   Updated: 2024/10/28 15:42:59 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../header/minishell.h"
 
+/*
+	@brief
+	- check if the character is a space or tab
+
+	@return
+	- TRUE if it is a space or tab
+	- FALSE if it is not a space or tab
+*/
+int	is_spaces(char c)
+{
+	if (c == ' ' || (c >= 9 && c <= 13))
+		return (TRUE);
+	return (FALSE);
+}
 /*
 	@brief
 	- remove space and tab from the line
@@ -28,7 +42,7 @@ int	remove_space(char *line, int *i)
 	int	j;
 	
 	j = *i;
-	while (line[j] == ' ' || line[j] == '\t')
+	while (is_spaces(line[j]) == TRUE)
 		j++;
 	*i = j;
 	return (0);
@@ -53,8 +67,14 @@ int	is_token(char c)
 }
 
 /*
-	
-	
+	@brief
+	- get the token type
+
+	@param
+	- c: the character to be checked
+
+	@return
+	- return the token type in str form
 */
 t_token	get_token_type(int c)
 {
@@ -69,10 +89,32 @@ t_token	get_token_type(int c)
 	while (i < 3)
 	{
 		if (c == token_list[i][0])
-			return (token_list[i][1]); // return token type in str form
+			return (token_list[i][1]); // return token type in str-num form
 		i++;	
 	}
 	return (0);
+}
+/*
+	@brief
+	- check if current str has opening quotes,
+	- if yes, find the closing quotes,
+
+	@return
+	- skip the quotes and return the next index
+*/
+int	handle_quotes(int i, char *str, char quote)
+{
+	int	j;
+
+	j = 0;
+	while (str[i + j] == quote)
+	{
+		j++;
+		while (str[i + j] != quote && str[i + j])
+			j++;
+		j++;
+	}
+	return (j);
 }
 
 /*
@@ -87,11 +129,11 @@ t_token	get_token_type(int c)
 	@todo
 	neeed to handle lexer
 */
-int	handle_token(char *str, int i)
+int	handle_token(char *str, int i, t_lexer **lexer_list)
 {
 	t_token	token;
 	
-	token = get_token_type(str[i]); // get token type in str format
+	token = get_token_type(str[i]); // get token type in str-num format
 	printf("Token: %d\n", token);
 	if (token == BIG && str[i + 1] == BIG)
 	{
@@ -113,21 +155,41 @@ int	handle_token(char *str, int i)
 	}
 	return (0);
 }
+
+int	add_node_to_lexer(char *str, t_token token_type, t_lexer **lexer_list)
+{
+	t_lexer	*node;
+
+	node = create_node(str, token_type, 0);
+	if (!node)
+		return (0);
+	if (add_to_backlexer(node, lexer_list) == 0)
+		return (0);
+	return (1);
+}
 /*
 	still need to fix
 */
-int	handle_word(char *str, int i)
+int	handle_word(char *str, int i, t_lexer **lexer_list)
 {	
-	while (str[i] && str[i] != ' ' && str[i] != '\t')
+	int	j;
+
+	j = 0;
+	while (str[i + j] && is_token(str[i + j]) == FALSE)
 	{
-		printf("%c", str[i]);
-		i++;
+		j += handle_quotes(i + j, str,'\"');
+		j += handle_quotes(i + j, str,'\'');
+		if (is_spaces(str[i + j]) == TRUE) // if space found, break
+			break ;
+		else 
+			j++;
 	}
-	printf("\n");
-	return (i);
+	if (add_node(ft_substr(str, i, j), 0, lexer_list) == 0)
+		return (ERROR);
+	return (j);
 }
 
-int	read_token(t_env *utils)
+int	read_token(t_general *utils)
 {
 	int		i;
 	int		j;
@@ -138,9 +200,9 @@ int	read_token(t_env *utils)
 		j = 0;
 		remove_space(utils->line, &i);
 		if (is_token(utils->line[i]) == TRUE)
-			j = handle_token(utils->line, i);
+			j = handle_token(utils->line, i, &utils->lexer_list);
 		else
-			j = handle_word(utils->line, i);
+			j = handle_word(utils->line, i, &utils->lexer_list);
 		if (j < 0)
 			return (0);
 		i += j;
