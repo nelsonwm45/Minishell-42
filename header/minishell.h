@@ -19,6 +19,7 @@
 # include "./builtin.h"
 # include "./env.h"
 # include "./helper.h"
+# include "./error.h"
 
 /* Standard Library */
 // # include "../readline/x86_64/include/readline/readline.h"
@@ -37,8 +38,10 @@
 typedef enum s_token
 {
 	PIPE = 1,
-	GREAT,
-	LESS,
+	BIG,
+	BIGBIG,
+	SMALL,
+	SMALLSMALL,
 }	t_token;
 
 /* Functions */
@@ -47,8 +50,6 @@ int		same_str(char *s1, char *s2);
 int		start_shell(t_env *utils);
 int		closed_quotes(char *line);
 int		find_next_quote(char *line, int *i, int *num_quote, char quote);
-int		error_message(int error_code, t_env *utils);
-int		clean_utils(t_env *utils);
 
 /* Token */
 int		read_token(t_env *utils);
@@ -56,6 +57,7 @@ int		remove_space(char *line, int *i);
 int		is_token(char c);
 t_token	get_token_type(int c);
 int		handle_token(char *str, int i);
+int		handle_word(char *str, int i);
 
 /* Test */
 

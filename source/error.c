@@ -6,24 +6,29 @@
 /*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 16:54:36 by nchok             #+#    #+#             */
-/*   Updated: 2024/10/16 17:05:54 by nchok            ###   ########.fr       */
+/*   Updated: 2024/10/28 11:33:38 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../header/minishell.h"
 
-int	clean_utils(t_env *utils)
+void	free_array(char **arr)
 {
 	int	i;
 
 	i = 0;
-	while (utils->envp[i] != NULL)
+	while (arr[i])
 	{
-		free(utils->envp[i]);
+		free(arr[i]);
 		i++;
 	}
-	free(utils->envp);
-	free(utils->path);
+	free(arr);
+}
+
+int	clean_utils(t_env *utils)
+{
+	free_array(utils->envp);
+	free_array(utils->path);
 	free(utils->pwd);
 	free(utils->oldpwd);
 	free(utils->line);

@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helper.h                                           :+:      :+:    :+:   */
+/*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/27 14:20:09 by nchok             #+#    #+#             */
-/*   Updated: 2024/10/28 11:29:29 by nchok            ###   ########.fr       */
+/*   Created: 2024/10/28 11:30:56 by nchok             #+#    #+#             */
+/*   Updated: 2024/10/28 11:31:40 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HELPER_H
-# define HELPER_H
-
-# include <signal.h>
+#ifndef ERROR_H
+# define ERROR_H
 
 # include "./minishell.h"
 
-void	init_signal(t_env *utils);
-void	sigint_handler(int sig);
+/* Error Function */
+void	free_array(char **arr);
+int		clean_utils(t_env *utils);
+int		error_message(int error_code, t_env *utils);
 
 #endif
