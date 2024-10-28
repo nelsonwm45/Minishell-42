@@ -46,11 +46,11 @@ typedef struct	s_token
 	struct s_token	*next;
 }				t_token;
 
-typedef struct s_env
+typedef struct s_mini
 {
     char            *value;
     struct s_env    *next;
-}               t_env;
+}               t_mini;
 
 typedef struct s_shell
 {
