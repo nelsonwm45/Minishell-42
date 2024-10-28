@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 02:16:40 by nchok             #+#    #+#             */
-/*   Updated: 2024/10/28 15:42:59 by nchok            ###   ########.fr       */
+/*   Updated: 2024/10/28 16:24:51 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	is_token(char c)
 	@return
 	- return the token type in str form
 */
-t_token	get_token_type(int c)
+t_type	get_token_type(int c)
 {
 	static int token_list[3][2] = {
 		{'>', BIG},
@@ -131,7 +131,7 @@ int	handle_quotes(int i, char *str, char quote)
 */
 int	handle_token(char *str, int i, t_lexer **lexer_list)
 {
-	t_token	token;
+	t_type	token;
 	
 	token = get_token_type(str[i]); // get token type in str-num format
 	printf("Token: %d\n", token);

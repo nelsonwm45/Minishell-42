@@ -33,11 +33,22 @@
 # include <limits.h>  // For PATH_MAX
 
 /* Constants */
-# define ERROR 1
+# define ERROR -1
 # define SUCCESS 0
+# define TRUE 1
+# define FALSE 2
 # define BUFF_SIZE 1000
 
 /* Structs */
+typedef enum s_type
+{
+	PIPE = 1,
+	BIG,
+	BIGBIG,
+	SMALL,
+	SMALLSMALL,
+}			t_type;
+
 typedef struct	s_token
 {
 	char			*str;
@@ -46,11 +57,11 @@ typedef struct	s_token
 	struct s_token	*next;
 }				t_token;
 
-typedef struct s_env
+typedef struct	s_env
 {
-    char            *value;
-    struct s_env    *next;
-}               t_env;
+	char			*value;
+	struct s_env	*next;
+}				t_env;
 
 typedef struct s_shell
 {
