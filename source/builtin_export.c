@@ -18,17 +18,17 @@ static int	print_error(int error, const char *arg)
     return (ERROR);
 }
 
-int env_add(const char *value, t_mini *env)
+int env_add(const char *value, t_env *env)
 {
-    t_mini *new;
-    t_mini *tmp;
+    t_env *new;
+    t_env *tmp;
 
     if (env && env->value == NULL)
     {
         env->value = ft_strdup(value);
         return (SUCCESS);
     }
-    if (!(new = malloc(sizeof(t_mini))))
+    if (!(new = malloc(sizeof(t_env))))
         return (-1);
     new->value = ft_strdup(value);
     new->next = NULL; 
@@ -52,7 +52,7 @@ char		*get_env_name(char *dest, const char *src)
     return (dest);
 }
 
-int			is_in_env(t_mini *env, char *args)
+int			is_in_env(t_env *env, char *args)
 {
     char	var_name[BUFF_SIZE];
     char	env_name[BUFF_SIZE];
@@ -72,7 +72,7 @@ int			is_in_env(t_mini *env, char *args)
     return (SUCCESS);
 }
 
-int			ft_export(char **args, t_mini *env, t_mini *secret)
+int			ft_export(char **args, t_env *env, t_env *secret)
 {
     int		new_env;
     int		error_ret;
