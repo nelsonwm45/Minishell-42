@@ -54,8 +54,14 @@ SRC_FILES	=	main.c \
 				start_shell.c \
 				error.c \
 				read_token.c \
-				# builtin_main.c \
-				# builtin_func.c \
+            	builtin_cd.c \
+				builtin_echo.c \
+				builtin_env.c \
+				builtin_exit.c \
+				builtin_export.c \
+				builtin_pwd.c \
+				builtin_unset.c \
+
 
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
 
