@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef BUILTIN_FUNCS_H
-#define BUILTIN_FUNCS_H
+# define BUILTIN_FUNCS_H
 
 // Function prototypes
 int execute_command(char **args);
