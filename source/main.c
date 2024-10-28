@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 13:51:36 by nchok             #+#    #+#             */
-/*   Updated: 2024/10/18 02:43:08 by nchok            ###   ########.fr       */
+/*   Updated: 2024/10/28 15:42:52 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int		same_str(char *s1, char *s2)
 
 int main(int ac, char **av, char **envp)
 {
-	t_env	utils;
+	t_general	utils;
 
 	if (ac != 1 || av[1] != NULL)
 	{

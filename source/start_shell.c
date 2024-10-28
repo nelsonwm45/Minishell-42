@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_shell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hheng <hheng@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:15:41 by nchok             #+#    #+#             */
-/*   Updated: 2024/10/28 13:08:48 by hheng            ###   ########.fr       */
+/*   Updated: 2024/10/28 16:05:13 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	closed_quotes(char *line)
 	return (TRUE);
 }
 
-int	start_shell(t_env *utils)
+int	start_shell(t_general *utils)
 {
 	char	*line;
 

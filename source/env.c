@@ -6,13 +6,13 @@
 /*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:49:21 by nchok             #+#    #+#             */
-/*   Updated: 2024/10/10 19:33:03 by nchok            ###   ########.fr       */
+/*   Updated: 2024/10/28 15:42:15 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../header/minishell.h"
 
-int	duplicate_env(char **envp, t_env *utils)
+int	duplicate_env(char **envp, t_general *utils)
 {
 	int	size;
 	int	i;
@@ -34,7 +34,7 @@ int	duplicate_env(char **envp, t_env *utils)
 	return (0);
 }
 
-int	print_envp(t_env *utils)
+int	print_envp(t_general *utils)
 {
 	int	i;
 
@@ -48,7 +48,7 @@ int	print_envp(t_env *utils)
 	return (0);
 }
 
-int	get_pwd(t_env *utils)
+int	get_pwd(t_general *utils)
 {
 	int	i;
 	
@@ -70,7 +70,7 @@ int	get_pwd(t_env *utils)
 	return (ERROR);
 }
 
-int	get_oldpwd(t_env *utils)
+int	get_oldpwd(t_general *utils)
 {
 		int	i;
 	
@@ -110,7 +110,7 @@ int	get_array_size(char **arr)
 	@error handling
 	- path not found
 */
-char	*get_path(t_env *utils)
+char	*get_path(t_general *utils)
 {
 	int	i;
 
@@ -124,7 +124,7 @@ char	*get_path(t_env *utils)
 	return (NULL);
 }
 
-void	store_path(t_env *utils)
+void	store_path(t_general *utils)
 {
 	char	*longpath;
 	char	**path;
@@ -147,7 +147,15 @@ void	store_path(t_env *utils)
 	}
 }
 
-int	process_envp(char **envp, t_env *utils)
+int	init_utils(t_general *utils)
+{
+	utils->line = NULL;
+	utils->lexer_list = NULL;
+	utils->cmds_list = NULL;
+	return (0);
+}
+
+int	process_envp(char **envp, t_general *utils)
 {
 	// int i;
 
@@ -156,6 +164,6 @@ int	process_envp(char **envp, t_env *utils)
 	get_oldpwd(utils);
 	store_path(utils);
 	init_signal(utils);
-	// init_utils(utils);
+	init_utils(utils);
 	return (0);
 }
