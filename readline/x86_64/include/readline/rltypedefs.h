@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 /* rltypedefs.h -- Type declarations for readline functions. */
 
 /* Copyright (C) 2000-2021 Free Software Foundation, Inc.

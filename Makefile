@@ -107,6 +107,9 @@ execrd :
 		@echo "#include <stdio.h>\n" > .tmp
 		@cat $(READLINE_INC_DIR)/readline/readline.h >> .tmp
 		@mv .tmp $(READLINE_INC_DIR)/readline/readline.h
+		@echo "#include <stdio.h>\n" > .tmp
+		@cat $(READLINE_INC_DIR)/readline/rltypedefs.h >> .tmp
+		@mv .tmp $(READLINE_INC_DIR)/readline/rltypedefs.h
 
 clean_readline:
 	@echo $(RED)"----- 🧻 Removing readline library -----\n"$(RESET)

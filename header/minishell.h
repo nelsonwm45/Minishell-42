@@ -138,6 +138,8 @@ int	update_oldpwd(t_env *env);
 int	go_to_path(int option, t_env *env);
 int	ft_cd(char **args, t_env *env);
 
+int env_add(const char *value, t_env *env);
+
 /* Env Functions */
 int	process_envp(char **envp, t_general *utils);
 int	duplicate_env(char **envp, t_general *utils);
