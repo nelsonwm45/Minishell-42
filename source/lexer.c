@@ -12,7 +12,7 @@
 
 # include "../header/minishell.h"
 
-t_lexer	*create_node(char *str, t_token token_type)
+t_lexer	*create_node(char *str, t_type token_type)
 {
 	t_lexer	*node;
 	static int	i = 0;

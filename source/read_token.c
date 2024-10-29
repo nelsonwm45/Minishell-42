@@ -137,30 +137,34 @@ int	handle_token(char *str, int i, t_lexer **lexer_list)
 	printf("Token: %d\n", token);
 	if (token == BIG && str[i + 1] == BIG)
 	{
-		// handle double bigger than
-		printf("Double bigger than\n");
+		if (add_node_to_lexer(">>", BIGBIG, lexer_list) == 0)
+			return (ERROR);
+		printf("Double bigger than\n"); // print for debug
 		return (2);
 	}
 	else if (token == SMALL && str[i + 1] == SMALL)
 	{
-		// handle double small than
+		if (add_node_to_lexer("<<", SMALLSMALL, lexer_list) == 0)
+			return (ERROR);
 		printf("Double small than\n");
 		return (2);
 	}
 	else if (token)
 	{
-		// handle single token
-		printf("Single token\n");
+		printf("token : %s\n", ft_substr(str, i, 1)); // Debug
+		if (add_node_to_lexer(ft_substr(str, i, 1), token, lexer_list) == 0)
+			return (ERROR);
+		printf("Single token\n"); // Debug
 		return (1);
 	}
 	return (0);
 }
 
-int	add_node_to_lexer(char *str, t_token token_type, t_lexer **lexer_list)
+int	add_node_to_lexer(char *str, t_type token_type, t_lexer **lexer_list)
 {
 	t_lexer	*node;
 
-	node = create_node(str, token_type, 0);
+	node = create_node(str, token_type);
 	if (!node)
 		return (0);
 	if (add_to_backlexer(node, lexer_list) == 0)
@@ -184,7 +188,7 @@ int	handle_word(char *str, int i, t_lexer **lexer_list)
 		else 
 			j++;
 	}
-	if (add_node(ft_substr(str, i, j), 0, lexer_list) == 0)
+	if (add_node_to_lexer(ft_substr(str, i, j), 0, lexer_list) == 0)
 		return (ERROR);
 	return (j);
 }
