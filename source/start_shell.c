@@ -60,24 +60,39 @@ int	closed_quotes(char *line)
 
 int	start_shell(t_general *utils)
 {
-	char	*line;
+    char	*line;
 
-	while (1)
-	{
-		line = readline("42Minishell-1.0$ ");
-		utils->line = ft_strtrim(line, " "); // trim the spaces in front & back
-		if (utils->line[0] == '\0')
-			clean_utils(utils);
-		if (*line)
-			add_history(line);
-		if (closed_quotes(utils->line) == FALSE)
-			error_message(2, utils);
-		printf("Hi3\n");
-		if (read_token(utils) == 0)
-			error_message(1, utils);
-		printf("Hi4\n");
-		if (same_str(line, "exit") == 1)
-			exit(EXIT_SUCCESS);
-	}
-	return (0);
+    while (1)
+    {
+        line = readline("42Minishell-1.0$ ");
+        if (!line) {
+            perror("readline");
+            continue;
+        }
+        utils->line = ft_strtrim(line, " "); // trim the spaces in front & back
+        free(line); // Free the original line to avoid memory leak
+        if (!utils->line) {
+            perror("ft_strtrim");
+            continue;
+        }
+        if (utils->line[0] == '\0') {
+            clean_utils(utils);
+            continue;
+        }
+        if (*utils->line)
+            add_history(utils->line);
+        if (closed_quotes(utils->line) == FALSE) {
+            error_message(2, utils);
+            continue;
+        }
+        // if (read_token(utils) == 0) {
+        //     error_message(1, utils);
+        //     continue;
+        // }
+        if (is_builtin(utils->line)) {
+            exec_builtin(&utils->line, (t_shell *)utils);
+        } else {
+            printf("Error: '%s' is not a built-in command.\n", utils->line);
+        }
+    }
 }
