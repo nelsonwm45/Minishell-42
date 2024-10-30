@@ -72,8 +72,10 @@ int	start_shell(t_general *utils)
 			add_history(line);
 		if (closed_quotes(utils->line) == FALSE)
 			error_message(2, utils);
+		printf("Hi3\n");
 		if (read_token(utils) == 0)
 			error_message(1, utils);
+		printf("Hi4\n");
 		if (same_str(line, "exit") == 1)
 			exit(EXIT_SUCCESS);
 	}
