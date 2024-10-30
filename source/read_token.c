@@ -61,6 +61,7 @@ int	remove_space(char *line, int *i)
 */
 int	is_token(char c)
 {
+	printf("did I come here? is_token\n");
 	if (c == '>' || c == '<' || c == '|')
 		return (TRUE);
 	return (FALSE);
@@ -133,6 +134,7 @@ int	handle_token(char *str, int i, t_lexer **lexer_list)
 {
 	t_type	token;
 	
+	printf("Hello\n");
 	token = get_token_type(str[i]); // get token type in str-num format
 	printf("Token: %d\n", token);
 	if (token == BIG && str[i + 1] == BIG)
@@ -179,6 +181,8 @@ int	handle_word(char *str, int i, t_lexer **lexer_list)
 	int	j;
 
 	j = 0;
+	printf("str: %s\n", str);
+	printf("Index: %d\n", i);
 	while (str[i + j] && is_token(str[i + j]) == FALSE)
 	{
 		j += handle_quotes(i + j, str,'\"');
@@ -207,9 +211,16 @@ int	read_token(t_general *utils)
 			j = handle_token(utils->line, i, &utils->lexer_list);
 		else
 			j = handle_word(utils->line, i, &utils->lexer_list);
+		printf("Am I here\n");
 		if (j < 0)
 			return (0);
 		i += j;
+	}
+	while (utils->lexer_list->next)
+	{
+		printf("Index: %d\n", utils->lexer_list->i);
+		printf("Token Type: %d\n", utils->lexer_list->token_type);
+		utils->lexer_list = utils->lexer_list->next;
 	}
 	return (1);
 }

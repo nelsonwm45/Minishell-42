@@ -97,20 +97,24 @@ execlib :
 	@make -s -C $(LIBFT_DIR)
 
 execrd :
-		@echo $(GREEN)"----- 👵🏻 Grandma is fetching readline ------\n"$(RESET)
-		@curl -O "$(READLINE_URL)"
-		@echo $(GREEN)"------ 💤 Be patient yea, Grandma is compiling readline ------\n"$(RESET)
-		@tar -xzf $(READLINE_TAR_FILE)
-		@rm -rf $(READLINE_TAR_FILE)
+	@if [ ! -d $(READLINE_DIR) ]; then \
+		echo $(GREEN)"----- 👵🏻 Grandma is fetching readline ------\n"$(RESET); \
+		curl -O "$(READLINE_URL)"; \
+		echo $(GREEN)"------ 💤 Be patient yea, Grandma is compiling readline ------\n"$(RESET); \
+		tar -xzf $(READLINE_TAR_FILE); \
+		rm -rf $(READLINE_TAR_FILE); \
 		cd $(READLINE_SRC_DIR) && ./configure "--prefix=$(PWD)/$(READLINE_DIR)" \
-		&& make && make install && cd ..
-		@rm -rf $(READLINE_SRC_DIR)
-		@echo "#include <stdio.h>\n" > .tmp
-		@cat $(READLINE_INC_DIR)/readline/readline.h >> .tmp
-		@mv .tmp $(READLINE_INC_DIR)/readline/readline.h
-		@echo "#include <stdio.h>\n" > .tmp
-		@cat $(READLINE_INC_DIR)/readline/rltypedefs.h >> .tmp
-		@mv .tmp $(READLINE_INC_DIR)/readline/rltypedefs.h
+		&& make && make install && cd ..; \
+		rm -rf $(READLINE_SRC_DIR); \
+		echo "#include <stdio.h>\n" > .tmp; \
+		cat $(READLINE_INC_DIR)/readline/readline.h >> .tmp; \
+		mv .tmp $(READLINE_INC_DIR)/readline/readline.h; \
+		echo "#include <stdio.h>\n" > .tmp; \
+		cat $(READLINE_INC_DIR)/readline/rltypedefs.h >> .tmp; \
+		mv .tmp $(READLINE_INC_DIR)/readline/rltypedefs.h; \
+	else \
+		echo $(GREEN)"----- 🧵 Readline had been installed 🧵 -----\n"$(RESET); \
+	fi
 
 clean_readline:
 	@echo $(RED)"----- 🧻 Removing readline library -----\n"$(RESET)
