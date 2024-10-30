@@ -162,17 +162,25 @@ void	sigint_handler(int sig);
 int	ft_cd(char **args, t_env *env);
 int	ft_env(t_env *env);
 int	ft_echo(char **args);
+char *get_env_name(char *dest, const char *src);
+int	 is_in_env(t_env *env, char *args);
+int	env_add(const char *value, t_env *env);
 int	ft_pwd(void);
+int		is_valid_env(const char *env);
 int	ft_unset(char **args, t_shell *mini);
 void	mini_exit(t_shell *mini, char **cmd);
 int	ft_export(char **args, t_env *env, t_env *secret);
 
-/* Additional Function Declarations */
-char	*env_to_str(t_env *env);
-void	sort_env(char **tab, int len);
-int	    str_env_len(char **tab);
-void	ft_putstr(char *str);
-void	ft_putendl(char *str);
-void	free_tab(char **tab);
+// /* Additional Function Declarations */
+// char	*env_to_str(t_env *env);
+// void	sort_env(char **tab, int len);
+// int	    str_env_len(char **tab);
+// void	ft_putstr(char *str);
+// void	ft_putendl(char *str);
+// void	free_tab(char **tab);
+
+/* Execution Functions */
+int	is_builtin(char *command);
+int	exec_builtin(char **args, t_shell *mini);
 
 #endif

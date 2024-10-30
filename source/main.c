@@ -41,27 +41,6 @@ int		same_str(char *s1, char *s2)
 		return (0);
 }
 
-// void	print_welcome(void)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i <= 12)
-// 	{
-// 		if (welcome[i] !=  NULL)
-// 			printf("%s%s\n", COLOR_RED, welcome[i++]);
-// 		if (welcome[i] !=  NULL)
-// 			printf("%s%s\n", COLOR_GREEN, welcome[i++]);
-// 		if (welcome[i] !=  NULL)
-// 			printf("%s%s\n", COLOR_YELLOW, welcome[i++]);
-// 		if (welcome[i] !=  NULL)
-// 			printf("%s%s\n", COLOR_BLUE, welcome[i++]);
-// 		if (welcome[i] !=  NULL)
-// 			printf("%s%s\n", COLOR_MAGENTA, welcome[i++]);
-// 	}
-// 	printf("%s\n", COLOR_RESET);
-// }
-
 int main(int ac, char **av, char **envp)
 {
 	t_general	utils;

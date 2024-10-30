@@ -23,6 +23,8 @@ HEADER = -I ./header/ -I $(READLINE_INC_DIR)
 SRC_DIR = ./source/
 OBJ_DIR = ./obj/
 LIBFT_DIR = ./libft/
+BUILTIN_DIR = $(SRC_DIR)builtin/
+EXECUTE_DIR = $(SRC_DIR)execution/
 
 #-----Path-------#
 LIBFT_PATH = ./libft/libft.a
@@ -49,22 +51,26 @@ AR = ar rcs
 
 #-----Files-----#
 SRC_FILES	=	main.c \
-				env.c \
-				signal.c \
-				start_shell.c \
-				error.c \
-				read_token.c \
-				lexer.c\
-            	builtin_cd.c \
-				builtin_echo.c \
-				builtin_env.c \
-				builtin_exit.c \
-				builtin_export.c \
-				builtin_pwd.c \
-				builtin_unset.c \
+                env.c \
+                signal.c \
+                start_shell.c \
+                error.c \
+                read_token.c \
+                lexer.c\
 
+BUILTIN_FILES = builtin_cd.c \
+                builtin_echo.c \
+                builtin_env.c \
+                builtin_exit.c \
+                builtin_pwd.c \
+                builtin_unset.c\
+				#builtin_export.c\
 
-OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
+EXECUTE_FILES = execute.c\
+
+OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o)) \
+            $(addprefix $(OBJ_DIR), $(BUILTIN_FILES:.c=.o))\
+			$(addprefix $(OBJ_DIR), $(EXECUTE_FILES:.c=.o))
 
 #----Rules & Dependencies-----#
 all : execlib execrd  $(NAME)
@@ -97,20 +103,20 @@ execlib :
 	@make -s -C $(LIBFT_DIR)
 
 execrd :
-		@echo $(GREEN)"----- 👵🏻 Grandma is fetching readline ------\n"$(RESET)
-		@curl -O "$(READLINE_URL)"
-		@echo $(GREEN)"------ 💤 Be patient yea, Grandma is compiling readline ------\n"$(RESET)
-		@tar -xzf $(READLINE_TAR_FILE)
-		@rm -rf $(READLINE_TAR_FILE)
-		cd $(READLINE_SRC_DIR) && ./configure "--prefix=$(PWD)/$(READLINE_DIR)" \
-		&& make && make install && cd ..
-		@rm -rf $(READLINE_SRC_DIR)
-		@echo "#include <stdio.h>\n" > .tmp
-		@cat $(READLINE_INC_DIR)/readline/readline.h >> .tmp
-		@mv .tmp $(READLINE_INC_DIR)/readline/readline.h
-		@echo "#include <stdio.h>\n" > .tmp
-		@cat $(READLINE_INC_DIR)/readline/rltypedefs.h >> .tmp
-		@mv .tmp $(READLINE_INC_DIR)/readline/rltypedefs.h
+	@echo $(GREEN)"----- 👵🏻 Grandma is fetching readline ------\n"$(RESET)
+	@curl -O "$(READLINE_URL)"
+	@echo $(GREEN)"------ 💤 Be patient yea, Grandma is compiling readline ------\n"$(RESET)
+	@tar -xzf $(READLINE_TAR_FILE)
+	@rm -rf $(READLINE_TAR_FILE)
+	cd $(READLINE_SRC_DIR) && ./configure "--prefix=$(PWD)/$(READLINE_DIR)" \
+	&& make && make install && cd ..
+	@rm -rf $(READLINE_SRC_DIR)
+	@echo "#include <stdio.h>\n" > .tmp
+	@cat $(READLINE_INC_DIR)/readline/readline.h >> .tmp
+	@mv .tmp $(READLINE_INC_DIR)/readline/readline.h
+	@echo "#include <stdio.h>\n" > .tmp
+	@cat $(READLINE_INC_DIR)/readline/rltypedefs.h >> .tmp
+	@mv .tmp $(READLINE_INC_DIR)/readline/rltypedefs.h
 
 clean_readline:
 	@echo $(RED)"----- 🧻 Removing readline library -----\n"$(RESET)
@@ -119,6 +125,12 @@ clean_readline:
 	@rm -rf $(READLINE_SRC_DIR)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c
+	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
+
+$(OBJ_DIR)%.o : $(BUILTIN_DIR)%.c
+	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
+
+$(OBJ_DIR)%.o : $(EXECUTE_DIR)%.c
 	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
 $(OBJ_DIR) :
