@@ -129,8 +129,6 @@ t_type	get_token_type(int c);
 int	handle_token(char *str, int i, t_lexer **lexer_list);
 int	handle_word(char *str, int i, t_lexer **lexer_list);
 int	handle_quotes(int i, char *str, char quote);
-// static void print_error(char *arg);
-// static char *get_env_path(t_env *env, const char *var_name) ;
 int	update_oldpwd(t_env *env);
 int	go_to_path(int option, t_env *env);
 int	ft_cd(char **args, t_env *env);
