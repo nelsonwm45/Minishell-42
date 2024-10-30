@@ -91,8 +91,9 @@ int	start_shell(t_general *utils)
         // }
         if (is_builtin(utils->line)) {
             exec_builtin(&utils->line, (t_shell *)utils);
-        } else {
-            printf("Error: '%s' is not a built-in command.\n", utils->line);
-        }
+		}
+        // } else {
+        //     printf("Error: '%s' is not a built-in command.\n", utils->line);
+        // }
     }
 }

@@ -19,6 +19,7 @@ FILES = ft_strlen.c \
 		ft_memchr.c \
 		ft_memcmp.c \
 		ft_strnstr.c \
+		ft_strisnum.c \
 		ft_atoi.c \
 		ft_calloc.c \
 		ft_strdup.c \
