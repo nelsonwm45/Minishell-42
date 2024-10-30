@@ -166,9 +166,12 @@ int	add_node_to_lexer(char *str, t_type token_type, t_lexer **lexer_list)
 {
 	t_lexer	*node;
 
+	
 	node = create_node(str, token_type);
+	printf("Walao\n");
 	if (!node)
 		return (0);
+	printf("Walao2\n");
 	if (add_to_backlexer(node, lexer_list) == 0)
 		return (0);
 	return (1);
