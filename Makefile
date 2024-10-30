@@ -54,6 +54,7 @@ SRC_FILES	=	main.c \
 				start_shell.c \
 				error.c \
 				read_token.c \
+				lexer.c\
             	builtin_cd.c \
 				builtin_echo.c \
 				builtin_env.c \

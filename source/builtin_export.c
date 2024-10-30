@@ -21,7 +21,7 @@ static int	print_error(int error, const char *arg)
 int env_add(const char *value, t_env *env)
 {
     t_env *new;
-    t_env *tmp;
+    // t_env *tmp;
 
     if (env && env->value == NULL)
     {
@@ -71,8 +71,27 @@ int			is_in_env(t_env *env, char *args)
     }
     return (SUCCESS);
 }
+void	print_sorted_env(t_env *env)
+{
+    int		i;
+    char	**tab;
+    char	*str_env;
 
-int			ft_export(char **args, t_env *env, t_env *secret)
+    str_env = env_to_str(env);
+    tab = ft_split(str_env, '\n');
+    ft_memdel(str_env);
+    sort_env(tab, str_env_len(tab));
+    i = 0;
+    while (tab[i])
+    {
+        ft_putstr("declare -x ");
+        ft_putendl(tab[i]);
+        i++;
+    }
+    free_tab(tab);
+}
+
+int	ft_export(char **args, t_env *env, t_env *secret)
 {
     int		new_env;
     int		error_ret;
@@ -85,7 +104,7 @@ int			ft_export(char **args, t_env *env, t_env *secret)
     }
     else
     {
-        error_ret = is_valid_env(args[1]);
+        error_ret = is_in_env(env, args[1]);
         if (args[1][0] == '=')
             error_ret = -3;
         if (error_ret <= 0)

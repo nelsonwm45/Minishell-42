@@ -28,7 +28,7 @@ t_lexer	*create_node(char *str, t_type token_type)
 	return (node);
 }
 
-void	add_to_backlexerr(t_lexer *new, t_lexer **lexer_list)
+int	add_to_backlexer(t_lexer *new, t_lexer **lexer_list)
 {
 	t_lexer	*ptr;
 	
@@ -36,4 +36,6 @@ void	add_to_backlexerr(t_lexer *new, t_lexer **lexer_list)
 	while (ptr->next != NULL)
 		ptr = ptr->next;
 	ptr->next = new;
+
+	return 0;
 }

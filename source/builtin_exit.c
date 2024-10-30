@@ -10,7 +10,7 @@ void	mini_exit(t_shell *mini, char **cmd)
 		mini->return_code = 1;
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
 	}
-	else if (cmd[1] && ft_strisnum(cmd[1]) == 0)
+	else if (cmd[1][0] == '0')
 	{
 		mini->return_code = 255;
 		ft_putstr_fd("minishell: exit: ", 2);

@@ -10,6 +10,7 @@ FILES = ft_strlen.c \
 		ft_isprint.c \
 		ft_memset.c \
 		ft_bzero.c \
+		ft_memdel.c\
 		ft_toupper.c \
 		ft_tolower.c \
 		ft_strchr.c \
