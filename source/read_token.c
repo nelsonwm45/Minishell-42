@@ -61,7 +61,6 @@ int	remove_space(char *line, int *i)
 */
 int	is_token(char c)
 {
-	printf("did I come here? is_token\n");
 	if (c == '>' || c == '<' || c == '|')
 		return (TRUE);
 	return (FALSE);
@@ -169,8 +168,7 @@ int	add_node_to_lexer(char *str, t_type token_type, t_lexer **lexer_list)
 	node = create_node(str, token_type);
 	if (!node)
 		return (0);
-	if (add_to_backlexer(node, lexer_list) == 0)
-		return (0);
+	add_to_backlexer(node, lexer_list);
 	return (1);
 }
 /*
@@ -181,8 +179,6 @@ int	handle_word(char *str, int i, t_lexer **lexer_list)
 	int	j;
 
 	j = 0;
-	printf("str: %s\n", str);
-	printf("Index: %d\n", i);
 	while (str[i + j] && is_token(str[i + j]) == FALSE)
 	{
 		j += handle_quotes(i + j, str,'\"');
@@ -201,6 +197,7 @@ int	read_token(t_general *utils)
 {
 	int		i;
 	int		j;
+	t_lexer	*ptr;
 
 	i = 0;
 	while (utils->line[i])
@@ -211,16 +208,17 @@ int	read_token(t_general *utils)
 			j = handle_token(utils->line, i, &utils->lexer_list);
 		else
 			j = handle_word(utils->line, i, &utils->lexer_list);
-		printf("Am I here\n");
 		if (j < 0)
 			return (0);
 		i += j;
 	}
-	while (utils->lexer_list->next)
+	ptr = utils->lexer_list;
+	while (ptr != NULL)
 	{
-		printf("Index: %d\n", utils->lexer_list->i);
-		printf("Token Type: %d\n", utils->lexer_list->token_type);
-		utils->lexer_list = utils->lexer_list->next;
+		printf("String: %s\n", ptr->str);
+		printf("Index: %d\n", ptr->i);
+		printf("Token Type: %d\n", ptr->token_type);
+		ptr = ptr->next;
 	}
 	return (1);
 }

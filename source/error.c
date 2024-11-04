@@ -32,8 +32,6 @@ int	clean_utils(t_general *utils)
 {
 	free_array(utils->envp);
 	free_array(utils->path);
-	free(utils->pwd);
-	free(utils->oldpwd);
 	free(utils->line);
 	return (0);
 }
