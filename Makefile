@@ -25,6 +25,7 @@ OBJ_DIR = ./obj/
 LIBFT_DIR = ./libft/
 BUILTIN_DIR = $(SRC_DIR)builtin/
 EXECUTE_DIR = $(SRC_DIR)execution/
+ENVIRONMENT_DIR = $(SRC_DIR)env/
 
 #-----Path-------#
 LIBFT_PATH = ./libft/libft.a
@@ -51,11 +52,10 @@ AR = ar rcs
 
 #-----Files-----#
 SRC_FILES	=	main.c \
-				env.c \
-				start_shell.c \
-				error.c \
-				read_token.c \
-				lexer.c\
+                start_shell.c \
+                error.c \
+                read_token.c \
+                lexer.c\
 				signal.c \
 				parser.c\
 				lexer_utils.c\
@@ -70,14 +70,21 @@ BUILTIN_FILES = builtin_cd.c \
                 builtin_exit.c \
                 builtin_pwd.c \
                 builtin_unset.c\
-				#builtin_export.c\
+				builtin_export.c\
 
 EXECUTE_FILES = execute.c\
 
+ENVIRONMENT_FILES = env.c\
+				 env_utils.c\
+				 utils_tools.c\
+				 get_env.c\
+				 shell_level.c\
+				 sort_env.c\
+
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o)) \
             $(addprefix $(OBJ_DIR), $(BUILTIN_FILES:.c=.o))\
-			$(addprefix $(OBJ_DIR), $(EXECUTE_FILES:.c=.o))
-
+			$(addprefix $(OBJ_DIR), $(EXECUTE_FILES:.c=.o))\
+			$(addprefix $(OBJ_DIR), $(ENVIRONMENT_FILES:.c=.o))
 #----Rules & Dependencies-----#
 all : execlib execrd  $(NAME)
 
@@ -141,6 +148,10 @@ $(OBJ_DIR)%.o : $(BUILTIN_DIR)%.c
 	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
 $(OBJ_DIR)%.o : $(EXECUTE_DIR)%.c
+	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
+
+	
+$(OBJ_DIR)%.o : $(ENVIRONMENT_DIR)%.c
 	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
 $(OBJ_DIR) :

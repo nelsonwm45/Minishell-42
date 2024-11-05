@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: hheng < hheng@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 23:19:41 by nchok             #+#    #+#             */
-/*   Updated: 2024/10/29 23:19:41 by nchok            ###   ########.fr       */
+/*   Created: 2024/11/05 13:26:55 by hheng             #+#    #+#             */
+/*   Updated: 2024/11/05 13:26:55 by hheng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,27 +68,6 @@ static int	change_to_env_path(int option, t_env *env)
 	int result = chdir(path);
 	ft_memdel(path);
 	return (result);
-}
-//from export.c file 
-int			env_add(const char *value, t_env *env)
-{
-	t_env	*new;
-	t_env	*tmp;
-
-	if (env && env->value == NULL)
-	{
-		env->value = ft_strdup(value);
-		return (SUCCESS);
-	}
-	if (!(new = malloc(sizeof(t_env))))
-		return (-1);
-	new->value = ft_strdup(value);
-	while (env && env->next && env->next->next)
-		env = env->next;
-	tmp = env->next;
-	env->next = new;
-	new->next = tmp;
-	return (SUCCESS);
 }
 
 int	ft_cd(char **args, t_env *env)

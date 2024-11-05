@@ -26,35 +26,39 @@
  *   - Prints a newline if the "-n" option is not present.
  */
 
-// Count the number of arguments in the array
-static int nb_args(char **args) {
-	int count = 0;
-	while (args[count]) count++;
-	return count;
+static	int		nb_args(char **args)
+{
+	int		size;
+
+	size = 0;
+	while (args[size])
+		size++;
+	return (size);
 }
 
-// A simple echo implementation with support for the -n option
-int ft_echo(char **args) {
-	int i = 1;
-	int n_option = 0;
+int				ft_echo(char **args)
+{
+	int		i;
+	int		n_option;
 
-	// Check for the "-n" option as the first argument
-	if (nb_args(args) > 1 && ft_strcmp(args[1], "-n") == 0) {
-		n_option = 1;
-		i++; // Skip "-n" for the actual output
+	i = 1;
+	n_option = 0;
+	if (nb_args(args) > 1)
+	{
+		while (args[i] && ft_strcmp(args[i], "-n") == 0)
+		{
+			n_option = 1;
+			i++;
+		}
+		while (args[i])
+		{
+			ft_putstr_fd(args[i], 1);
+			if (args[i + 1] && args[i][0] != '\0')
+				write(1, " ", 1);
+			i++;
+		}
 	}
-
-	// Print each argument with a space separator
-	while (args[i]) {
-		ft_putstr_fd(args[i], 1);
-		if (args[i + 1]) // Add a space if there are more arguments
-			write(1, " ", 1);
-		i++;
-	}
-
-	// Print a newline if -n option is not present
-	if (!n_option)
+	if (n_option == 0)
 		write(1, "\n", 1);
-
-	return SUCCESS;
+	return (SUCCESS);
 }

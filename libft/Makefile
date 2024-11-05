@@ -12,6 +12,7 @@ FILES = ft_strlen.c \
 		ft_bzero.c \
 		ft_memdel.c\
 		ft_toupper.c \
+		ft_putstr.c \
 		ft_tolower.c \
 		ft_strchr.c \
 		ft_strrchr.c \

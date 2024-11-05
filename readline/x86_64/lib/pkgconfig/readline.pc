@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 prefix=/home/ubuntu/Minishell-42/readline/x86_64
+=======
+prefix=/mnt/c/Users/User/Desktop/Minishell-42/readline/x86_64
+>>>>>>> c42550f ( export and execution still got error)
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

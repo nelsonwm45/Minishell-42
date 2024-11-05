@@ -6,11 +6,11 @@
 /*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:49:21 by nchok             #+#    #+#             */
-/*   Updated: 2024/10/28 15:42:15 by nchok            ###   ########.fr       */
+/*   Updated: 2024/10/28 15:42:15 by hheng             ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../header/minishell.h"
+# include "minishell.h"
 
 char	**duplicate_env(char **envp)
 {

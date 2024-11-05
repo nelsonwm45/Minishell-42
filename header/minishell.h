@@ -32,6 +32,7 @@
 # include <string.h> // For strerror
 # include <unistd.h>
 # include <sys/wait.h>
+#include <stdbool.h>
 
 /* Constants */
 # define ERROR -1
@@ -39,6 +40,7 @@
 # define TRUE 1
 # define FALSE 2
 # define BUFF_SIZE 1000
+# define END_TOKEN 3
 
 /* Structs */
 typedef enum s_type
@@ -220,8 +222,37 @@ int	ft_export(char **args, t_env *env, t_env *secret);
 // void	ft_putendl(char *str);
 // void	free_tab(char **tab);
 
+/* Env Function*/
+size_t	size_env(t_env *lst);
+void	ft_putendl(char *s);
+char	*env_to_str(t_env *lst);
+int	env_init(t_shell *mini, char **env_array);
+int	secret_env_init(t_shell *mini, char **env_array);
+int	is_env_char(int c);
+int	env_value_len(const char *env);
+char	*env_value(char *env);
+char	*get_env_value(char *arg, t_env *env);
+void	increment_shell_level(t_env *env);
+int	str_env_len(char **env);
+void	sort_env(char **tab, int env_len);
+void	print_sorted_env(t_env *env);
+int	duplicate_env(char **envp, t_general *utils);
+int	get_pwd(t_general *utils);
+int	print_envp(t_general *utils); // debug purpose
+int	init_utils(t_general *utils);
+int	get_oldpwd(t_general *utils);
+int	get_array_size(char **arr);
+char	*get_path(t_general *utils);
+void	store_path(t_general *utils);
+int	process_envp(char **envp, t_general *utils);
+
 /* Execution Functions */
+bool is_end_of_command(t_token *token);
 int	is_builtin(char *command);
 int	exec_builtin(char **args, t_shell *mini);
 
+
+/* Tools utils*/
+void	free_tab(char **tab);
+void	ft_putendl(char *s);
 #endif
