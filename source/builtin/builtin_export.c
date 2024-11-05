@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-#include "minishell.h"
-
 static int	print_error(int error, const char *arg)
 {
 	int		i;
