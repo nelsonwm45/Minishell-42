@@ -2,11 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
+/*                                                    +:+ +:+
 	+:+     */
-/*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+      
+/*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+
 	+#+        */
-/*                                                +#+#+#+#+#+  
+/*                                                +#+#+#+#+#+
 	+#+           */
 /*   Created: 2024/08/28 16:11:05 by nchok             #+#    #+#             */
 /*   Updated: 2024/10/28 15:41:10 by nchok            ###   ########.fr       */
@@ -76,15 +76,24 @@ typedef struct s_simple_cmds
 	struct s_simple_cmds *prev;
 } t_simple_cmds;
 
+typedef struct s_parser
+{
+	t_lexer *lexer_list;
+	t_lexer *redirections;
+	int redirections_count;
+	struct s_general *utils;
+} t_parser;
+
 typedef struct s_general
 {
 	t_lexer *lexer_list;
-	t_simple_cmds *cmds_list;
+	t_simple_cmds *cmds;
 	char **envp;
 	char **path;
 	char *pwd;
 	char *oldpwd;
 	char *line;
+	int pipecount;
 } t_general;
 
 typedef struct s_env
@@ -140,20 +149,29 @@ int	env_add(const char *value, t_env *env);
 
 /* Env Functions */
 int	process_envp(char **envp, t_general *utils);
-char **duplicate_env(char **envp);
+char	**duplicate_env(char **envp);
 int	get_pwd(t_general *utils);
 int	print_envp(t_general *utils); // debug purpose
 int	init_utils(t_general *utils);
 
 /* Error Functions */
+int	double_token_error(t_general *utils, t_lexer **lexer, t_type token_type);
+int	error_message(int error_code, t_general *utils);
+
+/* Cleanning Structs */
 void	free_array(char **arr);
 int	clean_utils(t_general *utils);
-int	error_message(int error_code, t_general *utils);
+int	clean_lexer(t_lexer **lexer);
 
 /* Lexer Functions */
 int	add_node_to_lexer(char *str, t_type token_type, t_lexer **lexer_list);
 int	add_to_backlexer(t_lexer *node, t_lexer **lexer_list);
 t_lexer	*create_node(char *str, t_type token_type);
+
+/* Lexer Cleaning Functions*/
+void	del_one_node(t_lexer **lexer, int i);
+void	del_first_node(t_lexer **lexer);
+t_lexer	*clear_node(t_lexer **lexer);
 
 /* Helper Functions */
 void	init_signal(t_general *utils);
@@ -175,7 +193,7 @@ int	ft_export(char **args, t_env *env, t_env *secret);
 // /* Additional Function Declarations */
 // char	*env_to_str(t_env *env);
 // void	sort_env(char **tab, int len);
-// int		 str_env_len(char **tab);
+// int			str_env_len(char **tab);
 // void	ft_putstr(char *str);
 // void	ft_putendl(char *str);
 // void	free_tab(char **tab);

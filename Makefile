@@ -57,6 +57,8 @@ SRC_FILES	=	main.c \
                 read_token.c \
                 lexer.c\
 				signal.c \
+				parser.c\
+				lexer_utils.c\
 
 BUILTIN_FILES = builtin_cd.c \
                 builtin_echo.c \

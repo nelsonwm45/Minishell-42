@@ -154,7 +154,7 @@ int	init_utils(t_general *utils)
 {
 	utils->line = NULL;
 	utils->lexer_list = NULL;
-	utils->cmds_list = NULL;
+	utils->cmds = NULL;
 	return (0);
 }
 

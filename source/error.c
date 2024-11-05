@@ -11,29 +11,22 @@
 /* ************************************************************************** */
 
 # include "../header/minishell.h"
-/*
-	@brief
-	- free the array
-*/
-void	free_array(char **arr)
-{
-	int	i;
 
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
-int	clean_utils(t_general *utils)
+int	double_token_error(t_general *utils, t_lexer **lexer, t_type token_type)
 {
-	free_array(utils->envp);
-	free_array(utils->path);
-	free(utils->line);
-	return (0);
+	ft_putstr_fd("Syntax error near unexpected token ", STDERR_FILENO);
+	if (token_type == PIPE)
+		ft_putstr_fd("'|'\n", STDERR_FILENO);
+	else if (token_type == BIG)
+		ft_putstr_fd("'>'\n", STDERR_FILENO);
+	else if (token_type == BIGBIG)
+		ft_putstr_fd("'>>'\n", STDERR_FILENO);
+	else if (token_type == SMALL)
+		ft_putstr_fd("'<'\n", STDERR_FILENO);
+	else if (token_type == SMALLSMALL)
+		ft_putstr_fd("'<'\n", STDERR_FILENO);
+	clean_lexer(lexer);
+	clean_utils(utils);
 }
 
 int	error_message(int error_code, t_general *utils)

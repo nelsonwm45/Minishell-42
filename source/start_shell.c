@@ -85,6 +85,7 @@ int	start_shell(t_general *utils)
 		printf("Going In read_token\n");
 		if (read_token(utils) == 0)
 			return (error_message(1, utils));
+		start_parsing(utils);
 		if (is_builtin(utils->line))
 			exec_builtin(&utils->line, (t_shell *)utils);
 		if (same_str(utils->line, "exit"))

@@ -212,13 +212,13 @@ int	read_token(t_general *utils)
 			return (0);
 		i += j;
 	}
-	ptr = utils->lexer_list;
-	while (ptr != NULL)
-	{
-		printf("String: %s\n", ptr->str);
-		printf("Index: %d\n", ptr->i);
-		printf("Token Type: %d\n", ptr->token_type);
-		ptr = ptr->next;
-	}
+	// ptr = utils->lexer_list;
+	// while (ptr != NULL)
+	// {
+	// 	printf("String: %s\n", ptr->str);
+	// 	printf("Index: %d\n", ptr->i);
+	// 	printf("Token Type: %d\n", ptr->token_type);
+	// 	ptr = ptr->next;
+	// }
 	return (1);
 }
