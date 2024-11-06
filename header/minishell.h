@@ -19,6 +19,7 @@
 
 /* Macros */
 /* Standard Library */
+# include <stdlib.h>
 # include <errno.h>
 # include <stdint.h>
 # include <limits.h> // For PATH_MAX
@@ -29,6 +30,8 @@
 # include <string.h> // For strerror
 # include <unistd.h>
 #include <stdbool.h>
+#include <dirent.h>
+# include <fcntl.h>
 
 /* Constants */
 # define ERROR -1
@@ -37,11 +40,14 @@
 # define FALSE 2
 # define BUFF_SIZE 1000
 # define END_TOKEN 3
+# define COMMAND 4
+# define UNKNOWN_COMMAND 127
+# define IS_DIRECTORY 126
 
 /* Structs */
 typedef enum s_type
 {
-    PIPE = 1,
+    PIPE = 6,
     BIG,
     BIGBIG,
     SMALL,
@@ -115,6 +121,13 @@ typedef struct s_shell
 
 } t_shell;
 
+typedef struct	s_expansions
+{
+	char			*new_arg;
+	int				i;
+	int				j;
+}				t_expansions;
+
 /* Functions */
 // void	print_welcome(void);
 int	same_str(char *s1, char *s2);
@@ -136,17 +149,6 @@ int	go_to_path(int option, t_env *env);
 int	ft_cd(char **args, t_env *env);
 
 int env_add(const char *value, t_env *env);
-
-// /* Env Functions */
-// int	process_envp(char **envp, t_general *utils);
-// int	duplicate_env(char **envp, t_general *utils);
-// int	get_pwd(t_general *utils);
-// int	print_envp(t_general *utils); // debug purpose
-// int	init_utils(t_general *utils);
-// int	get_oldpwd(t_general *utils);
-// int	get_array_size(char **arr);
-// char	*get_path(t_general *utils);
-// void	store_path(t_general *utils);
 
 /* Error Functions */
 void	free_array(char **arr);
@@ -175,7 +177,7 @@ int	ft_unset(char **args, t_shell *mini);
 void	mini_exit(t_shell *mini, char **cmd);
 int	ft_export(char **args, t_env *env, t_env *secret);
 
-/* Env Function*/
+/* Environment Function*/
 size_t	size_env(t_env *lst);
 void	ft_putendl(char *s);
 char	*env_to_str(t_env *lst);
@@ -184,7 +186,7 @@ int	secret_env_init(t_shell *mini, char **env_array);
 int	is_env_char(int c);
 int	env_value_len(const char *env);
 char	*env_value(char *env);
-char	*get_env_value(char *arg, t_env *env);
+char *get_env_value(char *var_name, t_env *env);
 void	increment_shell_level(t_env *env);
 int	str_env_len(char **env);
 void	sort_env(char **tab, int env_len);
@@ -195,17 +197,36 @@ int	print_envp(t_general *utils); // debug purpose
 int	init_utils(t_general *utils);
 int	get_oldpwd(t_general *utils);
 int	get_array_size(char **arr);
-char	*get_path(t_general *utils);
 void	store_path(t_general *utils);
 int	process_envp(char **envp, t_general *utils);
+char *get_path(t_general *utils);
 
 /* Execution Functions */
+
+void	ft_close(int fd);
+int			exec_bin(char **args, t_env *env, t_shell *mini);
+char *expansions(char *arg, t_env *env, int ret);
 bool is_end_of_command(t_token *token);
 int	is_builtin(char *command);
 int	exec_builtin(char **args, t_shell *mini);
+char **cmd_tab(t_token *start);
+void exec_cmd(t_shell *mini, t_token *token);
+int		has_pipe(t_token *token);
 
 
 /* Tools utils*/
 void	free_tab(char **tab);
 void	ft_putendl(char *s);
+char		*path_join(const char *s1, const char *s2);
+char		*check_dir(char *bin, char *command);
+int		arg_alloc_len(const char *arg, t_env *env, int ret);
+
+/*Signal Function*/
+void	sigint_handler(int sig);
+void sig_int(int code);
+void sig_quit(int code);
+void sig_init(void);
+void free_token(t_token *token);
+int magic_box(char *path, char **args, t_env *env, t_shell *mini, pid_t *pid, int *sigint, int *sigquit);
+
 #endif
