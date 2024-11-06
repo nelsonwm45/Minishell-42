@@ -76,7 +76,7 @@ int main(int ac, char **av, char **envp)
     }
 
     // Initialize utils and process environment variables
-    process_envp(envp, &utils);
+   // process_envp(envp, &utils); 
 
     // Convert envp to t_env linked list
     mini.env_vars = convert_envp_to_list(envp);

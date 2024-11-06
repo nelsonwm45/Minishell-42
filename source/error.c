@@ -10,7 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+<<<<<<< HEAD
 # include "../header/minishell.h"
+=======
+# include "minishell.h"
+/*
+	@brief
+	- free the array
+*/
+void	free_array(char **arr)
+{
+	int	i;
+>>>>>>> d9fd237 ( last fix)
 
 int	double_token_error(t_general *utils, t_lexer *lexer, t_type token_type)
 {

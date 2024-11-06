@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+# include "../header/minishell.h"
 
 static int sigint;
 static int sigquit;

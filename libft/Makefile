@@ -51,7 +51,8 @@ FILES = ft_strlen.c \
 		ft_greater.c \
 		ft_atoi_base.c \
 		ft_isspace.c \
-		ft_strchr_i.c
+		ft_strchr_i.c \
+		ft_numlen.c \
 
 NAME = libft.a
 

@@ -94,7 +94,7 @@ OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o)) \
             $(addprefix $(OBJ_DIR), $(BUILTIN_FILES:.c=.o))\
 			$(addprefix $(OBJ_DIR), $(EXECUTE_FILES:.c=.o))\
 			$(addprefix $(OBJ_DIR), $(ENVIRONMENT_FILES:.c=.o))\
-			$(addprefix $(OBJ_DIR), $(SIGN_FILES:.c=.o))
+			$(addprefix $(OBJ_DIR), $(SIGNAL_FILES:.c=.o))
 #----Rules & Dependencies-----#
 all : execlib execrd  $(NAME)
 
@@ -162,6 +162,9 @@ $(OBJ_DIR)%.o : $(EXECUTE_DIR)%.c
 
 	
 $(OBJ_DIR)%.o : $(ENVIRONMENT_DIR)%.c
+	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
+
+$(OBJ_DIR)%.o : $(SIGNAL_DIR)%.c
 	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
 $(OBJ_DIR) :
