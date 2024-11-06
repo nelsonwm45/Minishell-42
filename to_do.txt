@@ -1,0 +1,5 @@
+signal
+redirection/heredoc
+expansion -> quotes
+pipe
+parser -> lexer

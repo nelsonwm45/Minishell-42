@@ -16,37 +16,35 @@
 t_lexer	*create_node(char *str, t_type token_type)
 {
 	t_lexer *node;
+	static int i = 0;
 
 	node = ft_calloc(1, sizeof(t_lexer));
 	if (!node)
 		return (NULL);
 	node->str = str;
 	node->token_type = token_type;
-	node->i = -1;
+	node->i = i++;
 	node->prev = NULL;
 	node->next = NULL;
 	return (node);
 }
 
+/*
+	High chance segfault due to access to unexisted lexer_list
+*/
 int	add_to_backlexer(t_lexer *new, t_lexer **lexer_list)
 {
 	t_lexer *ptr;
 
-	ptr = *lexer_list;
-	if (ptr == NULL) // if the list is empty
+	if (*lexer_list == NULL)
 	{
 		*lexer_list = new;
-		if (ptr->i == -1) // assign the index for first node
-			ptr->i = 0;
 		return (0);
 	}
+	ptr = *lexer_list;
 	while (ptr->next != NULL)
-	{
 		ptr = ptr->next;
-		if (ptr->i == -1) // assign the index for the next node
-			ptr->i = ptr->prev->i + 1;
-	}
 	ptr->next = new;
-	new->prev = ptr;
+	new->prev = ptr; 
 	return (0);
 }

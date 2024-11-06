@@ -12,7 +12,7 @@
 
 # include "../header/minishell.h"
 
-int	duplicate_env(char **envp, t_general *utils)
+char	**duplicate_env(char **envp)
 {
 	int	size;
 	int	i;
@@ -23,15 +23,19 @@ int	duplicate_env(char **envp, t_general *utils)
 		size++;
 	arr = ft_calloc(size + 1, sizeof(char *));
 	if (!arr)
-		return (ERROR);
+		return (NULL);
 	i = 0;
 	while (envp[i] != NULL)
 	{
 		arr[i] = ft_strdup(envp[i]);
+		if (arr[i] == NULL)
+		{
+			free_array(arr);
+			return (arr);
+		}
 		i++;
 	}
-	utils->envp = arr;
-	return (0);
+	return (arr);
 }
 
 int	print_envp(t_general *utils)
@@ -132,7 +136,6 @@ void	store_path(t_general *utils)
 
 	longpath = get_path(utils);
 	path = ft_split(longpath, ':');
-	free(longpath);
 	i = get_array_size(path);
 	utils->path = ft_calloc(i + 1, sizeof(char *));
 	i = 0;
@@ -151,15 +154,13 @@ int	init_utils(t_general *utils)
 {
 	utils->line = NULL;
 	utils->lexer_list = NULL;
-	utils->cmds_list = NULL;
+	utils->cmds = NULL;
 	return (0);
 }
 
 int	process_envp(char **envp, t_general *utils)
 {
-	// int i;
-
-	duplicate_env(envp, utils);
+	utils->envp = duplicate_env(envp);
 	get_pwd(utils);
 	get_oldpwd(utils);
 	store_path(utils);
