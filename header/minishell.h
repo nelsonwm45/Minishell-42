@@ -31,6 +31,7 @@
 # include <stdio.h>
 # include <string.h> // For strerror
 # include <unistd.h>
+# include <sys/wait.h>
 
 /* Constants */
 # define ERROR -1
@@ -66,15 +67,16 @@ typedef struct s_lexer
 	struct s_lexer *next;
 } t_lexer;
 
-typedef struct s_simple_cmds
+typedef struct s_cmds
 {
 	char **str;
-	int num_redir;
+	int redir_count;
 	char *hd_file_name;
+	// char *builtin;
 	t_lexer *redir;
-	struct s_simple_cmds *next;
-	struct s_simple_cmds *prev;
-} t_simple_cmds;
+	struct s_cmds *next;
+	struct s_cmds *prev;
+} t_cmds;
 
 typedef struct s_parser
 {
@@ -87,7 +89,7 @@ typedef struct s_parser
 typedef struct s_general
 {
 	t_lexer *lexer_list;
-	t_simple_cmds *cmds;
+	t_cmds *cmds;
 	char **envp;
 	char **path;
 	char *pwd;
@@ -155,8 +157,10 @@ int	print_envp(t_general *utils); // debug purpose
 int	init_utils(t_general *utils);
 
 /* Error Functions */
-int	double_token_error(t_general *utils, t_lexer **lexer, t_type token_type);
+int	double_token_error(t_general *utils, t_lexer *lexer, t_type token_type);
 int	error_message(int error_code, t_general *utils);
+void	parsing_error(int error, t_general *utils, t_lexer *lexer);
+int	pipes_errors(t_general *utils, t_type token_type);
 
 /* Cleanning Structs */
 void	free_array(char **arr);
@@ -172,6 +176,24 @@ t_lexer	*create_node(char *str, t_type token_type);
 void	del_one_node(t_lexer **lexer, int i);
 void	del_first_node(t_lexer **lexer);
 t_lexer	*clear_node(t_lexer **lexer);
+
+/* Parser Functions */
+int	count_pipes(t_general *utils);
+int	pipes_errors(t_general *utils, t_type token_type);
+t_parser	init_parser(t_general *utils, t_lexer *lexer_list);
+void	print_parser(t_general *utils);
+int	start_parsing(t_general *utils);
+
+/* Parsing - Commands Structs */
+t_cmds	*init_cmds(t_parser	*parser);
+t_cmds	*create_cmds(char **str, t_lexer *redirections, int redir_count);
+char	**form_str(char **str, int size, t_parser *parser);
+void	add_to_backcmds(t_cmds **parse_cmds, t_cmds *utils_cmds);
+int		count_no_pipe(t_lexer *lexer_list);
+
+/* Parsing - Redirections */
+void	recog_redirections(t_parser *parser);
+int		add_redirections(t_parser *parser, t_lexer *ptr);
 
 /* Helper Functions */
 void	init_signal(t_general *utils);

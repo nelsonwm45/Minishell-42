@@ -51,14 +51,18 @@ AR = ar rcs
 
 #-----Files-----#
 SRC_FILES	=	main.c \
-                env.c \
-                start_shell.c \
-                error.c \
-                read_token.c \
-                lexer.c\
+				env.c \
+				start_shell.c \
+				error.c \
+				read_token.c \
+				lexer.c\
 				signal.c \
 				parser.c\
 				lexer_utils.c\
+				parse_redirections.c \
+				clean.c \
+				cmds_utils.c \
+				cmds.c \
 
 BUILTIN_FILES = builtin_cd.c \
                 builtin_echo.c \

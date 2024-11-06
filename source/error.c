@@ -12,7 +12,7 @@
 
 # include "../header/minishell.h"
 
-int	double_token_error(t_general *utils, t_lexer **lexer, t_type token_type)
+int	double_token_error(t_general *utils, t_lexer *lexer, t_type token_type)
 {
 	ft_putstr_fd("Syntax error near unexpected token ", STDERR_FILENO);
 	if (token_type == PIPE)
@@ -25,16 +25,24 @@ int	double_token_error(t_general *utils, t_lexer **lexer, t_type token_type)
 		ft_putstr_fd("'<'\n", STDERR_FILENO);
 	else if (token_type == SMALLSMALL)
 		ft_putstr_fd("'<'\n", STDERR_FILENO);
-	clean_lexer(lexer);
+	clean_lexer(&lexer);
 	clean_utils(utils);
+	return (EXIT_FAILURE);
 }
 
+void	parsing_error(int error, t_general *utils, t_lexer *lexer)
+{
+	clean_lexer(&lexer);
+	error_message(error, utils);
+}
 int	error_message(int error_code, t_general *utils)
 {
 	if (error_code == 1)
 		ft_putstr_fd("Syntax error near unexpected token 'newline'\n", STDERR_FILENO);
 	else if (error_code == 2)
 		ft_putstr_fd("Syntax error: unable to locate closing quote\n", STDERR_FILENO);
+	else if (error_code == 3)
+		ft_putstr_fd("Parser Error\n", STDERR_FILENO);
 	clean_utils(utils);
 	return (EXIT_FAILURE);
 }

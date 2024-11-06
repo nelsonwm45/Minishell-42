@@ -82,13 +82,29 @@ int	start_shell(t_general *utils)
 		add_history(utils->line);
 		if (closed_quotes(utils->line) == FALSE)
 			return (error_message(2, utils));
-		printf("Going In read_token\n");
 		if (read_token(utils) == 0)
 			return (error_message(1, utils));
 		start_parsing(utils);
-		if (is_builtin(utils->line))
-			exec_builtin(&utils->line, (t_shell *)utils);
+		print_parser(utils);
+		// if (is_builtin(utils->line))
+		// 	exec_builtin(&utils->line, (t_shell *)utils);
 		if (same_str(utils->line, "exit"))
 			return (clean_utils(utils));
+	}
+}
+
+void	print_parser(t_general *utils)
+{
+	t_cmds	*ptr;
+	int		i;
+
+	i = 0;
+	ptr = utils->cmds;
+	while (ptr)
+	{
+		printf("str: %s\n", ptr->str[i]);
+		printf("redir_count: %d\n", ptr->redir_count);
+		i++;
+		ptr = ptr->next;
 	}
 }

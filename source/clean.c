@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:10:40 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/05 11:11:15 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/06 18:16:23 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,5 @@ int	clean_lexer(t_lexer **lexer)
 		ptr = *lexer;
 	}
 	*lexer = NULL;
+	return (0);
 }

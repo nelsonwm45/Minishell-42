@@ -133,7 +133,6 @@ int	handle_token(char *str, int i, t_lexer **lexer_list)
 {
 	t_type	token;
 	
-	printf("Hello\n");
 	token = get_token_type(str[i]); // get token type in str-num format
 	printf("Token: %d\n", token);
 	if (token == BIG && str[i + 1] == BIG)
@@ -197,7 +196,7 @@ int	read_token(t_general *utils)
 {
 	int		i;
 	int		j;
-	t_lexer	*ptr;
+	// t_lexer	*ptr;
 
 	i = 0;
 	while (utils->line[i])

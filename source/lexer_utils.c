@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:29:08 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/05 13:36:12 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/06 10:41:08 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,3 +64,4 @@ void	del_one_node(t_lexer **lexer, int i)
 	clear_node(&ptr); // clear the current node
 	*lexer = start;
 }
+
