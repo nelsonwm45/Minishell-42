@@ -106,26 +106,33 @@ int	get_array_size(char **arr)
 	return (i);
 }
 
-/*
-	@brief
-	- get path from envp
-	@return
-	- return path
-	@error handling
-	- path not found
-*/
-char	*get_path(t_general *utils)
+char *get_env_value(char *var_name, t_env *env)
 {
-	int	i;
+    while (env)
+    {
+        if (ft_strncmp(env->value, var_name, ft_strlen(var_name)) == 0 && env->value[ft_strlen(var_name)] == '=')
+            return (env->value + ft_strlen(var_name) + 1);
+        env = env->next;
+    }
+    return NULL;
+}
 
-	i = 0;
-	while (utils->envp[i] != NULL)
-	{
-		if (ft_strncmp(utils->envp[i], "PATH=", 5) == 0)
-			return (utils->envp[i]);
-		i++;
-	}
-	return (NULL);
+char *get_path(t_general *utils)
+{
+    int i = 0;
+
+    // Iterate through the environment variable array `envp`
+    while (utils->envp[i])
+    {
+        // Check if the current environment variable starts with "PATH="
+        if (strncmp(utils->envp[i], "PATH=", 5) == 0)
+        {
+            // Duplicate the path string (without "PATH=") and return it
+            return strdup(utils->envp[i] + 5);
+        }
+        i++;
+    }
+    return NULL; // Return NULL if "PATH=" is not found
 }
 
 void	store_path(t_general *utils)
@@ -164,7 +171,7 @@ int	process_envp(char **envp, t_general *utils)
 	get_pwd(utils);
 	get_oldpwd(utils);
 	store_path(utils);
-	init_signal(utils);
+	// init_signal(utils);
 	init_utils(utils);
 	return (0);
 }

@@ -26,6 +26,7 @@ LIBFT_DIR = ./libft/
 BUILTIN_DIR = $(SRC_DIR)builtin/
 EXECUTE_DIR = $(SRC_DIR)execution/
 ENVIRONMENT_DIR = $(SRC_DIR)env/
+SIGNAL_DIR = $(SRC_DIR)signal/
 
 #-----Path-------#
 LIBFT_PATH = ./libft/libft.a
@@ -56,6 +57,7 @@ SRC_FILES	=	main.c \
                 error.c \
                 read_token.c \
                 lexer.c\
+<<<<<<< HEAD
 				signal.c \
 				parser.c\
 				lexer_utils.c\
@@ -63,6 +65,8 @@ SRC_FILES	=	main.c \
 				clean.c \
 				cmds_utils.c \
 				cmds.c \
+=======
+>>>>>>> 756fb46 (left exit status still got problem)
 
 BUILTIN_FILES = builtin_cd.c \
                 builtin_echo.c \
@@ -72,19 +76,25 @@ BUILTIN_FILES = builtin_cd.c \
                 builtin_unset.c\
 				builtin_export.c\
 
-EXECUTE_FILES = execute.c\
+EXECUTE_FILES = exec.c\
+				builtin.c\
+				exec_utils.c\
+				tools.c\
 
 ENVIRONMENT_FILES = env.c\
 				 env_utils.c\
-				 utils_tools.c\
+				 env_tools.c\
 				 get_env.c\
 				 shell_level.c\
 				 sort_env.c\
 
+SIGNAL_FILES = signal.c\
+
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o)) \
             $(addprefix $(OBJ_DIR), $(BUILTIN_FILES:.c=.o))\
 			$(addprefix $(OBJ_DIR), $(EXECUTE_FILES:.c=.o))\
-			$(addprefix $(OBJ_DIR), $(ENVIRONMENT_FILES:.c=.o))
+			$(addprefix $(OBJ_DIR), $(ENVIRONMENT_FILES:.c=.o))\
+			$(addprefix $(OBJ_DIR), $(SIGN_FILES:.c=.o))
 #----Rules & Dependencies-----#
 all : execlib execrd  $(NAME)
 
