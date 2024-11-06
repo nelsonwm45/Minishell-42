@@ -31,6 +31,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 int		ft_toupper(int c);
 void	*ft_memdel(void *ptr);
+int ft_numlen(int num);
 void	ft_putstr(char *s);
 int		ft_tolower(int c);
 char	*ft_strchr(const char *s, int c);

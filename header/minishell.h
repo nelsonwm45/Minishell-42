@@ -29,9 +29,10 @@
 # include <stdio.h>
 # include <string.h> // For strerror
 # include <unistd.h>
-#include <stdbool.h>
-#include <dirent.h>
+# include <stdbool.h>
+# include <dirent.h>
 # include <fcntl.h>
+# include <sys/wait.h>
 
 /* Constants */
 # define ERROR -1
@@ -43,11 +44,12 @@
 # define COMMAND 4
 # define UNKNOWN_COMMAND 127
 # define IS_DIRECTORY 126
+# define pipe 6
 
 /* Structs */
 typedef enum s_type
 {
-    PIPE = 6,
+    PIPE = 1,
     BIG,
     BIGBIG,
     SMALL,
@@ -154,7 +156,7 @@ int env_add(const char *value, t_env *env);
 void	free_array(char **arr);
 int	clean_utils(t_general *utils);
 int	error_message(int error_code, t_general *utils);
-
+int error_message_path(char *path);
 /* Lexer Functions */
 int	add_node_to_lexer(char *str, t_type token_type, t_lexer **lexer_list);
 int	add_to_backlexer(t_lexer *node, t_lexer **lexer_list);
@@ -198,7 +200,7 @@ int	init_utils(t_general *utils);
 int	get_oldpwd(t_general *utils);
 int	get_array_size(char **arr);
 void	store_path(t_general *utils);
-int	process_envp(char **envp, t_general *utils);
+//int	process_envp(char **envp, t_general *utils);
 char *get_path(t_general *utils);
 
 /* Execution Functions */
@@ -220,6 +222,8 @@ void	ft_putendl(char *s);
 char		*path_join(const char *s1, const char *s2);
 char		*check_dir(char *bin, char *command);
 int		arg_alloc_len(const char *arg, t_env *env, int ret);
+int     get_var_len(const char *arg, int i, t_env *env, int ret);
+
 
 /*Signal Function*/
 void	sigint_handler(int sig);
@@ -228,5 +232,4 @@ void sig_quit(int code);
 void sig_init(void);
 void free_token(t_token *token);
 int magic_box(char *path, char **args, t_env *env, t_shell *mini, pid_t *pid, int *sigint, int *sigquit);
-
 #endif

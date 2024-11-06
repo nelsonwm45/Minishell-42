@@ -10,11 +10,13 @@
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
+                //  "__GNUC__"
             ],
             "windowsSdkVersion": "10.0.22000.0",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "windows-msvc-x64"
+            "intelliSenseMode": "windows-clang-x86",
+            //"compilerPath": "C:\\Program Files\\mingw64\\bin\\gcc.exe
         }
     ],
     "version": 4

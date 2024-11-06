@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../header/minishell.h"
+# include "minishell.h"
 /*
 	@brief
 	- free the array
