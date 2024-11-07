@@ -256,7 +256,7 @@ void	increment_shell_level(t_env *env);
 int	str_env_len(char **env);
 void	sort_env(char **tab, int env_len);
 void	print_sorted_env(t_env *env);
-int	duplicate_env(char **envp, t_general *utils);
+char	**duplicate_env(char **envp);
 int	get_pwd(t_general *utils);
 int	print_envp(t_general *utils); // debug purpose
 int	init_utils(t_general *utils);

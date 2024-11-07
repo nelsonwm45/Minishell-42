@@ -53,11 +53,11 @@ AR = ar rcs
 
 #-----Files-----#
 SRC_FILES	=	main.c \
-                start_shell.c \
-                error.c \
-                read_token.c \
-                lexer.c\
-<<<<<<< HEAD
+				env.c \
+				start_shell.c \
+				error.c \
+				read_token.c \
+				lexer.c\
 				signal.c \
 				parser.c\
 				lexer_utils.c\
@@ -65,8 +65,6 @@ SRC_FILES	=	main.c \
 				clean.c \
 				cmds_utils.c \
 				cmds.c \
-=======
->>>>>>> 756fb46 (left exit status still got problem)
 
 BUILTIN_FILES = builtin_cd.c \
                 builtin_echo.c \
