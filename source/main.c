@@ -41,33 +41,45 @@ int		same_str(char *s1, char *s2)
 		return (0);
 }
 
-t_env *convert_envp_to_list(char **envp) {
-    t_env *head = NULL;
-    t_env *current = NULL;
-    t_env *new_node = NULL;
-    int i = 0;
+t_env *convert_envp_to_list(char **envp)
+{
+    t_env *env_list = NULL;
+    t_env *new_node;
+    char **env;
 
-    while (envp[i]) {
+    for (env = envp; *env != NULL; env++)
+    {
         new_node = malloc(sizeof(t_env));
         if (!new_node)
-            return NULL; // Handle allocation failure
-        new_node->value = ft_strdup(envp[i]);
-        new_node->next = NULL;
-        if (!head)
-            head = new_node;
-        else
-            current->next = new_node;
-        current = new_node;
-        i++;
+            return NULL;
+        new_node->value = strdup(*env);  // Corrected to 'value'
+        new_node->next = env_list;
+        env_list = new_node;
     }
-    return head;
+    return env_list;
+}
+
+void exec_cmd_from_token(t_shell *mini, t_token *token)
+{
+    char **args = ft_split(token->str, ' ');  // Split the token string into arguments
+
+    if (is_builtin(args[0]))  // Check if the command is built-in
+    {
+        exec_builtin(args, mini);  // Execute the built-in command
+    }
+    else
+    {
+        // Call the existing exec_cmd to handle external commands
+        exec_cmd(mini, token);
+    }
+
+    // Free allocated memory for args (important to avoid memory leaks)
+    free(args);
 }
 
 int main(int ac, char **av, char **envp)
 {
     t_general utils;
-    t_shell mini;
-    t_token *token;
 
     if (ac != 1 || av[1] != NULL)
     {
@@ -75,32 +87,9 @@ int main(int ac, char **av, char **envp)
         exit(EXIT_FAILURE);
     }
 
-    // Initialize utils and process environment variables
-   // process_envp(envp, &utils); 
+    utils.env_vars = convert_envp_to_list(envp);
 
-    // Convert envp to t_env linked list
-    mini.env_vars = convert_envp_to_list(envp);
-    mini.hidden_env_vars = NULL; // Initialize other members as needed
-
-    // Create or obtain a token (this is just an example, adjust as needed)
-    token = malloc(sizeof(t_token));
-    if (!token)
-    {
-        ft_putendl_fd("Failed to allocate memory for token", STDERR_FILENO);
-        exit(EXIT_FAILURE);
-    }
-    token->str = "example_command"; // Set the command string
-    token->type = COMMAND; // Set the token type
-    token->next = NULL; // Set the next token if any
-
-    // Call exec_cmd function
-    exec_cmd(&mini, token);
-
-    // Free allocated memory for token
-    free(token);
-
-    // Start the shell
     start_shell(&utils);
 
-    return (0);
+    return 0;
 }

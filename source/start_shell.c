@@ -63,48 +63,64 @@ int	closed_quotes(char *line)
 	return (TRUE);
 }
 
-int	start_shell(t_general *utils)
+void start_shell(t_general *utils)
 {
-	char *line;
+    t_shell mini;
+    t_token *token;
+    char *line;
 
-	while (1)
-	{
-		line = readline("42Minishell-1.0$ ");
-		utils->line = ft_strtrim(line, " "); // trim the spaces in front & back
-		free(line);// Free the original line to avoid memory leak
-		if (!utils->line)
-		{
-			ft_putendl_fd("exit", STDOUT_FILENO);
-			exit(EXIT_SUCCESS);
-		}
-		if (utils->line[0] == '\0')
-			return (clean_utils(utils));
-		add_history(utils->line);
-		if (closed_quotes(utils->line) == FALSE)
-			return (error_message(2, utils));
-		if (read_token(utils) == 0)
-			return (error_message(1, utils));
-		start_parsing(utils);
-		print_parser(utils);
-		// if (is_builtin(utils->line))
-		// 	exec_builtin(&utils->line, (t_shell *)utils);
-		if (same_str(utils->line, "exit"))
-			return (clean_utils(utils));
+    // Initialize the t_shell structure
+    mini.env_vars = utils->env_vars;
+    mini.hidden_env_vars = NULL;
+    mini.skip_execution = 0;
+    mini.process_charge = 1;
+    mini.pipe_input_fd = -1;
+    mini.pipe_output_fd = -1;
+    mini.return_code = 0;
+
+    while (1)
+    {
+        // Display prompt and read input
+        line = readline("42Minishell-1.0$ ");
+        if (!line)
+            break;
+
+        // Add input to history
+        add_history(line);
+
+        // Create a token from the input line
+        token = malloc(sizeof(t_token));
+        if (!token)
+        {
+            ft_putendl_fd("Failed to allocate memory for token", STDERR_FILENO);
+            free(line);
+            continue;
+        }
+        token->str = line;
+        token->type = COMMAND; // Set the token type
+        token->next = NULL;
+
+        // Execute the command from the token
+        exec_cmd_from_token(&mini, token);
+
+        // Free allocated memory for token and line
+        free(token);
+        free(line);
 	}
 }
 
-void	print_parser(t_general *utils)
-{
-	t_cmds	*ptr;
-	int		i;
+// void	print_parser(t_general *utils)
+// {
+// 	t_cmds	*ptr;
+// 	int		i;
 
-	i = 0;
-	ptr = utils->cmds;
-	while (ptr)
-	{
-		printf("str: %s\n", ptr->str[i]);
-		printf("redir_count: %d\n", ptr->redir_count);
-		i++;
-		ptr = ptr->next;
-	}
-}
+// 	i = 0;
+// 	ptr = utils->cmds;
+// 	while (ptr)
+// 	{
+// 		printf("str: %s\n", ptr->str[i]);
+// 		printf("redir_count: %d\n", ptr->redir_count);
+// 		i++;
+// 		ptr = ptr->next;
+// 	}
+// }

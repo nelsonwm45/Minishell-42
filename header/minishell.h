@@ -96,8 +96,15 @@ typedef struct s_parser
 	struct s_general *utils;
 } t_parser;
 
+typedef struct s_env
+{
+	char *value;
+	struct s_env *next;
+} t_env;
+
 typedef struct s_general
 {
+	t_env *env_vars;
 	t_lexer *lexer_list;
 	t_cmds *cmds;
 	char **envp;
@@ -107,12 +114,6 @@ typedef struct s_general
 	char *line;
 	int pipecount;
 } t_general;
-
-typedef struct s_env
-{
-	char *value;
-	struct s_env *next;
-} t_env;
 
 typedef struct s_shell
 {
@@ -147,9 +148,10 @@ typedef struct	s_expansions
 /* Functions */
 // void	print_welcome(void);
 int	same_str(char *s1, char *s2);
-int	start_shell(t_general *utils);
+void start_shell(t_general *utils);
 int	closed_quotes(char *line);
 int	find_next_quote(char *line, int *i, int *num_quote, char quote);
+void	exec_cmd_from_token(t_shell *mini, t_token *token);
 
 /* Token */
 int	read_token(t_general *utils);
@@ -203,7 +205,7 @@ t_lexer	*clear_node(t_lexer **lexer);
 int	count_pipes(t_general *utils);
 int	pipes_errors(t_general *utils, t_type token_type);
 t_parser	init_parser(t_general *utils, t_lexer *lexer_list);
-void	print_parser(t_general *utils);
+// void	print_parser(t_general *utils);
 int	start_parsing(t_general *utils);
 
 /* Parsing - Commands Structs */
