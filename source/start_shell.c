@@ -148,6 +148,77 @@ void start_shell(t_general *utils)
     }
 }
 
+// void start_shell(t_general *utils)
+// {
+//     t_shell mini;
+//     t_token *token;
+//     // t_lexer *lexer;  // Assuming you need a lexer for parsing
+//     char *line;
+
+//     // Initialize the t_shell structure
+//     mini.env_vars = utils->env_vars; // Directly assign env_vars
+//     mini.hidden_env_vars = utils->env_vars; // Directly assign hidden_env_vars
+//     mini.skip_execution = 0;
+//     mini.process_charge = 1;
+//     mini.pipe_input_fd = -1;
+//     mini.pipe_output_fd = -1;
+//     mini.return_code = 0;
+
+//     while (1)
+//     {
+//         // Display prompt and read input
+//         line = readline("\033[31m42Minishell-1.0$ \033[0m");
+//         if (!line)
+//             break;
+
+//         // Add input to history
+//         add_history(line);
+
+//         // Check for unmatched quotes before proceeding (use closed_quotes or your validation)
+//         if (closed_quotes(line) == FALSE)
+//         {
+//             error_message(2, utils);
+//             free(line);
+//             continue;
+//         }
+
+//         // Tokenize the input line (assuming read_token processes into t_lexer)
+//         if (read_token(utils) == 0)
+//         {
+//             error_message(1, utils);
+//             free(line);
+//             continue;
+//         }
+
+//         // Now parse the tokens using start_parsing (you may need to adjust based on your lexer structure)
+//         start_parsing(utils);  // This will process your lexer and tokens into a command structure
+
+//         // Print or debug the parsed structure if needed
+//         print_parser(utils);   // This prints or debugs the parsed structure
+
+//         // Now you can create the command token for execution after parsing
+//         token = malloc(sizeof(t_token));
+//         if (!token)
+//         {
+//             ft_putendl_fd("Failed to allocate memory for token", STDERR_FILENO);
+//             free(line);
+//             continue;
+//         }
+
+//         token->str = line;       // Set the token's string to the input line
+//         token->type = COMMAND;   // Set the token type (e.g., as a command)
+//         token->next = NULL;
+
+//         // Execute the command from the token
+//         exec_cmd_from_token(&mini, token);
+
+//         // Free allocated memory for token and line
+//         free(token);
+//         free(line);
+//     }
+// }
+
+
 
 
 
