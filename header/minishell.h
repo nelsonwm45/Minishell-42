@@ -149,6 +149,7 @@ typedef struct	s_expansions
 // void	print_welcome(void);
 int	same_str(char *s1, char *s2);
 void start_shell(t_general *utils);
+// t_token *create_token_from_cmd(t_cmds *cmd);
 int	closed_quotes(char *line);
 int	find_next_quote(char *line, int *i, int *num_quote, char quote);
 void	exec_cmd_from_token(t_shell *mini, t_token *token);
@@ -200,7 +201,7 @@ t_lexer	*clear_node(t_lexer **lexer);
 int	count_pipes(t_general *utils);
 int	pipes_errors(t_general *utils, t_type token_type);
 t_parser	init_parser(t_general *utils, t_lexer *lexer_list);
-// void	print_parser(t_general *utils);
+ void	print_parser(t_general *utils);
 int	start_parsing(t_general *utils);
 
 /* Parsing - Commands Structs */

@@ -148,18 +148,22 @@ void start_shell(t_general *utils)
     }
 }
 
-// void	print_parser(t_general *utils)
-// {
-// 	t_cmds	*ptr;
-// 	int		i;
 
-// 	i = 0;
-// 	ptr = utils->cmds;
-// 	while (ptr)
-// 	{
-// 		printf("str: %s\n", ptr->str[i]);
-// 		printf("redir_count: %d\n", ptr->redir_count);
-// 		i++;
-// 		ptr = ptr->next;
-// 	}
-// }
+
+
+
+void	print_parser(t_general *utils)
+{
+	t_cmds	*ptr;
+	int		i;
+
+	i = 0;
+	ptr = utils->cmds;
+	while (ptr)
+	{
+		printf("str: %s\n", ptr->str[i]);
+		printf("redir_count: %d\n", ptr->redir_count);
+		i++;
+		ptr = ptr->next;
+	}
+}
