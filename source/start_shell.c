@@ -81,7 +81,7 @@ void start_shell(t_general *utils)
     while (1)
     {
         // Display prompt and read input
-        line = readline("42Minishell-1.0$ ");
+        line = readline("\033[31m""42Minishell-1.0$ ""\033[0m");
         if (!line)
             break;
 

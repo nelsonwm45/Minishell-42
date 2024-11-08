@@ -30,25 +30,35 @@ static int	print_error(int error, const char *arg)
 	return (ERROR);
 }
 
-int			env_add(const char *value, t_env *env)
+int env_add(const char *value, t_env *env)
 {
-	t_env	*new;
-	t_env	*tmp;
+    t_env *new;
+    t_env *tmp;
 
-	if (env && env->value == NULL)
-	{
-		env->value = ft_strdup(value);
-		return (SUCCESS);
-	}
-	if (!(new = malloc(sizeof(t_env))))
-		return (-1);
-	new->value = ft_strdup(value);
-	while (env && env->next && env->next->next)
-		env = env->next;
-	tmp = env->next;
-	env->next = new;
-	new->next = tmp;
-	return (SUCCESS);
+    // Handle case where env is NULL or env->value is NULL
+    if (!env)
+        return (-1);
+
+    if (env->value == NULL)
+    {
+        env->value = ft_strdup(value);
+        env->next = NULL;
+        return (SUCCESS);
+    }
+
+    // Create new environment node
+    if (!(new = malloc(sizeof(t_env))))
+        return (-1);
+    new->value = ft_strdup(value);
+    new->next = NULL;
+
+    // Traverse to the end of the list
+    tmp = env;
+    while (tmp->next)
+        tmp = tmp->next;
+
+    tmp->next = new;
+    return (SUCCESS);
 }
 
 char		*get_env_name(char *dest, const char *src)
@@ -65,51 +75,74 @@ char		*get_env_name(char *dest, const char *src)
 	return (dest);
 }
 
-int			is_in_env(t_env *env, char *args)
+int is_in_env(t_env *env, char *args)
 {
-	char	var_name[BUFF_SIZE];
-	char	env_name[BUFF_SIZE];
+    char var_name[BUFF_SIZE];
+    char env_name[BUFF_SIZE];
 
-	get_env_name(var_name, args);
-	while (env && env->next)
-	{
-		get_env_name(env_name, env->value);
-		if (ft_strcmp(var_name, env_name) == 0)
-		{
-			ft_memdel(env->value);
-			env->value = ft_strdup(args);
-			return (1);
-		}
-		env = env->next;
-	}
-	return (SUCCESS);
+    get_env_name(var_name, args);
+
+    while (env)
+    {
+        if (env->value)  // Ensure env->value is not NULL before using it
+        {
+            get_env_name(env_name, env->value);
+            if (ft_strcmp(var_name, env_name) == 0)
+            {
+                ft_memdel((void **)&env->value);  // Safely delete the existing value
+                env->value = ft_strdup(args);
+                return (1);
+            }
+        }
+        env = env->next;
+    }
+    return (0);
 }
 
-int			ft_export(char **args, t_env *env, t_env *secret)
+int ft_export(char **args, t_env *env, t_env *secret)
 {
-	int		new_env;
-	int		error_ret;
+    int new_env;
+    int error_ret;
 
-	new_env = 0;
-	if (!args[1])
-	{
-		print_sorted_env(secret);
-		return (SUCCESS);
-	}
-	else
-	{
-		error_ret = is_valid_env(args[1]);
-		if (args[1][0] == '=')
-			error_ret = -3;
-		if (error_ret <= 0)
-			return (print_error(error_ret, args[1]));
-		new_env = error_ret == 2 ? 1 : is_in_env(env, args[1]);
-		if (new_env == 0)
-		{
-			if (error_ret == 1)
-				env_add(args[1], env);
-			env_add(args[1], secret);
-		}
-	}
-	return (SUCCESS);
+    if (!env || !secret)  // Check if env and secret are NULL
+        return (-1);
+
+    printf("Entering ft_export\n");
+
+    new_env = 0;
+    if (!args[1])
+    {
+        printf("No arguments provided to export. Printing sorted environment.\n");
+        print_sorted_env(secret);
+        return (SUCCESS);
+    }
+    else
+    {
+        printf("Argument provided to export: %s\n", args[1]);
+        error_ret = is_valid_env(args[1]);
+        if (args[1][0] == '=')
+        {
+            error_ret = -3;
+            printf("Invalid environment variable: starts with '='\n");
+        }
+        if (error_ret <= 0)
+        {
+            printf("Invalid environment variable: %s\n", args[1]);
+            return (print_error(error_ret, args[1]));
+        }
+        new_env = error_ret == 2 ? 1 : is_in_env(env, args[1]);
+        if (new_env == 0)
+        {
+            if (error_ret == 1)
+            {
+                printf("Adding new environment variable to env: %s\n", args[1]);
+                env_add(args[1], env);
+            }
+            printf("Adding new environment variable to secret: %s\n", args[1]);
+            env_add(args[1], secret);
+        }
+    }
+
+    printf("Exiting ft_export\n");
+    return (SUCCESS);
 }

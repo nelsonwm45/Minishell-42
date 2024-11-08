@@ -9,7 +9,7 @@
 /*                                                +#+#+#+#+#+
 	+#+           */
 /*   Created: 2024/08/28 16:11:05 by nchok             #+#    #+#             */
-/*   Updated: 2024/10/28 15:41:10 by nchok            ###   ########.fr       */
+/*   Updated: 2024/10/28 15:41:10 by hheng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,9 +164,6 @@ int	handle_word(char *str, int i, t_lexer **lexer_list);
 int	handle_quotes(int i, char *str, char quote);
 int	update_oldpwd(t_env *env);
 int	go_to_path(int option, t_env *env);
-int	ft_cd(char **args, t_env *env);
-
-int env_add(const char *value, t_env *env);
 
 // /* Env Functions */
 // int	process_envp(char **envp, t_general *utils);
@@ -229,8 +226,8 @@ int	ft_env(t_env *env);
 int	ft_echo(char **args);
 char	*get_env_name(char *dest, const char *src);
 int	is_in_env(t_env *env, char *args);
-int	env_add(const char *value, t_env *env);
 int	ft_pwd(void);
+int env_add(const char *value, t_env *env);
 int	is_valid_env(const char *env);
 int	ft_unset(char **args, t_shell *mini);
 void	mini_exit(t_shell *mini, char **cmd);
