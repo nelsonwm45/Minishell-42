@@ -98,6 +98,41 @@ int	closed_quotes(char *line)
 //     return env_list;
 // }
 
+
+/* Original version*/
+
+
+// int	start_shell(t_general *utils)
+// {
+// 	char *line;
+
+// 	while (1)
+// 	{
+// 		line = readline("42Minishell-1.0$ ");
+// 		utils->line = ft_strtrim(line, " "); // trim the spaces in front & back
+// 		free(line);// Free the original line to avoid memory leak
+// 		if (!utils->line)
+// 		{
+// 			ft_putendl_fd("exit", STDOUT_FILENO);
+// 			exit(EXIT_SUCCESS);
+// 		}
+// 		if (utils->line[0] == '\0')
+// 			return (clean_utils(utils));
+// 		add_history(utils->line);
+// 		if (closed_quotes(utils->line) == FALSE)
+// 			return (error_message(2, utils));
+// 		if (read_token(utils) == 0)
+// 			return (error_message(1, utils));
+// 		start_parsing(utils);
+// 		print_parser(utils);
+// 		// if (is_builtin(utils->line))
+// 		// 	exec_builtin(&utils->line, (t_shell *)utils);
+// 		if (same_str(utils->line, "exit"))
+// 			return (clean_utils(utils));
+// 	}
+// }
+
+/* Winnie version*/
 void start_shell(t_general *utils)
 {
     t_shell mini;
@@ -144,6 +179,8 @@ void start_shell(t_general *utils)
     }
 }
 
+
+/* Try to combine version -- will cause seg fault, due to i used t_token to parse and Nelson use t_lexer to parse*/
 // void start_shell(t_general *utils)
 // {
 //     t_shell mini;
