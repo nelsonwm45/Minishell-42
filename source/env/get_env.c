@@ -76,22 +76,22 @@ char	*env_value(char *env)
 	return (env_value);
 }
 
-// char	*get_env_value(char *arg, t_env *env)
-// {
-// 	char	env_name[BUFF_SIZE];
-// 	char	*env_val;
+char	*get_env_value(char *arg, t_env *env)
+{
+	char	env_name[BUFF_SIZE];
+	char	*env_val;
 
-// 	env_val = ft_strdup("");
-// 	while (env && env->value)
-// 	{
-// 		get_env_name(env_name, env->value);
-// 		if (ft_strcmp(arg, env_name) == 0)
-// 		{
-// 			ft_memdel(env_val);
-// 			env_val = env_value(env->value);
-// 			return (env_val);
-// 		}
-// 		env = env->next;
-// 	}
-// 	return (env_val);
-// }
+	env_val = ft_strdup("");
+	while (env && env->value)
+	{
+		get_env_name(env_name, env->value);
+		if (ft_strcmp(arg, env_name) == 0)
+		{
+			ft_memdel(env_val);
+			env_val = env_value(env->value);
+			return (env_val);
+		}
+		env = env->next;
+	}
+	return (env_val);
+}

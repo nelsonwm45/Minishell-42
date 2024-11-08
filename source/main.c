@@ -45,16 +45,37 @@ t_env *convert_envp_to_list(char **envp)
 {
     t_env *env_list = NULL;
     t_env *new_node;
+    t_env *current;
     char **env;
 
     for (env = envp; *env != NULL; env++)
     {
         new_node = malloc(sizeof(t_env));
         if (!new_node)
+        {
+            perror("malloc");
             return NULL;
-        new_node->value = strdup(*env);  // Corrected to 'value'
-        new_node->next = env_list;
-        env_list = new_node;
+        }
+        new_node->value = strdup(*env);
+        if (!new_node->value)
+        {
+            perror("strdup");
+            free(new_node);
+            return NULL;
+        }
+        new_node->next = NULL;
+
+        if (!env_list)
+        {
+            env_list = new_node;
+        }
+        else
+        {
+            current = env_list;
+            while (current->next)
+                current = current->next;
+            current->next = new_node;
+        }
     }
     return env_list;
 }

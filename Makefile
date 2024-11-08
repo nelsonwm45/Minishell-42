@@ -80,11 +80,11 @@ EXECUTE_FILES = exec.c\
 				tools.c\
 
 ENVIRONMENT_FILES = env.c\
-				 env_utils.c\
 				 env_tools.c\
 				 get_env.c\
 				 shell_level.c\
 				 sort_env.c\
+				#  env_utils.c
 
 SIGNAL_FILES = signal.c\
 

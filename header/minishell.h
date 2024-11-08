@@ -60,6 +60,12 @@ typedef enum s_type
     SMALLSMALL,
 } t_type;
 
+typedef struct s_env
+{
+	char *value;
+	struct s_env *next;
+} t_env;
+
 typedef struct s_token
 {
 	char *str;
@@ -95,12 +101,6 @@ typedef struct s_parser
 	int redirections_count;
 	struct s_general *utils;
 } t_parser;
-
-typedef struct s_env
-{
-	char *value;
-	struct s_env *next;
-} t_env;
 
 typedef struct s_general
 {
@@ -255,15 +255,15 @@ void	increment_shell_level(t_env *env);
 int	str_env_len(char **env);
 void	sort_env(char **tab, int env_len);
 void	print_sorted_env(t_env *env);
-char	**duplicate_env(char **envp);
-int	get_pwd(t_general *utils);
-int	print_envp(t_general *utils); // debug purpose
-int	init_utils(t_general *utils);
-int	get_oldpwd(t_general *utils);
-int	get_array_size(char **arr);
-void	store_path(t_general *utils);
+// char	**duplicate_env(char **envp);
+// int	get_pwd(t_general *utils);
+// int	print_envp(t_general *utils); // debug purpose
+// int	init_utils(t_general *utils);
+// int	get_oldpwd(t_general *utils);
+// int	get_array_size(char **arr);
+// void	store_path(t_general *utils);
 //int	process_envp(char **envp, t_general *utils);
-char *get_path(t_general *utils);
+// char *get_path(t_general *utils);
 
 /* Execution Functions */
 

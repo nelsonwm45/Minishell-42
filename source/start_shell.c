@@ -63,6 +63,45 @@ int	closed_quotes(char *line)
 	return (TRUE);
 }
 
+// t_env *convert_envp_to_list(char **envp)
+// {
+//     t_env *env_list = NULL;
+//     t_env *new_node;
+//     t_env *current;
+//     char **env;
+
+//     for (env = envp; *env != NULL; env++)
+//     {
+//         new_node = malloc(sizeof(t_env));
+//         if (!new_node)
+//         {
+//             perror("malloc");
+//             return NULL;
+//         }
+//         new_node->var = strdup(*env);
+//         if (!new_node->var)
+//         {
+//             perror("strdup");
+//             free(new_node);
+//             return NULL;
+//         }
+//         new_node->next = NULL;
+
+//         if (!env_list)
+//         {
+//             env_list = new_node;
+//         }
+//         else
+//         {
+//             current = env_list;
+//             while (current->next)
+//                 current = current->next;
+//             current->next = new_node;
+//         }
+//     }
+//     return env_list;
+// }
+
 void start_shell(t_general *utils)
 {
     t_shell mini;
@@ -70,8 +109,8 @@ void start_shell(t_general *utils)
     char *line;
 
     // Initialize the t_shell structure
-    mini.env_vars = utils->env_vars;
-    mini.hidden_env_vars = NULL;
+    mini.env_vars = utils->env_vars; // Directly assign env_vars
+    mini.hidden_env_vars = utils->env_vars; // Directly assign hidden_env_vars
     mini.skip_execution = 0;
     mini.process_charge = 1;
     mini.pipe_input_fd = -1;
@@ -81,7 +120,7 @@ void start_shell(t_general *utils)
     while (1)
     {
         // Display prompt and read input
-        line = readline("\033[31m""42Minishell-1.0$ ""\033[0m");
+        line = readline("\033[31m42Minishell-1.0$ \033[0m");
         if (!line)
             break;
 
@@ -106,7 +145,7 @@ void start_shell(t_general *utils)
         // Free allocated memory for token and line
         free(token);
         free(line);
-	}
+    }
 }
 
 // void	print_parser(t_general *utils)

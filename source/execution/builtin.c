@@ -6,7 +6,7 @@
 /*   By: hheng < hheng@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:16:38 by hheng             #+#    #+#             */
-/*   Updated: 2024/11/06 15:14:50 by hheng            ###   ########.fr       */
+/*   Updated: 2024/11/08 14:38:43 by hheng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,25 @@ int		is_builtin(char *command)
 	return (0);
 }
 
-int		exec_builtin(char **args, t_shell *mini)
+int exec_builtin(char **args, t_shell *mini)
 {
-	int		result;
+    // printf("exec_builtin called with command: %s\n", args[0]);
 
-	result = 0;
-	if (ft_strcmp(args[0], "echo") == 0)
-		result = ft_echo(args);
-	if (ft_strcmp(args[0], "cd") == 0)
-		result = ft_cd(args, mini->env_vars);
-	if (ft_strcmp(args[0], "pwd") == 0)
-		result = ft_pwd();
-	if (ft_strcmp(args[0], "env") == 0)
-		ft_env(mini->env_vars);
-	if (ft_strcmp(args[0], "export") == 0)
-		ft_export(args, mini->env_vars, mini->hidden_env_vars);
-	if (ft_strcmp(args[0], "unset") == 0)
-		ft_unset(args, mini);
-	return (result);
+    if (ft_strcmp(args[0], "cd") == 0)
+        return ft_cd(args, mini->env_vars);
+    else if (ft_strcmp(args[0], "echo") == 0)
+        return ft_echo(args);
+    else if (ft_strcmp(args[0], "env") == 0)
+        return ft_env(mini->env_vars);
+    else if (ft_strcmp(args[0], "export") == 0)
+    {
+        printf("Calling ft_export\n");
+        printf("env: %p, secret: %p\n", (void *)mini->env_vars, (void *)mini->hidden_env_vars);
+        return ft_export(args, mini->env_vars, mini->hidden_env_vars);
+    }
+    else if (ft_strcmp(args[0], "pwd") == 0)
+        return ft_pwd();
+    else if (ft_strcmp(args[0], "unset") == 0)
+        return ft_unset(args, mini);
+    return -1; // Command not found
 }

@@ -105,7 +105,10 @@ int ft_export(char **args, t_env *env, t_env *secret)
     int error_ret;
 
     if (!env || !secret)  // Check if env and secret are NULL
+    {
+        printf("Error: env or secret is NULL\n");
         return (-1);
+    }
 
     printf("Entering ft_export\n");
 
