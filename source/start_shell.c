@@ -2,22 +2,18 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   start_shell.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
-	+:+     */
-/*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+      
-	+#+        */
-/*                                                +#+#+#+#+#+  
-	+#+           */
-/*   Created: 2024/10/15 17:15:41 by nchok             #+#    #+#             */
-/*   Updated: 2024/10/28 16:05:13 by hheng            ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/07 11:38:48 by nchok             #+#    #+#             */
+/*   Updated: 2024/11/07 11:38:48 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
 
-int	find_next_quote(char *line, int *i, int *num_quote, char quote)
-{
+int	find_next_quote(char *line, int *i, int *num_quote, char quote){
 	int j;
 
 	j = *i + 1; // go to next cha after the quote
