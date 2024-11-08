@@ -13,8 +13,7 @@
 #include "../header/minishell.h"
 
 
-int	find_next_quote(char *line, int *i, int *num_quote, char quote)
-{
+int	find_next_quote(char *line, int *i, int *num_quote, char quote){
 	int j;
 
 	j = *i + 1; // go to next cha after the quote
