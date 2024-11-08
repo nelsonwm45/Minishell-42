@@ -89,7 +89,8 @@ int is_in_env(t_env *env, char *args)
             get_env_name(env_name, env->value);
             if (ft_strcmp(var_name, env_name) == 0)
             {
-                ft_memdel((void **)&env->value);  // Safely delete the existing value
+                // ft_memdel((void **)&env->value);  // Safely delete the existing value
+                free(env->value); 
                 env->value = ft_strdup(args);
                 return (1);
             }

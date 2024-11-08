@@ -86,7 +86,7 @@ void exec_cmd(t_shell *mini, t_token *token)
     // Check if command is "exit" without pipes, then exit
    if (cmd[0] && ft_strcmp(cmd[0], "exit") == 0 && has_pipe(token) == 0)
     {
-        mini_exit(mini, cmd);
+        ft_exit(mini, cmd);
     }
     else if (cmd[0] && is_builtin(cmd[0])) // Execute builtin if it's a recognized command
     {

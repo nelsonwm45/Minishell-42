@@ -6,7 +6,7 @@
 /*   By: hheng < hheng@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:16:38 by hheng             #+#    #+#             */
-/*   Updated: 2024/11/08 14:38:43 by hheng            ###   ########.fr       */
+/*   Updated: 2024/11/08 15:04:38 by hheng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int		is_builtin(char *command)
 		return (1);
 	if (ft_strcmp(command, "unset") == 0)
 		return (1);
+	if (ft_strcmp(command, "exit") == 0)
+		return (1);
 	return (0);
 }
 
@@ -39,6 +41,11 @@ int exec_builtin(char **args, t_shell *mini)
         return ft_echo(args);
     else if (ft_strcmp(args[0], "env") == 0)
         return ft_env(mini->env_vars);
+	  else if (ft_strcmp(args[0], "exit") == 0)
+    {
+        ft_exit(mini, args);
+        return 0; 
+    }
     else if (ft_strcmp(args[0], "export") == 0)
     {
         printf("Calling ft_export\n");

@@ -162,8 +162,6 @@ t_type	get_token_type(int c);
 int	handle_token(char *str, int i, t_lexer **lexer_list);
 int	handle_word(char *str, int i, t_lexer **lexer_list);
 int	handle_quotes(int i, char *str, char quote);
-int	update_oldpwd(t_env *env);
-int	go_to_path(int option, t_env *env);
 
 // /* Env Functions */
 // int	process_envp(char **envp, t_general *utils);
@@ -230,8 +228,11 @@ int	ft_pwd(void);
 int env_add(const char *value, t_env *env);
 int	is_valid_env(const char *env);
 int	ft_unset(char **args, t_shell *mini);
-void	mini_exit(t_shell *mini, char **cmd);
+void	ft_exit(t_shell *mini, char **cmd);
 int	ft_export(char **args, t_env *env, t_env *secret);
+int update_oldpwd(t_env *env);
+int go_to_path(int option, t_env *env);
+
 
 // /* Additional Function Declarations */
 // char	*env_to_str(t_env *env);
