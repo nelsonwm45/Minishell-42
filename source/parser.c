@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:45:12 by nchok             #+#    #+#             */
-/*   Updated: 2024/10/30 14:45:22 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/11 18:49:10 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,22 +63,41 @@ int	start_parsing(t_general *utils)
 
 	utils->cmds = NULL;
 	count_pipes(utils);
-	if (utils->lexer_list->token_type == PIPE) // check if first token is pipe, throw error
+
+	// Check if the first token is a pipe and throw an error
+	if (utils->lexer_list->token_type == PIPE)
 		return (double_token_error(utils, utils->lexer_list, utils->lexer_list->token_type));
+	
+	// Main parsing loop
 	while (utils->lexer_list)
 	{
-		if (utils->lexer_list && utils->lexer_list->token_type) // remove pipe from lexer
+		// If we encounter a PIPE token, this means we have reached the end of a command.
+		// We need to prepare to start parsing the next command after the pipe.
+		// Remove the PIPE token from the lexer list as it's not part of any command
+		
+		if (utils->lexer_list->token_type == PIPE)
 			del_one_node(&utils->lexer_list, utils->lexer_list->i);
-		if (pipes_errors(utils, utils->lexer_list->token_type)) // check for pipe errors
+
+		// Check for pipe-related syntax errors before proceeding
+		if (pipes_errors(utils, utils->lexer_list->token_type))
 			return (EXIT_FAILURE);
+
+		// Initialize the parser with the current lexer list position
+		// This sets up the parsing context for the current command
 		parser = init_parser(utils, utils->lexer_list);
+
+		// Parse the current command and get a new t_cmds node
 		cmds = init_cmds(&parser);
 		if (!cmds)
 			parsing_error(1, utils, utils->lexer_list);
+
+		// Add the new command node to the command list (utils->cmds)
 		if (!utils->cmds)
-			utils->cmds = cmds;
+			utils->cmds = cmds; // Set the head of the list if it's empty
 		else
-			add_to_backcmds(&cmds, utils->cmds);
+			add_to_backcmds(&utils->cmds, cmds); // Append to the end of the list otherwise
+		// Move the lexer list pointer to the remaining unparsed tokens
+		// This allows us to start parsing the next command (if any) in the next iteration
 		utils->lexer_list = parser.lexer_list;
 	}
 	return (EXIT_SUCCESS);

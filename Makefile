@@ -84,7 +84,7 @@ ENVIRONMENT_FILES = env.c\
 				 get_env.c\
 				 shell_level.c\
 				 sort_env.c\
-				#  env_utils.c
+				 env_utils.c
 
 SIGNAL_FILES = signal.c\
 

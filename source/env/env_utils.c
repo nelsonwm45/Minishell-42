@@ -157,13 +157,19 @@
 // 	}
 // }
 
-// int	init_utils(t_general *utils)
-// {
-// 	utils->line = NULL;
-// 	utils->lexer_list = NULL;
-// 	utils->cmds = NULL;
-// 	return (0);
-// }
+int	init_utils(t_general *utils)
+{
+	utils->line = NULL;
+	utils->env_vars = NULL;
+	utils->lexer_list = NULL;
+	utils->cmds = NULL;
+	utils->envp = NULL;
+	utils->path = NULL;
+	utils->pwd = NULL;
+	utils->oldpwd = NULL;
+	utils->pipecount = 0;
+	return (0);
+}
 
 // int	process_envp(char **envp, t_general *utils)
 // {

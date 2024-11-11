@@ -148,13 +148,14 @@ typedef struct	s_expansions
 /* Functions */
 // void	print_welcome(void);
 int	same_str(char *s1, char *s2);
-void start_shell(t_general *utils);
+int	start_shell(t_general *utils);
 // t_token *create_token_from_cmd(t_cmds *cmd);
 int	closed_quotes(char *line);
 int	find_next_quote(char *line, int *i, int *num_quote, char quote);
 void	exec_cmd_from_token(t_shell *mini, t_token *token);
 
 /* Token */
+int	init_utils(t_general *utils);
 int	read_token(t_general *utils);
 int	is_spaces(char c);
 int	remove_space(char *line, int *i);
@@ -169,7 +170,7 @@ int	handle_quotes(int i, char *str, char quote);
 // int	duplicate_env(char **envp, t_general *utils);
 // int	get_pwd(t_general *utils);
 // int	print_envp(t_general *utils); // debug purpose
-// int	init_utils(t_general *utils);
+
 // int	get_oldpwd(t_general *utils);
 // int	get_array_size(char **arr);
 // char	*get_path(t_general *utils);
@@ -187,6 +188,7 @@ int	clean_lexer(t_lexer **lexer);
 
 int	error_message(int error_code, t_general *utils);
 int error_message_path(char *path);
+
 /* Lexer Functions */
 int	add_node_to_lexer(char *str, t_type token_type, t_lexer **lexer_list);
 int	add_to_backlexer(t_lexer *node, t_lexer **lexer_list);
@@ -201,7 +203,6 @@ t_lexer	*clear_node(t_lexer **lexer);
 int	count_pipes(t_general *utils);
 int	pipes_errors(t_general *utils, t_type token_type);
 t_parser	init_parser(t_general *utils, t_lexer *lexer_list);
- void	print_parser(t_general *utils);
 int	start_parsing(t_general *utils);
 
 /* Parsing - Commands Structs */
@@ -218,6 +219,10 @@ int		add_redirections(t_parser *parser, t_lexer *ptr);
 /* Helper Functions */
 void	init_signal(t_general *utils);
 void	sigint_handler(int sig);
+
+/* Printing Functions */
+void	print_lexer(t_general *utils);
+void	print_cmds(t_general *utils);
 
 /* Builtin Functions */
 int	ft_cd(char **args, t_env *env);
