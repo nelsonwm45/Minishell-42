@@ -63,26 +63,13 @@ t_cmds	*init_cmds(t_parser	*parser)
 	char	**str;
 	int		size;
 	t_cmds	*cmds;
-	t_lexer	*ptr;
 
-	printf("Start Here\n");
-	ptr = parser->lexer_list;
-	while (parser->lexer_list)
-	{
-		printf("str: %s\n", parser->lexer_list->str);
-		parser->lexer_list = parser->lexer_list->next;
-	}
-	parser->lexer_list = ptr;
 	recog_redirections(parser);
-	printf("Init cmds2\n");
 	size = count_no_pipe(parser->lexer_list);
 	str = ft_calloc(size + 1, sizeof(char *));
-	printf("Init cmds3\n");
 	while (!str)
 		parsing_error(1, parser->utils, parser->lexer_list);
 	str = form_str(str, size, parser);
-	printf("Init cmds4\n");
 	cmds = create_cmds(str, parser->redirections, parser->redirections_count);
-	printf("Init cmds5\n");
 	return (cmds);
 }

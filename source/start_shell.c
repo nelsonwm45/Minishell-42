@@ -2,14 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   start_shell.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
-	+:+     */
-/*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+      
-	+#+        */
-/*                                                +#+#+#+#+#+  
-	+#+           */
-/*   Created: 2024/11/07 11:38:48 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/07 11:38:48 by nchok            ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/11 22:32:56 by nchok             #+#    #+#             */
+/*   Updated: 2024/11/11 22:32:56 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,30 +214,22 @@ int	start_shell(t_general *utils)
 		// Add input to history
 		add_history(line);
 
-		printf("1\n");
 		// Check for unmatched quotes before proceeding (use closed_quotes or your validation)
 		if (closed_quotes(utils->line) == FALSE)
 		{
 			return (error_message(2, utils));
 		}
-		printf("2\n");
 
-		printf("line: %s\n", utils->line);
 		// Tokenize the input line (assuming read_token processes into t_lexer)
 		if (read_token(utils) == 0)
 		{
 			return (error_message(1, utils));
 		}
-
-		print_lexer(utils);
-
-		printf("3\n");
 		// Now parse the tokens using start_parsing (you may need to adjust based on your lexer structure)
-		
 		start_parsing(utils);
 			// This will process your lexer and tokens into a command structure
 
-		printf("4\n");
+
 		// Now you can create the command token for execution after parsing
 		token = malloc(sizeof(t_token));
 		if (!token)
@@ -251,7 +240,6 @@ int	start_shell(t_general *utils)
 			continue ;
 		}
 
-		printf("5\n");
 		token->str = utils->line;     // Set the token's string to the input line
 		token->type = COMMAND; // Set the token type (e.g., as a command)
 		token->next = NULL;
@@ -259,7 +247,6 @@ int	start_shell(t_general *utils)
 		// Execute the command from the token
 		exec_cmd_from_token(&mini, token);
 
-		printf("6\n");
 		// Free allocated memory for token and line
 		free(token);
 	}

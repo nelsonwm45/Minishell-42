@@ -155,6 +155,7 @@ int	find_next_quote(char *line, int *i, int *num_quote, char quote);
 void	exec_cmd_from_token(t_shell *mini, t_token *token);
 
 /* Token */
+int	init_utils(t_general *utils);
 int	read_token(t_general *utils);
 int	is_spaces(char c);
 int	remove_space(char *line, int *i);
@@ -169,7 +170,7 @@ int	handle_quotes(int i, char *str, char quote);
 // int	duplicate_env(char **envp, t_general *utils);
 // int	get_pwd(t_general *utils);
 // int	print_envp(t_general *utils); // debug purpose
-// int	init_utils(t_general *utils);
+
 // int	get_oldpwd(t_general *utils);
 // int	get_array_size(char **arr);
 // char	*get_path(t_general *utils);

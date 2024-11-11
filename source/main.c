@@ -2,19 +2,15 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
-	+:+     */
-/*   By: hheng <hheng@student.42kl.edu.my>          +#+  +:+      
-	+#+        */
-/*                                                +#+#+#+#+#+  
-	+#+           */
-/*   Created: 2024/08/27 13:51:36 by nchok             #+#    #+#             */
-/*   Updated: 2024/10/28 16:16:27 by hheng            ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/11 22:33:13 by nchok             #+#    #+#             */
+/*   Updated: 2024/11/11 22:33:13 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
+#include "../header/minishell.h"
 
 /*
 	@brief
@@ -112,9 +108,8 @@ int	main(int ac, char **av, char **envp)
 		ft_putendl_fd("Program does not accept arguments", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
-
+	init_utils(&utils);
 	utils.env_vars = convert_envp_to_list(envp);
-
 	start_shell(&utils);
 
 	return (0);

@@ -176,7 +176,6 @@ int	add_node_to_lexer(char *str, t_type token_type, t_lexer **lexer_list)
 int	handle_word(char *str, int i, t_lexer **lexer_list)
 {	
 	int	j;
-	t_lexer	*ptr;
 
 	j = 0;
 	while (str[i + j] && is_token(str[i + j]) == FALSE)
@@ -190,12 +189,6 @@ int	handle_word(char *str, int i, t_lexer **lexer_list)
 	}
 	if (add_node_to_lexer(ft_substr(str, i, j), 0, lexer_list) == 0)
 		return (ERROR);
-	ptr = *lexer_list;
-	while (ptr)
-	{
-		printf("Str: %s\n", ptr->str);
-		ptr = ptr->next;
-	}
 	return (j);
 }
 

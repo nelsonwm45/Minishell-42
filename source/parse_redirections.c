@@ -51,18 +51,13 @@ void	recog_redirections(t_parser *parser)
 	ptr = parser->lexer_list;
 	while (ptr && ptr->token_type == 0) // skip words token
 		ptr = ptr->next;
-	printf("recog_redirections1\n");
 	if (!ptr || ptr->token_type == PIPE) // empty or pipe token
 		return ;
-	printf("recog_redirections2\n");
 	if (!ptr->next) // if next is NULL
 		parsing_error(1, parser->utils, parser->lexer_list);
-	printf("recog_redirections3\n");
 	if (ptr->next->token_type)
 		double_token_error(parser->utils, parser->lexer_list, ptr->next->token_type);
-	printf("recog_redirections4\n");
 	if (ptr->token_type >= BIG && ptr->token_type <= SMALLSMALL) // check if token is redirections
 		add_redirections(parser, ptr);
-	printf("recog_redirections5\n");
 	recog_redirections(parser);
 }

@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../header/minishell.h"
 
 t_lexer	*create_node(char *str, t_type token_type)

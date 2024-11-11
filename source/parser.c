@@ -67,14 +67,14 @@ int	start_parsing(t_general *utils)
 	// Check if the first token is a pipe and throw an error
 	if (utils->lexer_list->token_type == PIPE)
 		return (double_token_error(utils, utils->lexer_list, utils->lexer_list->token_type));
-	printf("What happened?\n");
+	
 	// Main parsing loop
 	while (utils->lexer_list)
 	{
 		// If we encounter a PIPE token, this means we have reached the end of a command.
 		// We need to prepare to start parsing the next command after the pipe.
 		// Remove the PIPE token from the lexer list as it's not part of any command
-		printf("What happened?1\n");
+		
 		if (utils->lexer_list->token_type == PIPE)
 			del_one_node(&utils->lexer_list, utils->lexer_list->i);
 
@@ -84,21 +84,14 @@ int	start_parsing(t_general *utils)
 
 		// Initialize the parser with the current lexer list position
 		// This sets up the parsing context for the current command
-		printf("What happened?2\n");
 		parser = init_parser(utils, utils->lexer_list);
-		while (parser.lexer_list)
-		{
-			printf("str: %s\n", parser.lexer_list->str);
-			parser.lexer_list = parser.lexer_list->next;
-		}
+
 		// Parse the current command and get a new t_cmds node
-		printf("What happened?3\n");
 		cmds = init_cmds(&parser);
 		if (!cmds)
 			parsing_error(1, utils, utils->lexer_list);
 
 		// Add the new command node to the command list (utils->cmds)
-		printf("What happened?4\n");
 		if (!utils->cmds)
 			utils->cmds = cmds; // Set the head of the list if it's empty
 		else
@@ -107,6 +100,5 @@ int	start_parsing(t_general *utils)
 		// This allows us to start parsing the next command (if any) in the next iteration
 		utils->lexer_list = parser.lexer_list;
 	}
-	printf("What happened? OUT\n");
 	return (EXIT_SUCCESS);
 }
