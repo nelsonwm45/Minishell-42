@@ -148,7 +148,7 @@ typedef struct	s_expansions
 /* Functions */
 // void	print_welcome(void);
 int	same_str(char *s1, char *s2);
-void start_shell(t_general *utils);
+int	start_shell(t_general *utils);
 // t_token *create_token_from_cmd(t_cmds *cmd);
 int	closed_quotes(char *line);
 int	find_next_quote(char *line, int *i, int *num_quote, char quote);
