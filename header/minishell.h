@@ -187,6 +187,7 @@ int	clean_lexer(t_lexer **lexer);
 
 int	error_message(int error_code, t_general *utils);
 int error_message_path(char *path);
+
 /* Lexer Functions */
 int	add_node_to_lexer(char *str, t_type token_type, t_lexer **lexer_list);
 int	add_to_backlexer(t_lexer *node, t_lexer **lexer_list);
@@ -201,7 +202,6 @@ t_lexer	*clear_node(t_lexer **lexer);
 int	count_pipes(t_general *utils);
 int	pipes_errors(t_general *utils, t_type token_type);
 t_parser	init_parser(t_general *utils, t_lexer *lexer_list);
- void	print_parser(t_general *utils);
 int	start_parsing(t_general *utils);
 
 /* Parsing - Commands Structs */
@@ -218,6 +218,10 @@ int		add_redirections(t_parser *parser, t_lexer *ptr);
 /* Helper Functions */
 void	init_signal(t_general *utils);
 void	sigint_handler(int sig);
+
+/* Printing Functions */
+void	print_lexer(t_general *utils);
+void	print_cmds(t_general *utils);
 
 /* Builtin Functions */
 int	ft_cd(char **args, t_env *env);

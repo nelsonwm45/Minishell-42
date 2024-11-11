@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmds.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:47:46 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/06 16:54:10 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/11 14:50:39 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,23 @@ int	count_no_pipe(t_lexer *lexer_list)
 */
 char	**form_str(char **str, int size, t_parser *parser)
 {
-	int	i;
+	int		i;
 	t_lexer	*ptr;
 
 	ptr = parser->lexer_list;
 	i = 0;
-	while (size > 0)
+	while (ptr && size > 0)
 	{
-		if (ptr->str != NULL)
+		if (ptr->token_type != PIPE && ptr->str != NULL)
 		{
-			str[i] = ft_strdup(ptr->str);
-			del_one_node(&parser->lexer_list, ptr->i);
-			ptr = parser->lexer_list;
+			str[i] = ft_strdup(ptr->str);  // Copy string only if not a pipe
 			i++;
 		}
+		del_one_node(&parser->lexer_list, ptr->i); // Remove the current node after processing
+		ptr = parser->lexer_list; // Update ptr to the new head of the list
 		size--;
 	}
+	str[i] = NULL; // Null-terminate the array
 	return (str);
 }
 
@@ -72,5 +73,3 @@ t_cmds	*init_cmds(t_parser	*parser)
 	cmds = create_cmds(str, parser->redirections, parser->redirections_count);
 	return (cmds);
 }
-
-

@@ -251,21 +251,40 @@ void start_shell(t_general *utils)
     }
 }
 
-void	print_parser(t_general *utils)
+void	print_cmds(t_general *utils)
 {
 	t_cmds	*ptr;
 	int		i;
+	int		count;
 
-	i = 0;
 	ptr = utils->cmds;
+	count = 0;
+	printf("------printing cmds------\n");
 	while (ptr)
 	{
+		i = 0;
+		printf("~~~~>>Node: %d\n", count);
 		while (ptr->str[i])
 		{
 			printf("str: %s\n", ptr->str[i]);
 			i++;
 		}
 		printf("redir_count: %d\n", ptr->redir_count);
+		count++;
+		ptr = ptr->next;
+	}
+}
+
+void	print_lexer(t_general *utils)
+{
+	t_lexer	*ptr;
+
+	ptr = utils->lexer_list;
+	printf("------printing lexer------\n");
+	while (ptr)
+	{
+		printf("str: %s\n", ptr->str);
+		printf("token_type: %d\n", ptr->token_type);
 		ptr = ptr->next;
 	}
 }
