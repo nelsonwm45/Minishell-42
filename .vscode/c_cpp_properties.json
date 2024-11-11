@@ -4,19 +4,18 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:\\Program Files\\mingw64\\x86_64-w64-mingw32\\include"
+                "C:\\Program Files\\mingw64\\x86_64-w64-mingw32\\include",
+                "/usr/include/x86_64-linux-gnu"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
-                //  "__GNUC__"
             ],
             "windowsSdkVersion": "10.0.22000.0",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "windows-clang-x86",
-            //"compilerPath": "C:\\Program Files\\mingw64\\bin\\gcc.exe
+            "intelliSenseMode": "windows-clang-x86"
         }
     ],
     "version": 4
