@@ -28,6 +28,7 @@ EXECUTE_DIR = $(SRC_DIR)execution/
 ENVIRONMENT_DIR = $(SRC_DIR)env/
 SIGNAL_DIR = $(SRC_DIR)signal/
 PARSING_DIR = $(SRC_DIR)parsing/
+EXPANDER_DIR = $(SRC_DIR)expander/
 
 #-----Path-------#
 LIBFT_PATH = ./libft/libft.a
@@ -61,12 +62,12 @@ SRC_FILES	=	main.c \
 				clean.c \
 
 
-BUILTIN_FILES = builtin_cd.c \
-                builtin_echo.c \
-                builtin_env.c \
-                builtin_exit.c \
-                builtin_pwd.c \
-                builtin_unset.c\
+BUILTIN_FILES =	builtin_cd.c \
+				builtin_echo.c \
+				builtin_env.c \
+				builtin_exit.c \
+				builtin_pwd.c \
+				builtin_unset.c\
 				builtin_export.c\
 
 EXECUTE_FILES = exec.c\
@@ -92,6 +93,10 @@ PARSING_FILES = read_token.c \
 				lexer_utils.c \
 				cmds_utils.c \
 				cmds.c \
+				execution_setup.c \
+
+EXPANDER_FILES	=	expander.c \
+					expander_utils.c \
 
 
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o)) \
@@ -173,6 +178,9 @@ $(OBJ_DIR)%.o : $(SIGNAL_DIR)%.c
 	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
 $(OBJ_DIR)%.o : $(PARSING_DIR)%.c
+	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
+
+$(OBJ_DIR)%.o : $(EXPANDER_DIR)%.c
 	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
 $(OBJ_DIR) :

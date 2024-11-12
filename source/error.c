@@ -37,12 +37,16 @@ void	parsing_error(int error, t_general *utils, t_lexer *lexer)
 }
 int	error_message(int error_code, t_general *utils)
 {
-	if (error_code == 1)
+	if (error_code == 0)
+		ft_putstr_fd("Memory allocation failed\n", STDERR_FILENO);
+	else if (error_code == 1)
 		ft_putstr_fd("Syntax error near unexpected token 'newline'\n", STDERR_FILENO);
 	else if (error_code == 2)
 		ft_putstr_fd("Syntax error: unable to locate closing quote\n", STDERR_FILENO);
 	else if (error_code == 3)
 		ft_putstr_fd("Parser Error\n", STDERR_FILENO);
+	if (utils->lexer_list)
+		clean_lexer(&utils->lexer_list);
 	clean_utils(utils);
 	return (EXIT_FAILURE);
 }

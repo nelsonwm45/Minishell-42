@@ -2,14 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2024/08/28 16:11:05 by nchok             #+#    #+#             */
-/*   Updated: 2024/10/28 15:41:10 by hheng            ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/12 11:33:18 by nchok             #+#    #+#             */
+/*   Updated: 2024/11/12 11:33:18 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +19,20 @@
 
 /* Macros */
 /* Standard Library */
-# include <stdlib.h>
+# include <dirent.h>
 # include <errno.h>
+# include <fcntl.h>
 # include <limits.h> // For PATH_MAX
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h> // For signal handling
+# include <stdbool.h>
 # include <stdint.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include <string.h> // For strerror
-# include <unistd.h>
 # include <sys/wait.h>
-# include <stdbool.h>
-# include <dirent.h>
-# include <fcntl.h>
-
+# include <unistd.h>
 
 /* Constants */
 # define ERROR -1
@@ -53,11 +49,11 @@
 /* Structs */
 typedef enum s_type
 {
-    PIPE = 1,
-    BIG,
-    BIGBIG,
-    SMALL,
-    SMALLSMALL,
+	PIPE = 1,
+	BIG,
+	BIGBIG,
+	SMALL,
+	SMALLSMALL,
 } t_type;
 
 typedef struct s_env
@@ -107,12 +103,17 @@ typedef struct s_general
 	t_env *env_vars;
 	t_lexer *lexer_list;
 	t_cmds *cmds;
+	char *line;
+	int pipecount;
+	int in_cmd;
+	pid_t pid;
+	int exit_status;
+
 	char **envp;
 	char **path;
 	char *pwd;
 	char *oldpwd;
-	char *line;
-	int pipecount;
+
 } t_general;
 
 typedef struct s_shell
@@ -138,12 +139,12 @@ typedef struct s_shell
 
 } t_shell;
 
-typedef struct	s_expansions
+typedef struct s_expansions
 {
-	char			*new_arg;
-	int				i;
-	int				j;
-}				t_expansions;
+	char *new_arg;
+	int i;
+	int j;
+} t_expansions;
 
 /* Functions */
 // void	print_welcome(void);
@@ -165,11 +166,11 @@ int	handle_token(char *str, int i, t_lexer **lexer_list);
 int	handle_word(char *str, int i, t_lexer **lexer_list);
 int	handle_quotes(int i, char *str, char quote);
 
-// /* Env Functions */
-// int	process_envp(char **envp, t_general *utils);
-// int	duplicate_env(char **envp, t_general *utils);
+/* Env Functions */
+int	process_envp(char **envp, t_general *utils);
+char	**duplicate_env(char **envp);
 // int	get_pwd(t_general *utils);
-// int	print_envp(t_general *utils); // debug purpose
+int	print_envp(t_general *utils); // debug purpose
 
 // int	get_oldpwd(t_general *utils);
 // int	get_array_size(char **arr);
@@ -187,7 +188,7 @@ int	clean_utils(t_general *utils);
 int	clean_lexer(t_lexer **lexer);
 
 int	error_message(int error_code, t_general *utils);
-int error_message_path(char *path);
+int	error_message_path(char *path);
 
 /* Lexer Functions */
 int	add_node_to_lexer(char *str, t_type token_type, t_lexer **lexer_list);
@@ -206,15 +207,26 @@ t_parser	init_parser(t_general *utils, t_lexer *lexer_list);
 int	start_parsing(t_general *utils);
 
 /* Parsing - Commands Structs */
-t_cmds	*init_cmds(t_parser	*parser);
+t_cmds	*init_cmds(t_parser *parser);
 t_cmds	*create_cmds(char **str, t_lexer *redirections, int redir_count);
 char	**form_str(char **str, int size, t_parser *parser);
 void	add_to_backcmds(t_cmds **parse_cmds, t_cmds *utils_cmds);
-int		count_no_pipe(t_lexer *lexer_list);
+int	count_no_pipe(t_lexer *lexer_list);
 
 /* Parsing - Redirections */
 void	recog_redirections(t_parser *parser);
-int		add_redirections(t_parser *parser, t_lexer *ptr);
+int	add_redirections(t_parser *parser, t_lexer *ptr);
+
+/* Executions Setup */
+int	setup_executor(t_general *utils);
+
+/* Expander */
+t_cmds	*call_expander(t_general *utils, t_cmds *cmds);
+char	**expander(t_general *utils, char *str);
+char	*replace_to_env(t_general *utils, char *str);
+size_t	find_dollar(char *str);
+char	*replace_to_env(t_general *utils, char *str);
+
 
 /* Helper Functions */
 void	init_signal(t_general *utils);
@@ -231,14 +243,13 @@ int	ft_echo(char **args);
 char	*get_env_name(char *dest, const char *src);
 int	is_in_env(t_env *env, char *args);
 int	ft_pwd(void);
-int env_add(const char *value, t_env *env);
+int	env_add(const char *value, t_env *env);
 int	is_valid_env(const char *env);
 int	ft_unset(char **args, t_shell *mini);
 void	ft_exit(t_shell *mini, char **cmd);
 int	ft_export(char **args, t_env *env, t_env *secret);
-int update_oldpwd(t_env *env);
-int go_to_path(int option, t_env *env);
-
+int	update_oldpwd(t_env *env);
+int	go_to_path(int option, t_env *env);
 
 // /* Additional Function Declarations */
 // char	*env_to_str(t_env *env);
@@ -257,7 +268,7 @@ int	secret_env_init(t_shell *mini, char **env_array);
 int	is_env_char(int c);
 int	env_value_len(const char *env);
 char	*env_value(char *env);
-char *get_env_value(char *var_name, t_env *env);
+char	*get_env_value(char *var_name, t_env *env);
 void	increment_shell_level(t_env *env);
 int	str_env_len(char **env);
 void	sort_env(char **tab, int env_len);
@@ -269,36 +280,34 @@ void	print_sorted_env(t_env *env);
 // int	get_oldpwd(t_general *utils);
 // int	get_array_size(char **arr);
 // void	store_path(t_general *utils);
-//int	process_envp(char **envp, t_general *utils);
+// int	process_envp(char **envp, t_general *utils);
 // char *get_path(t_general *utils);
 
 /* Execution Functions */
 
 void	ft_close(int fd);
-int			exec_bin(char **args, t_env *env, t_shell *mini);
-char *expansions(char *arg, t_env *env, int ret);
-bool is_end_of_command(t_token *token);
+int	exec_bin(char **args, t_env *env, t_shell *mini);
+char	*expansions(char *arg, t_env *env, int ret);
+bool	is_end_of_command(t_token *token);
 int	is_builtin(char *command);
 int	exec_builtin(char **args, t_shell *mini);
-char **cmd_tab(t_token *start);
-void exec_cmd(t_shell *mini, t_token *token);
-int		has_pipe(t_token *token);
-
+char	**cmd_tab(t_token *start);
+void	exec_cmd(t_shell *mini, t_token *token);
+int	has_pipe(t_token *token);
 
 /* Tools utils*/
 void	free_tab(char **tab);
 void	ft_putendl(char *s);
-char		*path_join(const char *s1, const char *s2);
-char		*check_dir(char *bin, char *command);
-int		arg_alloc_len(const char *arg, t_env *env, int ret);
-int     get_var_len(const char *arg, int i, t_env *env, int ret);
-
+char	*path_join(const char *s1, const char *s2);
+char	*check_dir(char *bin, char *command);
+int	arg_alloc_len(const char *arg, t_env *env, int ret);
+int	get_var_len(const char *arg, int i, t_env *env, int ret);
 
 /*Signal Function*/
 void	sigint_handler(int sig);
-void sig_int(int code);
-void sig_quit(int code);
-void sig_init(void);
-void free_token(t_token *token);
-int magic_box(char *path, char **args, t_env *env, t_shell *mini, pid_t *pid, int *sigint, int *sigquit);
+void	sig_int(int code);
+void	sig_quit(int code);
+void	sig_init(void);
+void	free_token(t_token *token);
+int	magic_box(char *path, char **args, t_env *env, t_shell *mini, pid_t *pid, int *sigint, int *sigquit);
 #endif

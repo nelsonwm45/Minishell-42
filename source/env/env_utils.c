@@ -12,45 +12,45 @@
 
 # include "minishell.h"
 
-// char	**duplicate_env(char **envp)
-// {
-// 	int	size;
-// 	int	i;
-// 	char	**arr;
+char	**duplicate_env(char **envp)
+{
+	int	size;
+	int	i;
+	char	**arr;
 	
-// 	size = 0;
-// 	while (envp[size] != NULL)
-// 		size++;
-// 	arr = ft_calloc(size + 1, sizeof(char *));
-// 	if (!arr)
-// 		return (NULL);
-// 	i = 0;
-// 	while (envp[i] != NULL)
-// 	{
-// 		arr[i] = ft_strdup(envp[i]);
-// 		if (arr[i] == NULL)
-// 		{
-// 			free_array(arr);
-// 			return (arr);
-// 		}
-// 		i++;
-// 	}
-// 	return (arr);
-// }
+	size = 0;
+	while (envp[size] != NULL)
+		size++;
+	arr = ft_calloc(size + 1, sizeof(char *));
+	if (!arr)
+		return (NULL);
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		arr[i] = ft_strdup(envp[i]);
+		if (arr[i] == NULL)
+		{
+			free_array(arr);
+			return (arr);
+		}
+		i++;
+	}
+	return (arr);
+}
 
-// int	print_envp(t_general *utils)
-// {
-// 	int	i;
+int	print_envp(t_general *utils)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (utils->envp[i])
-// 	{
-// 		ft_putstr_fd(utils->envp[i], 1);
-// 		write(1, "\n", 1);
-// 		i++;
-// 	}
-// 	return (0);
-// }
+	i = 0;
+	while (utils->envp[i])
+	{
+		ft_putstr_fd(utils->envp[i], 1);
+		write(1, "\n", 1);
+		i++;
+	}
+	return (0);
+}
 
 // int	get_pwd(t_general *utils)
 // {
@@ -168,16 +168,19 @@ int	init_utils(t_general *utils)
 	utils->pwd = NULL;
 	utils->oldpwd = NULL;
 	utils->pipecount = 0;
+	utils->in_cmd = 0;
+	utils->pid = 0;
+	utils->exit_status = 0;
 	return (0);
 }
 
-// int	process_envp(char **envp, t_general *utils)
-// {
-// 	utils->envp = duplicate_env(envp);
-// 	get_pwd(utils);
-// 	get_oldpwd(utils);
-// 	store_path(utils);
-// 	// init_signal(utils);
-// 	init_utils(utils);
-// 	return (0);
-
+int	process_envp(char **envp, t_general *utils)
+{
+	init_utils(utils);
+	utils->envp = duplicate_env(envp);
+	// get_pwd(utils);
+	// get_oldpwd(utils);
+	// store_path(utils);
+	// init_signal(utils);
+	return (0);
+}
