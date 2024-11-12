@@ -228,6 +228,8 @@ int	start_shell(t_general *utils)
 		// Now parse the tokens using start_parsing (you may need to adjust based on your lexer structure)
 		start_parsing(utils);
 			// This will process your lexer and tokens into a command structure
+		
+		// setup_execution(utils); // #####################
 
 
 		// Now you can create the command token for execution after parsing

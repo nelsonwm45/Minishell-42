@@ -6,11 +6,11 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:45:12 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/11 18:49:10 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/12 10:54:36 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../header/minishell.h"
+# include "../../header/minishell.h"
 
 /*
 	count the number of pipes in the lexer list

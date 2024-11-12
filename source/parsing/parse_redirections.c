@@ -6,11 +6,11 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:58:34 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/11 17:47:53 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/12 10:54:31 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../header/minishell.h"
+# include "../../header/minishell.h"
 
 /*
 	create a lexer node

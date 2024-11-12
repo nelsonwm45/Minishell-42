@@ -6,11 +6,11 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:51:28 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/11 14:35:52 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/12 10:54:13 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../header/minishell.h"
+# include "../../header/minishell.h"
 
 
 /*

@@ -6,11 +6,11 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:29:08 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/11 11:17:15 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/12 10:54:22 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../header/minishell.h"
+# include "../../header/minishell.h"
 
 t_lexer *clear_node(t_lexer **lexer)
 {

@@ -27,6 +27,7 @@ BUILTIN_DIR = $(SRC_DIR)builtin/
 EXECUTE_DIR = $(SRC_DIR)execution/
 ENVIRONMENT_DIR = $(SRC_DIR)env/
 SIGNAL_DIR = $(SRC_DIR)signal/
+PARSING_DIR = $(SRC_DIR)parsing/
 
 #-----Path-------#
 LIBFT_PATH = ./libft/libft.a
@@ -56,15 +57,9 @@ SRC_FILES	=	main.c \
 				env.c \
 				start_shell.c \
 				error.c \
-				read_token.c \
-				lexer.c\
 				signal.c \
-				parser.c\
-				lexer_utils.c\
-				parse_redirections.c \
 				clean.c \
-				cmds_utils.c \
-				cmds.c \
+
 
 BUILTIN_FILES = builtin_cd.c \
                 builtin_echo.c \
@@ -84,15 +79,28 @@ ENVIRONMENT_FILES = env.c\
 				 get_env.c\
 				 shell_level.c\
 				 sort_env.c\
-				 env_utils.c
+				 env_utils.c \
+				
+
 
 SIGNAL_FILES = signal.c\
 
+PARSING_FILES = read_token.c \
+				parser.c \
+				parse_redirections.c \
+				lexer.c \
+				lexer_utils.c \
+				cmds_utils.c \
+				cmds.c \
+
+
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o)) \
-            $(addprefix $(OBJ_DIR), $(BUILTIN_FILES:.c=.o))\
+			$(addprefix $(OBJ_DIR), $(BUILTIN_FILES:.c=.o))\
 			$(addprefix $(OBJ_DIR), $(EXECUTE_FILES:.c=.o))\
 			$(addprefix $(OBJ_DIR), $(ENVIRONMENT_FILES:.c=.o))\
-			$(addprefix $(OBJ_DIR), $(SIGNAL_FILES:.c=.o))
+			$(addprefix $(OBJ_DIR), $(SIGNAL_FILES:.c=.o)) \
+			$(addprefix $(OBJ_DIR), $(PARSING_FILES:.c=.o)) \
+
 #----Rules & Dependencies-----#
 all : execlib execrd  $(NAME)
 
@@ -157,12 +165,14 @@ $(OBJ_DIR)%.o : $(BUILTIN_DIR)%.c
 
 $(OBJ_DIR)%.o : $(EXECUTE_DIR)%.c
 	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
-
 	
 $(OBJ_DIR)%.o : $(ENVIRONMENT_DIR)%.c
 	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
 $(OBJ_DIR)%.o : $(SIGNAL_DIR)%.c
+	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
+
+$(OBJ_DIR)%.o : $(PARSING_DIR)%.c
 	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
 $(OBJ_DIR) :
