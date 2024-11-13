@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 12:30:15 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/12 17:54:20 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/13 15:43:17 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 		return 0 if dollar sign is not found
 	
 */
-size_t	find_dollar(char *str)
+int	find_dollar(char *str)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -66,4 +66,33 @@ int	get_equal_sign_index(char *str)
 		i++;
 	}
 	return (0);
+}
+
+/*
+	@brief
+		find the length of a substring that ends at any of these characters
+*/
+int	dollar_str_len(char *str, int j)
+{
+	int len;
+
+	len = j;
+	while (str[len] != ' ' && str[len] != '\0' && str[len] != '$' 
+		&& str[len] != '\"' && str[len] != '\'' && str[len] != '=' 
+		&& str[len] != ':' && str[len] != '-')
+			len++;
+	return (len);
+}
+
+/*
+	@brief
+		make a string from a character
+*/
+char	*char_to_str(char c)
+{
+	char	*str;
+
+	str = ft_calloc(2, sizeof(char));
+	str[0] = c;
+	return (str);
 }

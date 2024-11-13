@@ -222,10 +222,18 @@ int	setup_executor(t_general *utils);
 
 /* Expander */
 t_cmds	*call_expander(t_general *utils, t_cmds *cmds);
-char	**expander(t_general *utils, char *str);
+char	**expander(t_general *utils, char **str);
 char	*replace_to_env(t_general *utils, char *str);
-size_t	find_dollar(char *str);
+int	find_dollar(char *str);
 char	*replace_to_env(t_general *utils, char *str);
+int	subs_dollar_var(t_general *utils, char *str, char **tmp, int j);
+int	append_str(char **tmp, char **tmp2, char **tmp3, int j);
+int	dollar_str_len(char *str, int j);
+int	get_equal_sign_index(char *str);
+int	replace_question_mark(t_general *utils, char **tmp);
+int	skipped_char_after_dollar(int j, char *str);
+char	*remove_quotes(char *str, char quote);
+char	*expand_str(t_general *utils, char *str);
 
 
 /* Helper Functions */

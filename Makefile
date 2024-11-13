@@ -82,8 +82,6 @@ ENVIRONMENT_FILES = env.c\
 				 sort_env.c\
 				 env_utils.c \
 				
-
-
 SIGNAL_FILES = signal.c\
 
 PARSING_FILES = read_token.c \
@@ -97,6 +95,7 @@ PARSING_FILES = read_token.c \
 
 EXPANDER_FILES	=	expander.c \
 					expander_utils.c \
+					expander_utils2.c \
 
 
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o)) \
