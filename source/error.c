@@ -45,6 +45,8 @@ int	error_message(int error_code, t_general *utils)
 		ft_putstr_fd("Syntax error: unable to locate closing quote\n", STDERR_FILENO);
 	else if (error_code == 3)
 		ft_putstr_fd("Parser Error\n", STDERR_FILENO);
+	else if (error_code == 4)
+		ft_putstr_fd("Failed to Create Pipe\n", STDERR_FILENO);
 	if (utils->lexer_list)
 		clean_lexer(&utils->lexer_list);
 	clean_utils(utils);

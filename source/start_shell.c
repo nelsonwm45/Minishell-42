@@ -228,7 +228,7 @@ int	start_shell(t_general *utils)
 		// Now parse the tokens using start_parsing (you may need to adjust based on your lexer structure)
 		start_parsing(utils);
 			// This will process your lexer and tokens into a command structure
-		
+		print_cmds(utils);
 		// setup_execution(utils); // #####################
 
 
@@ -272,6 +272,7 @@ void	print_cmds(t_general *utils)
 			printf("str: %s\n", ptr->str[i]);
 			i++;
 		}
+		printf("builtin: %d\n", ptr->builtin);
 		printf("redir_count: %d\n", ptr->redir_count);
 		count++;
 		ptr = ptr->next;

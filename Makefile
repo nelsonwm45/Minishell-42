@@ -29,6 +29,7 @@ ENVIRONMENT_DIR = $(SRC_DIR)env/
 SIGNAL_DIR = $(SRC_DIR)signal/
 PARSING_DIR = $(SRC_DIR)parsing/
 EXPANDER_DIR = $(SRC_DIR)expander/
+HEREDOC_DIR = $(SRC_DIR)heredoc/
 
 #-----Path-------#
 LIBFT_PATH = ./libft/libft.a
@@ -97,6 +98,7 @@ EXPANDER_FILES	=	expander.c \
 					expander_utils.c \
 					expander_utils2.c \
 
+HEREDOC_FILES = heredoc.c \
 
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o)) \
 			$(addprefix $(OBJ_DIR), $(BUILTIN_FILES:.c=.o))\
@@ -181,6 +183,10 @@ $(OBJ_DIR)%.o : $(PARSING_DIR)%.c
 
 $(OBJ_DIR)%.o : $(EXPANDER_DIR)%.c
 	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
+
+$(OBJ_DIR)%.o : $(HEREDOC_DIR)%.c
+	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
+
 
 $(OBJ_DIR) :
 	@mkdir -p $(OBJ_DIR)

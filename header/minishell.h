@@ -44,7 +44,7 @@
 # define COMMAND 4
 # define UNKNOWN_COMMAND 127
 # define IS_DIRECTORY 126
-# define pipe 6
+// # define pipe 6
 
 /* Structs */
 typedef enum s_type
@@ -55,6 +55,18 @@ typedef enum s_type
 	SMALL,
 	SMALLSMALL,
 } t_type;
+
+typedef enum s_builtin
+{
+	NOT_BUILTIN = 0,
+	CD,
+	ECHO,
+	ENV,
+	EXPORT,
+	PWD,
+	UNSET,
+	EXIT,
+} t_builtin;
 
 typedef struct s_env
 {
@@ -84,7 +96,7 @@ typedef struct s_cmds
 	char **str;
 	int redir_count;
 	char *hd_file_name;
-	// char *builtin;
+	t_builtin builtin;
 	t_lexer *redir;
 	struct s_cmds *next;
 	struct s_cmds *prev;
@@ -108,6 +120,9 @@ typedef struct s_general
 	int in_cmd;
 	pid_t pid;
 	int exit_status;
+	int stop_heredoc;
+	int	in_heredoc;
+	int	heredoc_done;
 
 	char **envp;
 	char **path;
@@ -209,6 +224,7 @@ int	start_parsing(t_general *utils);
 /* Parsing - Commands Structs */
 t_cmds	*init_cmds(t_parser *parser);
 t_cmds	*create_cmds(char **str, t_lexer *redirections, int redir_count);
+t_builtin	check_builtin(char *str);
 char	**form_str(char **str, int size, t_parser *parser);
 void	add_to_backcmds(t_cmds **parse_cmds, t_cmds *utils_cmds);
 int	count_no_pipe(t_lexer *lexer_list);
@@ -234,6 +250,9 @@ int	replace_question_mark(t_general *utils, char **tmp);
 int	skipped_char_after_dollar(int j, char *str);
 char	*remove_quotes(char *str, char quote);
 char	*expand_str(t_general *utils, char *str);
+
+/* Heredoc */
+int	start_heredoc(t_general *utils, t_cmds *cmds);
 
 
 /* Helper Functions */
