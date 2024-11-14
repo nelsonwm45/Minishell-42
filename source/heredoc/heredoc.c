@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 13:30:57 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/14 18:00:33 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/14 18:26:45 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,15 @@ char	*create_hd_filename(void)
 	return (filename);
 }
 
+/*
+	@brief
+	- check if the string has quotes
+		-if yes, flag it
+		- remove quotes from the string
+	- call create_heredoc
+	- fork a child process
+	- wait for the child process to finish
+*/
 int	mini_heredoc(t_general *utils, t_lexer *ptr, char *filename)
 {
 	int		status;
@@ -79,13 +88,20 @@ int	mini_heredoc(t_general *utils, t_lexer *ptr, char *filename)
 	pid = fork();
 	if (pid == 0)
 		status = create_heredoc(utils, ptr, filename, have_quote);
-	signal(SIGQUIT, SIG_IGN);
+	// signal(SIGQUIT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	utils->in_heredoc = 0;
 	utils->heredoc_done = 1;
 	return (status);
 }
 
+/*
+	@brief
+	- create a heredoc file
+	- read the input from the user
+	- write the input to the file
+	- close the file
+*/
 int	create_heredoc(t_general *utils, t_lexer *ptr, char *filename, int have_quote)
 {
 	int	pipe_fd[2];
@@ -93,7 +109,7 @@ int	create_heredoc(t_general *utils, t_lexer *ptr, char *filename, int have_quot
 
 	if (pipe(pipe_fd) == -1)
 		return (error_message(4, utils));
-	signal(SIGINT, SIG_DFL);
+	// signal(SIGINT, SIG_DFL);
 	line = readline("\033[0;32mHeredoct> \033[0m");
 	while (line && ft_strncmp(ptr->str, line, ft_strlen(ptr->str)) == 0 && utils->stop_heredoc != 1)
 	{
