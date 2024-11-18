@@ -113,6 +113,8 @@ typedef struct s_parser
 typedef struct s_general
 {
 	t_env *env_vars;
+	t_shell *mini;
+
 	t_lexer *lexer_list;
 	t_cmds *cmds;
 	char *line;
@@ -235,6 +237,15 @@ int	add_redirections(t_parser *parser, t_lexer *ptr);
 
 /* Executions Setup */
 int	setup_executor(t_general *utils);
+int	prep_builtin(t_general *utils, t_env *env, t_shell *mini);
+
+
+/* Execution */
+void	exec_simple_cmd(t_general *utils, t_cmds *cmds);
+int		exec_complex_cmd(t_general *utils);
+void	handle_cmd(t_general *utils, t_cmds *cmds);
+void	search_cmd(t_general *utils, t_cmds *cmds);
+int		cmd_not_found(char *cmd);
 
 /* Expander */
 t_cmds	*call_expander(t_general *utils, t_cmds *cmds);

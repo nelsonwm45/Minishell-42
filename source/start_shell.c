@@ -219,7 +219,7 @@ int	start_shell(t_general *utils)
 		{
 			return (error_message(2, utils));
 		}
-
+		utils->mini = &mini;
 		// Tokenize the input line (assuming read_token processes into t_lexer)
 		if (read_token(utils) == 0)
 		{

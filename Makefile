@@ -75,6 +75,8 @@ EXECUTE_FILES = exec.c\
 				builtin.c\
 				exec_utils.c\
 				tools.c\
+				handle_cmd.c\
+				handle_cmd_utils.c\
 
 ENVIRONMENT_FILES = env.c\
 				 env_tools.c\

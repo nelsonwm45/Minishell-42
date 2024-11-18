@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 13:30:57 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/14 18:26:45 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/18 13:54:22 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,9 @@ int	create_heredoc(t_general *utils, t_lexer *ptr, char *filename, int have_quot
 		line = readline("\033[0;32mHeredoct> \033[0m");
 	}
 	free(line);
-	close(pipe_fd[1]);
-	close(pipe_fd[0]);
 	if (utils->stop_heredoc == 1 || !line)
 		return (EXIT_FAILURE);
+	close(pipe_fd[1]);
+	close(pipe_fd[0]);
 	return (EXIT_SUCCESS);
 }
