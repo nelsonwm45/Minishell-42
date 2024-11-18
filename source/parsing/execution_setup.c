@@ -53,6 +53,35 @@ void	exec_simple_cmd(t_general *utils, t_cmds *cmds)
 
 int	exec_complex_cmd(t_general *utils)
 {
-	
-	
+	int	pipe_fd[2];
+	int	std_in;
+
+	std_in = STDIN_FILENO;
+	while (utils->cmds)
+	{
+		utils->cmds = call_expander(utils, utils->cmds);
+		if (utils->cmds->next)
+			pipe(pipe_fd);
+		start_heredoc(utils, utils->cmds);
+		ft_fork(utils, pipe_fd, std_in, utils->cmds);
+	}
 }
+
+int	ft_fork(t_general *utils, int pipe_fd[2], int std_in, t_cmds *cmds)
+{
+	static int	i = 0;
+
+	if (utils->reset == 1)
+	{
+		utils->reset = 0;
+		i = 0;
+	}
+	utils->pid[i] = fork();
+	if (utils->pid[i] < 0)
+		error_message(5, utils);
+	if (utils->pid[i] == 0)
+		dup2_cmd(cmds, utils, pipe_fd, std_in);
+	i++;
+	return (EXIT_SUCCESS);
+}
+

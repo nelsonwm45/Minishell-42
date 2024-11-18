@@ -48,3 +48,36 @@ int	search_cmd(t_general *utils, t_cmds *cmds)
 	}
 	return (cmd_not_found(cmds->str[0]));
 }
+
+/*
+	- manage the input/output redirection 
+	and pipe handling for a shell-like command execution framework
+	- uses the dup2 function to set up the file descriptors for commands in a pipeline.
+	
+	cmd1 | cmd2 | cmd3
+	
+	cmd 1
+	- no previous command, no input redirection
+	- cmd1's output is connected to cmd2's input
+
+	cmd 2
+	- cmd1's output is connected to cmd2's input
+	- cmd2's output is connected to cmd3's input
+
+	cmd 3
+	- cmd2's output is connected to cmd3's input
+	- no next command, no output redirection
+
+*/
+void	dup2_cmd(t_cmds *cmds, t_general *utils, int pipe_fd[2], int std_in)
+{
+	if (cmds->prev && dup2(std_in, STDIN_FILENO) < 0)
+		error_message(4, utils);
+	close(pipe_fd[0]);
+	if (cmds->next && dup2(pipe_fd[1], STDOUT_FILENO) < 0)
+		error_message(4, utils);
+	close(pipe_fd[1]);
+	if (cmds->prev)
+		close(std_in);
+	handle_cmd(utils, cmds);
+}

@@ -120,7 +120,8 @@ typedef struct s_general
 	char *line;
 	int pipecount;
 	int in_cmd;
-	pid_t pid;
+	int *pid;
+	int reset;
 	int exit_status;
 	int stop_heredoc;
 	int	in_heredoc;

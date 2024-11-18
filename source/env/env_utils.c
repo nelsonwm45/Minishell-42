@@ -170,6 +170,7 @@ int	init_utils(t_general *utils)
 	utils->pipecount = 0;
 	utils->in_cmd = 0;
 	utils->pid = 0;
+	utils->reset = 0;
 	utils->exit_status = 0;
 	utils->stop_heredoc = 0;
 	utils->in_heredoc = 0;
