@@ -163,6 +163,9 @@ typedef struct s_expansions
 	int j;
 } t_expansions;
 
+
+
+
 /* Functions */
 // void	print_welcome(void);
 int	same_str(char *s1, char *s2);
@@ -322,11 +325,10 @@ void	free_tab(char **tab);
 void	ft_putendl(char *s);
 char	*path_join(const char *s1, const char *s2);
 char	*check_dir(char *bin, char *command);
+
 /*Signal Function*/
-void	sigint_handler(int sig);
-void	sig_int(int code);
-void	sig_quit(int code);
-void	sig_init(void);
-void	free_token(t_token *token);
-int	magic_box(char *path, char **args, t_env *env, t_shell *mini, pid_t *pid, int *sigint, int *sigquit);
+void	run_signals(int sig);
+void	restore_prompt(int sig);
+void	sig_init(int sig);
+void	sig_quit(int sig);
 #endif
