@@ -30,6 +30,7 @@ SIGNAL_DIR = $(SRC_DIR)signal/
 PARSING_DIR = $(SRC_DIR)parsing/
 EXPANDER_DIR = $(SRC_DIR)expander/
 HEREDOC_DIR = $(SRC_DIR)heredoc/
+PIPE_FILES = $(SRC_DIR)pipe/
 
 #-----Path-------#
 LIBFT_PATH = ./libft/libft.a
@@ -76,9 +77,9 @@ EXECUTE_FILES = exec.c\
 				exec_utils.c\
 				tools.c\
 				execution_setup.c \
-				execution_setup_utils.c \
 				handle_cmd.c\
 				handle_cmd_utils.c\
+				pipe.c \
 
 ENVIRONMENT_FILES = env.c\
 				 env_tools.c\
@@ -103,6 +104,7 @@ EXPANDER_FILES	=	expander.c \
 					expander_utils2.c \
 
 HEREDOC_FILES = heredoc.c \
+				redirection.c \
 
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o)) \
 			$(addprefix $(OBJ_DIR), $(BUILTIN_FILES:.c=.o))\
@@ -110,6 +112,8 @@ OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o)) \
 			$(addprefix $(OBJ_DIR), $(ENVIRONMENT_FILES:.c=.o))\
 			$(addprefix $(OBJ_DIR), $(SIGNAL_FILES:.c=.o)) \
 			$(addprefix $(OBJ_DIR), $(PARSING_FILES:.c=.o)) \
+			$(addprefix $(OBJ_DIR), $(EXPANDER_FILES:.c=.o)) \
+			$(addprefix $(OBJ_DIR), $(HEREDOC_FILES:.c=.o)) \
 
 #----Rules & Dependencies-----#
 all : execlib execrd  $(NAME)

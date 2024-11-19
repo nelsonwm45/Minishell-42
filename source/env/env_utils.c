@@ -106,16 +106,16 @@ int	get_array_size(char **arr)
 	return (i);
 }
 
-char *get_env_value(char *var_name, t_env *env)
-{
-    while (env)
-    {
-        if (ft_strncmp(env->value, var_name, ft_strlen(var_name)) == 0 && env->value[ft_strlen(var_name)] == '=')
-            return (env->value + ft_strlen(var_name) + 1);
-        env = env->next;
-    }
-    return NULL;
-}
+// char *get_env_value(char *var_name, t_env *env)
+// {
+//     while (env)
+//     {
+//         if (ft_strncmp(env->value, var_name, ft_strlen(var_name)) == 0 && env->value[ft_strlen(var_name)] == '=')
+//             return (env->value + ft_strlen(var_name) + 1);
+//         env = env->next;
+//     }
+//     return NULL;
+// }
 
 char *get_path(t_general *utils)
 {
