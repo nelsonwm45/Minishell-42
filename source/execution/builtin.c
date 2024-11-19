@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hheng < hheng@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:16:38 by hheng             #+#    #+#             */
-/*   Updated: 2024/11/08 15:04:38 by hheng            ###   ########.fr       */
+/*   Updated: 2024/11/18 11:24:02 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,34 @@ int exec_builtin(char **args, t_shell *mini)
     else if (ft_strcmp(args[0], "unset") == 0)
         return ft_unset(args, mini);
     return -1; // Command not found
+}
+
+/*
+	Nelson
+
+	@brief
+	connecting parser to builtin functions
+*/
+int prep_builtin(t_general *utils, t_env *env, t_shell *mini)
+{
+	if (utils->cmds->builtin == CD)
+		return (ft_cd(utils->cmds->str, mini->env_vars));
+	else if (utils->cmds->builtin == ECHO)
+		return (ft_echo(utils->cmds->str));
+	else if (utils->cmds->builtin == ENV)
+		return (ft_env(mini->env_vars));
+	else if (utils->cmds->builtin == EXIT)
+	{
+		ft_exit(mini, utils->cmds->str);
+		return (0);
+	}
+	else if (utils->cmds->builtin == PWD)
+		return (ft_pwd());
+	else if (utils->cmds->builtin == EXPORT)
+		return(ft_export(utils->cmds->str, mini->env_vars, mini->hidden_env_vars));
+	else if (utils->cmds->builtin == UNSET)
+	{
+		ft_unset(utils->cmds->str, mini);
+		return (EXIT_SUCCESS);
+	}
 }

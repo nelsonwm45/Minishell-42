@@ -3,5 +3,6 @@
 		"libft.h": "c",
 		"minishell.h": "c",
 		"dirent.h": "c"
-	}
+	},
+	"better-comments.highlightPlainText": true
 }
