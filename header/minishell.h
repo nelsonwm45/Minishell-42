@@ -167,7 +167,7 @@ typedef struct s_expansions
 // void	print_welcome(void);
 int	same_str(char *s1, char *s2);
 int	start_shell(t_general *utils);
-// t_token *create_token_from_cmd(t_cmds *cmd);
+void init_shell(t_shell *mini, t_general *utils);
 int	closed_quotes(char *line);
 int	find_next_quote(char *line, int *i, int *num_quote, char quote);
 void	exec_cmd_from_token(t_shell *mini, t_token *token);
@@ -322,9 +322,6 @@ void	free_tab(char **tab);
 void	ft_putendl(char *s);
 char	*path_join(const char *s1, const char *s2);
 char	*check_dir(char *bin, char *command);
-int	arg_alloc_len(const char *arg, t_env *env, int ret);
-int	get_var_len(const char *arg, int i, t_env *env, int ret);
-
 /*Signal Function*/
 void	sigint_handler(int sig);
 void	sig_int(int code);

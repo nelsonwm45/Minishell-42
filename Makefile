@@ -73,7 +73,6 @@ BUILTIN_FILES =	builtin_cd.c \
 				builtin_export.c\
 
 EXECUTE_FILES = builtin.c\
-				tools.c\
 				execution_setup.c \
 				handle_cmd.c\
 				handle_cmd_utils.c\
