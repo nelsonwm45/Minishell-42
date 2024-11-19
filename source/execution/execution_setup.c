@@ -6,7 +6,7 @@
 /*   By: hheng < hheng@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:11:04 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/19 18:50:38 by hheng            ###   ########.fr       */
+/*   Updated: 2024/11/20 06:11:25 by hheng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ void	exec_simple_cmd(t_general *utils, t_cmds *cmds)
 		utils->exit_status = prep_builtin(utils, cmds, utils->mini);
 		return ;
 	}
+
+	  // Handle `exit` in the parent shell process
+    if (cmds->builtin == EXIT)
+    {
+        prep_builtin(utils, cmds, utils->mini);
+        return;
+    }
 	start_heredoc(utils, cmds);
 	pid = fork();
 	if (pid < 0)

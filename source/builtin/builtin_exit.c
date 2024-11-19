@@ -12,6 +12,13 @@
 
 #include "minishell.h"
 
+/*
+	Check for
+	- No arguments.
+	- Valid numeric arguments (e.g., exit 42).
+	-Invalid arguments (e.g., exit abc). 
+*/
+
 void	ft_exit(t_shell *mini, char **cmd)
 {
 	mini->exit_code= 1;
