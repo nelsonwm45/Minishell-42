@@ -145,6 +145,13 @@ typedef struct	s_expansions
 	int				j;
 }				t_expansions;
 
+typedef struct s_sig {
+    int sigint;
+    int sigquit;
+    pid_t pid;
+    int exit_status;
+} t_sig;
+
 /* Functions */
 // void	print_welcome(void);
 int	same_str(char *s1, char *s2);
@@ -270,8 +277,8 @@ void	print_sorted_env(t_env *env);
 /* Execution Functions */
 
 void	ft_close(int fd);
-int			exec_bin(char **args, t_env *env, t_shell *mini);
-char *expansions(char *arg, t_env *env, int ret);
+//int			exec_bin(char **args, t_env *env, t_shell *mini);
+//char *expansions(char *arg, t_env *env, int ret);
 bool is_end_of_command(t_token *token);
 int	is_builtin(char *command);
 int	exec_builtin(char **args, t_shell *mini);
@@ -295,5 +302,5 @@ void sig_int(int code);
 void sig_quit(int code);
 void sig_init(void);
 void free_token(t_token *token);
-int magic_box(char *path, char **args, t_env *env, t_shell *mini, pid_t *pid, int *sigint, int *sigquit);
+//int magic_box(char *path, char **args, t_env *env, t_shell *mini, pid_t *pid, int *sigint, int *sigquit);
 #endif

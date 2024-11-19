@@ -55,60 +55,26 @@ char **cmd_tab(t_token *start) {
 void exec_cmd(t_shell *mini, t_token *token)
 {
     char **cmd = NULL;
-    int i = 0;
 
-    if (mini->process_charge == 0)
+    if (mini->process_charge == 0) // Check if there's a process to execute.
         return;
 
-    cmd = cmd_tab(token);
-     if (!cmd) {
-        fprintf(stderr, "Error: cmd_tab returned NULL in exec_cmd.\n");
-        return;
-    }
-    if (cmd == NULL || cmd[0] == NULL) // Ensure cmd is not NULL and has content
+    cmd = cmd_tab(token); // Convert the tokenized input into a command array.
+    if (!cmd || !cmd[0])  // Ensure the command array and first command are valid.
     {
-        free_tab(cmd); // Clean up if cmd is empty or invalid
+        free_tab(cmd);    // Clean up and return if invalid.
         return;
     }
 
-    // Expand each part of the command if cmd is not empty
-    while (cmd[i])
+    // Check if the command is "exit" and handle it.
+    if (ft_strcmp(cmd[0], "exit") == 0)
     {
-          if (!cmd[i]) {
-            fprintf(stderr, "Warning: Uninitialized command argument at index %d.\n", i);
-            break;
-        }
-
-        cmd[i] = expansions(cmd[i], mini->env_vars, mini->return_code);
-        i++;
+        ft_exit(mini, cmd); // Exit the shell.
+    }
+    else if (is_builtin(cmd[0])) // Check if the command is a recognized built-in command.
+    {
+        mini->return_code = exec_builtin(cmd, mini); // Execute the built-in command.
     }
 
-    // Check if command is "exit" without pipes, then exit
-   if (cmd[0] && ft_strcmp(cmd[0], "exit") == 0 && has_pipe(token) == 0)
-    {
-        ft_exit(mini, cmd);
-    }
-    else if (cmd[0] && is_builtin(cmd[0])) // Execute builtin if it's a recognized command
-    {
-        mini->return_code = exec_builtin(cmd, mini);
-    }
-    else if (cmd[0])// Otherwise, execute as external command
-    {
-        mini->return_code = exec_bin(cmd, mini->env_vars, mini);
-    }
-
-    free_tab(cmd); // Free the command array
-
-    // Close file descriptors if valid
-    // if (mini->pipe_input_fd != -1)
-    //     ft_close(mini->pipe_input_fd);
-    // if (mini->pipe_output_fd != -1)
-    //     ft_close(mini->pipe_output_fd);
-    ft_close(mini->pipe_input_fd);
-    ft_close(mini->pipe_output_fd);
-
-    // Reset mini struct states
-    mini->pipe_input_fd = -1;
-    mini->pipe_output_fd = -1;
-    mini->process_charge = 0;
+    free_tab(cmd); // Free the command array.
 }

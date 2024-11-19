@@ -76,8 +76,8 @@ BUILTIN_FILES = builtin_cd.c \
 
 EXECUTE_FILES = exec.c\
 				builtin.c\
-				exec_utils.c\
 				tools.c\
+				# exec_utils.c\
 
 ENVIRONMENT_FILES = env.c\
 				 env_tools.c\
