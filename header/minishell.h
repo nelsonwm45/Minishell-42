@@ -113,7 +113,7 @@ typedef struct s_parser
 typedef struct s_general
 {
 	t_env *env_vars;
-	t_shell *mini;
+	struct s_shell *mini;
 
 	t_lexer *lexer_list;
 	t_cmds *cmds;
@@ -238,15 +238,26 @@ int	add_redirections(t_parser *parser, t_lexer *ptr);
 
 /* Executions Setup */
 int	setup_executor(t_general *utils);
-int	prep_builtin(t_general *utils, t_env *env, t_shell *mini);
-
+int	prep_builtin(t_general *utils, t_cmds *cmds, t_shell *mini);
 
 /* Execution */
 void	exec_simple_cmd(t_general *utils, t_cmds *cmds);
 int		exec_complex_cmd(t_general *utils);
 void	handle_cmd(t_general *utils, t_cmds *cmds);
-void	search_cmd(t_general *utils, t_cmds *cmds);
+int	search_cmd(t_general *utils, t_cmds *cmds);
 int		cmd_not_found(char *cmd);
+char	*join_split_str(char **split_str, char *new_str);
+char	**resplit_str(char **double_arr);
+
+/* Pipe */
+void	dup2_cmd(t_cmds *cmds, t_general *utils, int pipe_fd[2], int fd_in);
+int		wait_pipe(t_general *utils, int *pid, int pipecount);
+t_cmds	*travel_first_cmds(t_cmds *cmds);
+
+int	check_fd_heredoc(t_general *utils, t_cmds *cmds, int pipe_fd[2]);
+int	ft_fork(t_general *utils, int pipe_fd[2], int fd_in, t_cmds *cmds);
+
+
 
 /* Expander */
 t_cmds	*call_expander(t_general *utils, t_cmds *cmds);
@@ -262,10 +273,19 @@ int	replace_question_mark(t_general *utils, char **tmp);
 int	skipped_char_after_dollar(int j, char *str);
 char	*remove_quotes(char *str, char quote);
 char	*expand_str(t_general *utils, char *str);
+char	*char_to_str(char c);
 
 /* Heredoc */
 int	start_heredoc(t_general *utils, t_cmds *cmds);
+char	*create_hd_filename(void);
+int	mini_heredoc(t_general *utils, t_lexer *ptr, char *filename);
+int	create_heredoc(t_general *utils, t_lexer *ptr, char *filename, int have_quote);
 
+/* Redirections */
+int	check_redir(t_cmds *cmds);
+int	handle_infile(char *filename);
+int	handle_outfile(t_lexer *redir);
+int	append_or_trunc(t_lexer *redir);
 
 /* Helper Functions */
 void	init_signal(t_general *utils);

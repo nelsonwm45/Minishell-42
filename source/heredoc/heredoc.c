@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 13:30:57 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/19 15:01:15 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/19 17:25:44 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	mini_heredoc(t_general *utils, t_lexer *ptr, char *filename)
 	int		have_quote;
 	pid_t	pid;
 
+	(void)filename;
 	status = EXIT_SUCCESS;
 	if ((ptr->str[0] == '\'' && ptr->str[ft_strlen(ptr->str) - 1] == '\'') || (ptr->str[0] == '\"' && ptr->str[ft_strlen(ptr->str) - 1] == '\"'))
 		have_quote = 1;
@@ -107,17 +108,18 @@ int	create_heredoc(t_general *utils, t_lexer *ptr, char *filename, int have_quot
 	int	pipe_fd[2];
 	char	*line;
 
+	(void)filename;
 	if (pipe(pipe_fd) == -1)
 		return (error_message(4, utils));
 	// signal(SIGINT, SIG_DFL);
-	line = readline("\033[0;32mHeredoct> \033[0m");
+	line = readline("\033[0;32mHeredoc> \033[0m");
 	while (line && ft_strncmp(ptr->str, line, ft_strlen(ptr->str)) == 0 && utils->stop_heredoc != 1)
 	{
 		if (have_quote == 1)
 			line = expand_str(utils, line);
 		ft_putendl_fd(line, pipe_fd[1]);
 		free(line);
-		line = readline("\033[0;32mHeredoct> \033[0m");
+		line = readline("\033[0;32mHeredoc> \033[0m");
 	}
 	free(line);
 	if (utils->stop_heredoc == 1 || !line)

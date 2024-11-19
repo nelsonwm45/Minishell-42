@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:16:38 by hheng             #+#    #+#             */
-/*   Updated: 2024/11/18 11:24:02 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/19 16:59:59 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,26 +65,24 @@ int exec_builtin(char **args, t_shell *mini)
 	@brief
 	connecting parser to builtin functions
 */
-int prep_builtin(t_general *utils, t_env *env, t_shell *mini)
+int prep_builtin(t_general *utils, t_cmds *cmds, t_shell *mini)
 {
 	if (utils->cmds->builtin == CD)
-		return (ft_cd(utils->cmds->str, mini->env_vars));
+		return (ft_cd(cmds->str, mini->env_vars));
 	else if (utils->cmds->builtin == ECHO)
-		return (ft_echo(utils->cmds->str));
-	else if (utils->cmds->builtin == ENV)
+		return (ft_echo(cmds->str));
+	else if (cmds->builtin == ENV)
 		return (ft_env(mini->env_vars));
-	else if (utils->cmds->builtin == EXIT)
+	else if (cmds->builtin == EXIT)
 	{
-		ft_exit(mini, utils->cmds->str);
+		ft_exit(mini, cmds->str);
 		return (0);
 	}
-	else if (utils->cmds->builtin == PWD)
+	else if (cmds->builtin == PWD)
 		return (ft_pwd());
-	else if (utils->cmds->builtin == EXPORT)
-		return(ft_export(utils->cmds->str, mini->env_vars, mini->hidden_env_vars));
-	else if (utils->cmds->builtin == UNSET)
-	{
-		ft_unset(utils->cmds->str, mini);
-		return (EXIT_SUCCESS);
-	}
+	else if (cmds->builtin == EXPORT)
+		return(ft_export(cmds->str, mini->env_vars, mini->hidden_env_vars));
+	else if (cmds->builtin == UNSET)
+		return (ft_unset(cmds->str, mini));
+	return (-1);
 }

@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 13:52:59 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/13 14:38:39 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/19 17:21:54 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ char *remove_quotes(char *str, char quote)
 {
 	int		i;
 	int		j;
-	int		len;
-	char	*tmp;
 
 	i = 0;
 	while (str[i])
