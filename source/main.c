@@ -91,6 +91,7 @@ int	main(int ac, char **av, char **envp)
 	}
 	process_envp(envp, &utils);
 	utils.env_vars = convert_envp_to_list(envp);
+	run_signals(1); // Set up signals for the main process
 	start_shell(&utils);
 	return (0);
 }
