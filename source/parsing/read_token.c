@@ -78,20 +78,12 @@ int	is_token(char c)
 */
 t_type	get_token_type(int c)
 {
-	static int token_list[3][2] = {
-		{'>', BIG},
-		{'<', SMALL},
-		{'|', PIPE}
-	};
-	int	i;
-
-	i = 0;
-	while (i < 3)
-	{
-		if (c == token_list[i][0])
-			return (token_list[i][1]); // return token type in str-num form
-		i++;	
-	}
+	if (c == '>')
+		return (BIG);
+	if (c == '<')
+		return (SMALL);
+	if (c == '|')
+		return (PIPE);
 	return (0);
 }
 /*
@@ -134,19 +126,18 @@ int	handle_token(char *str, int i, t_lexer **lexer_list)
 	t_type	token;
 	
 	token = get_token_type(str[i]); // get token type in str-num format
-	printf("Token: %d\n", token);
-	if (token == BIG && str[i + 1] == BIG)
+	if (token == BIG && str[i + 1] == '>') // check if double token
 	{
 		if (add_node_to_lexer(">>", BIGBIG, lexer_list) == 0)
 			return (ERROR);
 		printf("Double bigger than\n"); // print for debug
 		return (2);
 	}
-	else if (token == SMALL && str[i + 1] == SMALL)
+	else if (token == SMALL && str[i + 1] == '<') // check if double token
 	{
 		if (add_node_to_lexer("<<", SMALLSMALL, lexer_list) == 0)
 			return (ERROR);
-		printf("Double small than\n");
+		printf("Double small than\n"); // Debug
 		return (2);
 	}
 	else if (token)

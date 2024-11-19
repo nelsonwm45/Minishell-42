@@ -81,31 +81,3 @@ void	free_token(t_token *token)
 	}
 }
 
-int	magic_box(char *path, char **args, t_env *env, t_shell *mini, pid_t *pid,
-		int *sigint, int *sigquit)
-{
-	char **env_array;
-	char *ptr;
-	int ret;
-
-	ret = SUCCESS;
-	*pid = fork();
-	if (*pid == 0)
-	{
-		ptr = env_to_str(env);
-		env_array = ft_split(ptr, '\n');
-		ft_memdel(ptr);
-		if (ft_strchr(path, '/') != NULL)
-			execve(path, args, env_array);
-		ret = error_message_path(path);
-		free_tab(env_array);
-		free_token(mini->token_list);
-		exit(ret);
-	}
-	else
-		waitpid(*pid, &ret, 0);
-	if (*sigint == 1 || *sigquit == 1)
-		return (exit_status);
-	ret = (ret == 32256 || ret == 32512) ? ret / 256 : !!ret;
-	return (ret);
-}
