@@ -17,20 +17,14 @@
 ** SIGQUIT: (ctrl + \).
 ** EOT: end of transmission (ctrl + D).
 
-130: Typically used to indicate a program was terminated by SIGINT.
-131: Used to indicate termination by SIGQUIT.
+130: exit_status for SIGINT.
+131: exit_status for SIGQUIT.
 
 ** Case sig == 1: Handle parent(main) signal
-	SIGINT (Ctrl + C) is handled by the restore_prompt function.
-	SIGQUIT (Ctrl + \) is ignored using SIG_IGN.
 
 ** Case sig == 2: Handle child signal
-	SIGINT is handled by the sig_init function.
-	SIGQUIT is handled by the sig_quit function.
 
 ** Case sig == 3: for cleaning and termination purpose
-	Prints "exit\n".
-	Exits the program using exit(0).
 
 */
 
