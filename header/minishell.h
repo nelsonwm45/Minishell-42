@@ -200,8 +200,6 @@ int	clean_utils(t_general *utils);
 int	clean_lexer(t_lexer **lexer);
 
 int	error_message(int error_code, t_general *utils);
-int	error_message_path(char *path);
-
 /* Lexer Functions */
 int	add_node_to_lexer(char *str, t_type token_type, t_lexer **lexer_list);
 int	add_to_backlexer(t_lexer *node, t_lexer **lexer_list);
