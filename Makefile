@@ -75,6 +75,8 @@ EXECUTE_FILES = exec.c\
 				builtin.c\
 				exec_utils.c\
 				tools.c\
+				execution_setup.c \
+				execution_setup_utils.c \
 				handle_cmd.c\
 				handle_cmd_utils.c\
 
@@ -94,7 +96,7 @@ PARSING_FILES = read_token.c \
 				lexer_utils.c \
 				cmds_utils.c \
 				cmds.c \
-				execution_setup.c \
+				
 
 EXPANDER_FILES	=	expander.c \
 					expander_utils.c \

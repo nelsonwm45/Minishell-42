@@ -174,7 +174,7 @@ int	init_utils(t_general *utils)
 	utils->exit_status = 0;
 	utils->stop_heredoc = 0;
 	utils->in_heredoc = 0;
-	utils->heredoc_done = 0;
+	utils->heredoc = 0;
 	return (0);
 }
 

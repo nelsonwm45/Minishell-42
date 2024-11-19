@@ -125,7 +125,7 @@ typedef struct s_general
 	int exit_status;
 	int stop_heredoc;
 	int	in_heredoc;
-	int	heredoc_done;
+	int	heredoc;
 
 	char **envp;
 	char **path;

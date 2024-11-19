@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 13:30:57 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/18 13:54:22 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/19 15:01:15 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	mini_heredoc(t_general *utils, t_lexer *ptr, char *filename)
 	// signal(SIGQUIT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	utils->in_heredoc = 0;
-	utils->heredoc_done = 1;
+	utils->heredoc = 1;
 	return (status);
 }
 

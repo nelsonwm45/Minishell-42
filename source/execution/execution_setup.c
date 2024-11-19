@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:11:04 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/18 10:23:14 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/19 15:57:45 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,28 @@ void	exec_simple_cmd(t_general *utils, t_cmds *cmds)
 int	exec_complex_cmd(t_general *utils)
 {
 	int	pipe_fd[2];
-	int	std_in;
+	int	fd_in;
 
-	std_in = STDIN_FILENO;
+	fd_in = STDIN_FILENO;
 	while (utils->cmds)
 	{
 		utils->cmds = call_expander(utils, utils->cmds);
 		if (utils->cmds->next)
 			pipe(pipe_fd);
 		start_heredoc(utils, utils->cmds);
-		ft_fork(utils, pipe_fd, std_in, utils->cmds);
+		ft_fork(utils, pipe_fd, fd_in, utils->cmds);
+		close(pipe_fd[1]);
+		if (utils->cmds->prev)
+			close(fd_in);
+		fd_in = check_fd_heredoc(utils, utils->cmds, pipe_fd);
+		if (utils->cmds->next)
+			utils->cmds = utils->cmds->next;
+		else
+			break ;
 	}
 }
 
-int	ft_fork(t_general *utils, int pipe_fd[2], int std_in, t_cmds *cmds)
+int	ft_fork(t_general *utils, int pipe_fd[2], int fd_in, t_cmds *cmds)
 {
 	static int	i = 0;
 
@@ -80,8 +88,7 @@ int	ft_fork(t_general *utils, int pipe_fd[2], int std_in, t_cmds *cmds)
 	if (utils->pid[i] < 0)
 		error_message(5, utils);
 	if (utils->pid[i] == 0)
-		dup2_cmd(cmds, utils, pipe_fd, std_in);
+		dup2_cmd(cmds, utils, pipe_fd, fd_in);
 	i++;
 	return (EXIT_SUCCESS);
 }
-

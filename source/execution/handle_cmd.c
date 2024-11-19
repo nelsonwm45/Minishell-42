@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:26:00 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/18 13:44:25 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/19 14:52:15 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,15 @@ int	search_cmd(t_general *utils, t_cmds *cmds)
 	- no next command, no output redirection
 
 */
-void	dup2_cmd(t_cmds *cmds, t_general *utils, int pipe_fd[2], int std_in)
+void	dup2_cmd(t_cmds *cmds, t_general *utils, int pipe_fd[2], int fd_in)
 {
-	if (cmds->prev && dup2(std_in, STDIN_FILENO) < 0)
+	if (cmds->prev && dup2(fd_in, STDIN_FILENO) < 0)
 		error_message(4, utils);
 	close(pipe_fd[0]);
 	if (cmds->next && dup2(pipe_fd[1], STDOUT_FILENO) < 0)
 		error_message(4, utils);
 	close(pipe_fd[1]);
 	if (cmds->prev)
-		close(std_in);
+		close(fd_in);
 	handle_cmd(utils, cmds);
 }
