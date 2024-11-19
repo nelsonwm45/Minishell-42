@@ -44,7 +44,6 @@
 # define COMMAND 4
 # define UNKNOWN_COMMAND 127
 # define IS_DIRECTORY 126
-// # define pipe 6
 
 /* Structs */
 typedef enum s_type
@@ -190,11 +189,6 @@ char	**duplicate_env(char **envp);
 // int	get_pwd(t_general *utils);
 int	print_envp(t_general *utils); // debug purpose
 
-// int	get_oldpwd(t_general *utils);
-// int	get_array_size(char **arr);
-// char	*get_path(t_general *utils);
-// void	store_path(t_general *utils);
-
 /* Error Functions */
 int	double_token_error(t_general *utils, t_lexer *lexer, t_type token_type);
 void	parsing_error(int error, t_general *utils, t_lexer *lexer);
@@ -310,14 +304,6 @@ int	ft_export(char **args, t_env *env, t_env *secret);
 int	update_oldpwd(t_env *env);
 int	go_to_path(int option, t_env *env);
 
-// /* Additional Function Declarations */
-// char	*env_to_str(t_env *env);
-// void	sort_env(char **tab, int len);
-// int			str_env_len(char **tab);
-// void	ft_putstr(char *str);
-// void	ft_putendl(char *str);
-// void	free_tab(char **tab);
-
 /* Environment Function*/
 size_t	size_env(t_env *lst);
 void	ft_putendl(char *s);
@@ -332,27 +318,6 @@ void	increment_shell_level(t_env *env);
 int	str_env_len(char **env);
 void	sort_env(char **tab, int env_len);
 void	print_sorted_env(t_env *env);
-// char	**duplicate_env(char **envp);
-// int	get_pwd(t_general *utils);
-// int	print_envp(t_general *utils); // debug purpose
-// int	init_utils(t_general *utils);
-// int	get_oldpwd(t_general *utils);
-// int	get_array_size(char **arr);
-// void	store_path(t_general *utils);
-// int	process_envp(char **envp, t_general *utils);
-// char *get_path(t_general *utils);
-
-/* Execution Functions */
-
-void	ft_close(int fd);
-int	exec_bin(char **args, t_env *env, t_shell *mini);
-char	*expansions(char *arg, t_env *env, int ret);
-bool	is_end_of_command(t_token *token);
-int	is_builtin(char *command);
-int	exec_builtin(char **args, t_shell *mini);
-char	**cmd_tab(t_token *start);
-void	exec_cmd(t_shell *mini, t_token *token);
-int	has_pipe(t_token *token);
 
 /* Tools utils*/
 void	free_tab(char **tab);

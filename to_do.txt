@@ -3,3 +3,7 @@ redirection/heredoc
 expansion -> quotes
 pipe
 parser -> lexer
+
+
+- finish signal & expansion
+- initialize start_shell

@@ -80,25 +80,6 @@ t_env	*convert_envp_to_list(char **envp)
 	return (env_list);
 }
 
-void	exec_cmd_from_token(t_shell *mini, t_token *token)
-{
-	char **args = ft_split(token->str, ' ');
-		// Split the token string into arguments
-
-	if (is_builtin(args[0])) // Check if the command is built-in
-	{
-		exec_builtin(args, mini); // Execute the built-in command
-	}
-	else
-	{
-		// Call the existing exec_cmd to handle external commands
-		exec_cmd(mini, token);
-	}
-
-	// Free allocated memory for args (important to avoid memory leaks)
-	free(args);
-}
-
 int	main(int ac, char **av, char **envp)
 {
 	t_general utils;

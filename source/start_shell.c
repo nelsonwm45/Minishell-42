@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 22:32:56 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/11 22:32:56 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/11 22:32:56 by hheng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,124 +60,6 @@ int	closed_quotes(char *line)
 	return (TRUE);
 }
 
-// t_env *convert_envp_to_list(char **envp)
-// {
-//     t_env *env_list = NULL;
-//     t_env *new_node;
-//     t_env *current;
-//     char **env;
-
-//     for (env = envp; *env != NULL; env++)
-//     {
-//         new_node = malloc(sizeof(t_env));
-//         if (!new_node)
-//         {
-//             perror("malloc");
-//             return (NULL);
-//         }
-//         new_node->var = strdup(*env);
-//         if (!new_node->var)
-//         {
-//             perror("strdup");
-//             free(new_node);
-//             return (NULL);
-//         }
-//         new_node->next = NULL;
-
-//         if (!env_list)
-//         {
-//             env_list = new_node;
-//         }
-//         else
-//         {
-//             current = env_list;
-//             while (current->next)
-//                 current = current->next;
-//             current->next = new_node;
-//         }
-//     }
-//     return (env_list);
-// }
-
-/* Original version*/
-
-// int	start_shell(t_general *utils)
-// {
-// 	char *line;
-
-// 	while (1)
-// 	{
-// 		line = readline("42Minishell-1.0$ ");
-// 		utils->line = ft_strtrim(line, " "); // trim the spaces in front & back
-// 		free(line);// Free the original line to avoid memory leak
-// 		if (!utils->line)
-// 		{
-// 			ft_putendl_fd("exit", STDOUT_FILENO);
-// 			exit(EXIT_SUCCESS);
-// 		}
-// 		if (utils->line[0] == '\0')
-// 			return (clean_utils(utils));
-// 		add_history(utils->line);
-// 		if (closed_quotes(utils->line) == FALSE)
-// 			return (error_message(2, utils));
-// 		if (read_token(utils) == 0)
-// 			return (error_message(1, utils));
-// 		start_parsing(utils);
-// 		print_parser(utils);
-// 		// if (is_builtin(utils->line))
-// 		// 	exec_builtin(&utils->line, (t_shell *)utils);
-// 		if (same_str(utils->line, "exit"))
-// 			return (clean_utils(utils));
-// 	}
-// }
-
-// /* Winnie version*/
-// void start_shell(t_general *utils)
-// {
-//     t_shell mini;
-//     t_token *token;
-//     char *line;
-
-//     // Initialize the t_shell structure
-//     mini.env_vars = utils->env_vars; // Directly assign env_vars
-//     mini.hidden_env_vars = utils->env_vars;
-	// Directly assign hidden_env_vars
-//     mini.skip_execution = 0;
-//     mini.process_charge = 1;
-//     mini.pipe_input_fd = -1;
-//     mini.pipe_output_fd = -1;
-//     mini.return_code = 0;
-
-//     while (1)
-//     {
-//         // Display prompt and read input
-//         line = readline("\033[31m42Minishell-1.0$ \033[0m");
-//         if (!line)
-//             break ;
-
-//         // Add input to history
-//         add_history(line);
-
-//         // Create a token from the input line
-//         token = malloc(sizeof(t_token));
-//         if (!token)
-//         {
-//             ft_putendl_fd("Failed to allocate memory for token", STDERR_FILENO);
-//             free(line);
-//             continue ;
-//         }
-//         token->str = line;
-//         token->type = COMMAND; // Set the token type
-//         token->next = NULL;
-
-//         // Execute the command from the token
-//         exec_cmd_from_token(&mini, token);
-
-//         // Free allocated memory for token and line
-//         free(token);
-//         free(line);
-//     }
-// }
 
 /* Try to combine version -- will cause seg fault,
 	due to i used t_token to parse and Nelson use t_lexer to parse*/
@@ -185,7 +67,6 @@ int	start_shell(t_general *utils)
 {
 	t_shell mini;
 	t_token *token;
-	// t_lexer *lexer;  // Assuming you need a lexer for parsing
 	char *line;
 
 	// Initialize the t_shell structure
@@ -247,7 +128,7 @@ int	start_shell(t_general *utils)
 		token->next = NULL;
 
 		// Execute the command from the token
-		exec_cmd_from_token(&mini, token);
+		// exec_cmd_from_token(&mini, token);
 
 		// Free allocated memory for token and line
 		free(token);

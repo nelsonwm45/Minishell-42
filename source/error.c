@@ -86,6 +86,6 @@ int error_message_path(char *path)
         ret = IS_DIRECTORY;
     if (folder)
         closedir(folder);
-    ft_close(fd);
+    // ft_close(fd);
     return (ret);
 }

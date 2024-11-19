@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-
+// redo this for the $ with expansion
 int get_var_len(const char *arg, int i, t_env *env, int ret)
 {
     int len = 0;
