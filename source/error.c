@@ -32,7 +32,8 @@ int	double_token_error(t_general *utils, t_lexer *lexer, t_type token_type)
 
 void	parsing_error(int error, t_general *utils, t_lexer *lexer)
 {
-	clean_lexer(&lexer);
+	if (lexer)
+		clean_lexer(&lexer);
 	error_message(error, utils);
 }
 int	error_message(int error_code, t_general *utils)
@@ -49,9 +50,10 @@ int	error_message(int error_code, t_general *utils)
 		ft_putstr_fd("Failed to Create Pipe\n", STDERR_FILENO);
 	else if (error_code == 5)
 		ft_putstr_fd("Failed to Create Fork\n", STDERR_FILENO);
-	if (utils->lexer_list)
-		clean_lexer(&utils->lexer_list);
-	clean_utils(utils);
+	// if (utils->lexer_list)
+	// 	clean_lexer(&utils->lexer_list);
+	if (utils)
+		clean_utils(utils);
 	return (EXIT_FAILURE);
 }
 int	cmd_not_found(char *cmd)

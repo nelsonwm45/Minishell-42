@@ -20,7 +20,10 @@ t_lexer	*create_node(char *str, t_type token_type)
 	node = ft_calloc(1, sizeof(t_lexer));
 	if (!node)
 		return (NULL);
-	node->str = str;
+	if (str)
+		node->str = str;
+	else
+		node->str = NULL;
 	node->token_type = token_type;
 	node->i = i++;
 	node->prev = NULL;

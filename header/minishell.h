@@ -201,6 +201,7 @@ int	pipes_errors(t_general *utils, t_type token_type);
 void	free_array(char **arr);
 int	clean_utils(t_general *utils);
 int	clean_lexer(t_lexer **lexer);
+void	clean_cmd(t_cmds **cmds);
 int	error_message(int error_code, t_general *utils);
 
 /* Lexer Functions */
