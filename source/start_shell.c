@@ -100,12 +100,18 @@ int	start_shell(t_general *utils)
             return (error_message(2, utils));
         }
         utils->mini = &mini;
+
+		// Modify signals for child process
+		run_signals(2);
         if (read_token(utils) == 0)
         {
             return (error_message(1, utils));
         }
         start_parsing(utils);
         setup_executor(utils);
+
+		// Restore signals for the main process after execution
+		run_signals(1);
 
         token = malloc(sizeof(t_token));
         if (!token)

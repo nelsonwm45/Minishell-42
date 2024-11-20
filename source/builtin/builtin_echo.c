@@ -67,10 +67,4 @@ int ft_echo(char **args)
     return (SUCCESS);
 }
 
-// // Main function to test ft_echo
-// int main(int ac, char **av)
-// {
-//     ft_echo(ac, av);
-//     return 0;
-// }
 

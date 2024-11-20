@@ -12,72 +12,65 @@
 
 #include "../header/minishell.h"
 
-static int sigint;
-static int sigquit;
-static pid_t pid;
-static int exit_status;
+/*
+** SIGINT: program interrupt signal (ctrl + C).
+** SIGQUIT: (ctrl + \).
+** EOT: end of transmission (ctrl + D).
 
-void	sigint_handler(int sig)
+130: exit_status for SIGINT.
+131: exit_status for SIGQUIT.
+
+** Case sig == 1: Handle parent(main) signal
+
+** Case sig == 2: Handle child signal
+
+** Case sig == 3: for cleaning and termination purpose
+
+*/
+
+int g_ret_number = 0;
+
+void	run_signals(int sig)
 {
-	(void)sig;
+	if (sig == 1)
+	{
+		signal(SIGINT, restore_prompt);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	if (sig == 2)
+	{
+		signal(SIGINT, sig_init);
+		signal(SIGQUIT, sig_quit);
+	}
+	if (sig == 3)
+	{
+		printf("exit\n");
+		exit(0);
+	}
+}
+
+void	restore_prompt(int sig)
+{
+	g_ret_number = 130;
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
+	rl_on_new_line();
 	rl_redisplay();
+	(void)sig;
 }
 
-void	sig_int(int code)
+void	sig_init(int sig)
 {
-	(void)code;
-	if (pid == 0)
-	{
-		ft_putstr_fd("\b\b  ", 2);
-		ft_putstr_fd("\n", 2);
-		ft_putstr_fd("\033[0;36m\033[1m🤬 minishell ▸ \033[0m", 2);
-		exit_status = 1;
-	}
-	else
-	{
-		ft_putstr_fd("\n", 2);
-		exit_status = 130;
-	}
-	sigint = 1;
+	g_ret_number = 130;
+	write(1, "\n", 1);
+	(void)sig;
 }
 
-void	sig_quit(int code)
+void	sig_quit(int sig)
 {
-	char *nbr;
-
-	nbr = ft_itoa(code);
-	if (pid != 0)
-	{
-		ft_putstr_fd("Quit: ", 2);
-		ft_putendl_fd(nbr, 2);
-		exit_status = 131;
-		sigquit = 1;
-	}
-	else
-		ft_putstr_fd("\b\b  \b\b", 2);
-	ft_memdel(nbr);
+	g_ret_number = 131;
+	printf("quit\n");
+	(void)sig;
 }
 
-void	sig_init(void)
-{
-	sigint = 0;
-	sigquit = 0;
-	pid = 0;
-	exit_status = 0;
-}
-
-void	free_token(t_token *token)
-{
-	t_token *temp;
-
-	while (token)
-	{
-		temp = token;
-		token = token->next;
-		free(temp->str);
-		free(temp);
-	}
-}
 
