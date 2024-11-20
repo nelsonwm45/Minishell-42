@@ -12,18 +12,11 @@
 
 #include "minishell.h"
 
-/*
- * This file implements the `echo` command for a shell.
+/**
+ * @brief Counts the number of arguments in the array.
  * 
- * The `echo` command writes its arguments to standard output.
- * If the first argument is "-n", it does not output the trailing newline.
- * 
- * The code replicates this functionality as follows:
- * - `nb_args`: Counts the number of arguments in the array.
- * - `ft_echo`: Main function to handle the `echo` command logic.
- *   - Checks for the "-n" option.
- *   - Prints each argument with a space separator.
- *   - Prints a newline if the "-n" option is not present.
+ * @param args (Array) of arguments.
+ * @return The number of arguments.
  */
 
 static	int		nb_args(char **args)

@@ -13,12 +13,14 @@
 #include "../header/minishell.h"
 
 /*
+g_ret_number = global variable
+
 ** SIGINT: program interrupt signal (ctrl + C).
 ** SIGQUIT: (ctrl + \).
 ** EOT: end of transmission (ctrl + D).
 
-130: exit_status for SIGINT.
-131: exit_status for SIGQUIT.
+	130: exit_status for SIGINT.
+	131: exit_status for SIGQUIT.
 
 ** Case sig == 1: Handle parent(main) signal
 
