@@ -128,14 +128,14 @@ int	handle_token(char *str, int i, t_lexer **lexer_list)
 	token = get_token_type(str[i]); // get token type in str-num format
 	if (token == BIG && str[i + 1] == '>') // check if double token
 	{
-		if (add_node_to_lexer(">>", BIGBIG, lexer_list) == 0)
+		if (add_node_to_lexer(ft_strdup(">>"), BIGBIG, lexer_list) == 0)
 			return (ERROR);
 		printf("Double bigger than\n"); // print for debug
 		return (2);
 	}
 	else if (token == SMALL && str[i + 1] == '<') // check if double token
 	{
-		if (add_node_to_lexer("<<", SMALLSMALL, lexer_list) == 0)
+		if (add_node_to_lexer(ft_strdup("<<"), SMALLSMALL, lexer_list) == 0)
 			return (ERROR);
 		printf("Double small than\n"); // Debug
 		return (2);
