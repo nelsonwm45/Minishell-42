@@ -36,18 +36,17 @@ t_cmds	*call_expander(t_general *utils, t_cmds *cmds)
 */
 int	subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
 {
-	int	k;
-	int	equal_i;
-	int	ret_val;
+	int		k;
+	int		equal_i;
+	int		var_len;
 	char	*tmp2;
 	char	*tmp3;
 	char	var_name[256]; // Buffer for the variable name
 
 	k = 0;
-	ret_val = 0; // Initialize ret_val to avoid undefined behavior
+	var_len = 0;
 
 	// Extract the variable name from str[j + 1]
-	int var_len = 0;
 	while (str[j + 1 + var_len] && (ft_isalnum(str[j + 1 + var_len]) || str[j + 1 + var_len] == '_'))
 		var_len++;
 
@@ -62,31 +61,31 @@ int	subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
 	// Search for the variable in the environment variables
 	while (utils->envp[k])
 	{
-		equal_i = get_equal_sign_index(utils->envp[k]); // Index of '=' in the current envp entry
-		if (equal_i > 0 && ft_strncmp(utils->envp[k], var_name, equal_i) == 0)
+		printf("[DEBUG] envp[%d]: '%s'\n", k, utils->envp[k]);
+		equal_i = get_equal_sign_index(utils->envp[k]);
+		if (equal_i > 0)
 		{
-			printf("[DEBUG] Found match in envp: %s\n", utils->envp[k]);
-
-			// Append the value of the environment variable to tmp
-			tmp2 = ft_strdup(utils->envp[k] + equal_i + 1); // Skip '='
-			if (!tmp2)
+			// Compare the variable name exactly (considering its length)
+			if (ft_strncmp(utils->envp[k], var_name, var_len) == 0 && utils->envp[k][var_len] == '=')
 			{
-				fprintf(stderr, "[ERROR] Memory allocation failed for tmp2\n");
-				return (0);
+				printf("[DEBUG] Match found: '%s'\n", utils->envp[k]);
+				tmp2 = ft_strdup(utils->envp[k] + var_len + 1);
+				if (!tmp2)
+				{
+					fprintf(stderr, "[ERROR] Memory allocation failed for tmp2\n");
+					return (0);
+				}
+				tmp3 = ft_strjoin(*tmp, tmp2);
+                if (!tmp3)
+                {
+                    fprintf(stderr, "[ERROR] Memory allocation failed for tmp3\n");
+                    return (0);
+                }
+				free(*tmp);
+				*tmp = tmp3;
+				free(tmp2);
+				return (var_len + 1);
 			}
-			tmp3 = ft_strjoin(*tmp, tmp2);
-			free(*tmp);
-			*tmp = tmp3;
-			free(tmp2);
-
-			if (!*tmp)
-			{
-				fprintf(stderr, "[ERROR] Memory allocation failed for tmp\n");
-				return (0);
-			}
-
-			ret_val = var_len + 1; // +1 to account for the $
-			return (ret_val);        // Variable successfully replaced
 		}
 		k++;
 	}
@@ -95,6 +94,7 @@ int	subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
 	printf("[DEBUG] Variable not found: %s\n", var_name);
 	return (var_len + 1); // Skip past the variable name and $
 }
+
 
 
 /*
