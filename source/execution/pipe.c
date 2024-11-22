@@ -6,13 +6,13 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:22:27 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/19 16:28:23 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/22 15:02:54 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-int	ft_fork(t_general *utils, int pipe_fd[2], int fd_in, t_cmds *cmds)
+int	ft_fork(t_general *utils, int pipe_fd[2], t_cmds *cmds, int fd_in)
 {
 	static int	i = 0;
 
@@ -53,29 +53,30 @@ int	ft_fork(t_general *utils, int pipe_fd[2], int fd_in, t_cmds *cmds)
 */
 void	dup2_cmd(t_cmds *cmds, t_general *utils, int pipe_fd[2], int fd_in)
 {
-	if (cmds->prev && dup2(fd_in, STDIN_FILENO) < 0)
+	if (cmds->prev && dup2(fd_in, STDIN_FILENO) < 0) // Redirect input for non-first command
 		error_message(4, utils);
-	close(pipe_fd[0]);
-	if (cmds->next && dup2(pipe_fd[1], STDOUT_FILENO) < 0)
+	close(pipe_fd[0]); // Close read end of the pipe for the current process
+	if (cmds->next && dup2(pipe_fd[1], STDOUT_FILENO) < 0) // Redirect output for non-last command
 		error_message(4, utils);
-	close(pipe_fd[1]);
+	close(pipe_fd[1]);  // Close write end of the pipe after redirecting
 	if (cmds->prev)
-		close(fd_in);
+		close(fd_in); // Close the previous input file descriptor
 	handle_cmd(utils, cmds);
+	// if (cmds->prev && dup2(pipe_fd[0], STDIN_FILENO) < 0) // Redirect input for non-first command
+	// 	error_message(4, utils);
+	// close(pipe_fd[0]); // Close read end of the pipe for the current process
+	// if (cmds->next && dup2(pipe_fd[1], STDOUT_FILENO) < 0) // Redirect output for non-last command
+	// 	error_message(4, utils);
+	// close(pipe_fd[1]);  // Close write end of the pipe after redirecting
+	// handle_cmd(utils, cmds);
 }
 
 t_cmds	*travel_first_cmds(t_cmds *cmds)
 {
-	int	i;
-
-	i = 0;
 	if (!cmds)
 		return (NULL);
 	while (cmds->prev != NULL)
-	{
 		cmds = cmds->prev;
-		i++;
-	}
 	return (cmds);
 }
 
@@ -89,7 +90,7 @@ int	check_fd_heredoc(t_general *utils, t_cmds *cmds, int pipe_fd[2])
 		fd_in = open(cmds->hd_file_name, O_RDONLY); // open heredoc file
 	}
 	else
-		fd_in = STDIN_FILENO; // set fd_in to stdin
+		fd_in = pipe_fd[0]; // set fd_in to read end of pipe
 	return (fd_in);
 }
 
@@ -104,6 +105,7 @@ int	wait_pipe(t_general *utils, int *pid, int pipecount)
 		waitpid(pid[i], &status, 0);
 		i++;
 	}
+	waitpid(pid[i], &status, 0);
 	if (WIFEXITED(status))
 		utils->exit_status = WEXITSTATUS(status);
 	return (EXIT_SUCCESS);

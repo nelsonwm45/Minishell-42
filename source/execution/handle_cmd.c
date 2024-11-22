@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:26:00 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/19 17:08:57 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/22 14:20:21 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	search_cmd(t_general *utils, t_cmds *cmds)
 	char	*new_cmd;
 
 	cmds->str = resplit_str(cmds->str);
+	printf("cmds->str[0]: %s\n", cmds->str[0]);
 	i = 0;
 	if (!access(cmds->str[0], F_OK))
 		execve(cmds->str[0], cmds->str, utils->envp);

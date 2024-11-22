@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:34:47 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/19 17:08:06 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/22 12:28:37 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	handle_infile(char *filename)
 	int	fd;
 
 	fd = open(filename, O_RDONLY);
+	printf("filename: %s\n", filename);
+	printf("fd: %d\n", fd);
 	if (fd < 0)
 	{
 		ft_putstr_fd("minishell: infile", STDERR_FILENO);

@@ -130,22 +130,18 @@ int	handle_token(char *str, int i, t_lexer **lexer_list)
 	{
 		if (add_node_to_lexer(ft_strdup(">>"), BIGBIG, lexer_list) == 0)
 			return (ERROR);
-		printf("Double bigger than\n"); // print for debug
 		return (2);
 	}
 	else if (token == SMALL && str[i + 1] == '<') // check if double token
 	{
 		if (add_node_to_lexer(ft_strdup("<<"), SMALLSMALL, lexer_list) == 0)
 			return (ERROR);
-		printf("Double small than\n"); // Debug
 		return (2);
 	}
 	else if (token)
 	{
-		printf("token : %s\n", ft_substr(str, i, 1)); // Debug
 		if (add_node_to_lexer(ft_substr(str, i, 1), token, lexer_list) == 0)
 			return (ERROR);
-		printf("Single token\n"); // Debug
 		return (1);
 	}
 	return (0);

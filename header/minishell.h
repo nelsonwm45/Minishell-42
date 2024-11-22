@@ -252,7 +252,7 @@ t_cmds	*travel_first_cmds(t_cmds *cmds);
 int	close_pipes(int fd[2]);
 
 int	check_fd_heredoc(t_general *utils, t_cmds *cmds, int pipe_fd[2]);
-int	ft_fork(t_general *utils, int pipe_fd[2], int fd_in, t_cmds *cmds);
+int	ft_fork(t_general *utils, int pipe_fd[2], t_cmds *cmds, int fd_in);
 
 /* Expander */
 t_cmds	*call_expander(t_general *utils, t_cmds *cmds);

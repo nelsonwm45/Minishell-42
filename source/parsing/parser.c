@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:45:12 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/20 13:36:17 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/22 15:18:46 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,6 @@ int	start_parsing(t_general *utils)
 		// This allows us to start parsing the next command (if any) in the next iteration
 		utils->lexer_list = parser.lexer_list;
 	}
+	print_cmds(utils);
 	return (EXIT_SUCCESS);
 }
