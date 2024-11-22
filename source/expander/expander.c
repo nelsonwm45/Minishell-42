@@ -6,7 +6,7 @@
 /*   By: hheng < hheng@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:52:07 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/22 10:39:03 by hheng            ###   ########.fr       */
+/*   Updated: 2024/11/22 15:46:45 by hheng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,18 @@ int	subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
 
 	// Copy the variable name into var_name
 	ft_strlcpy(var_name, &str[j + 1], var_len + 1); // +1 for null terminator
-	printf("[DEBUG] Extracted variable name: %s\n", var_name);
 
 	// Search for the variable in the environment variables
 	while (utils->envp[k])
 	{
-		printf("[DEBUG] envp[%d]: '%s'\n", k, utils->envp[k]);
+		
 		equal_i = get_equal_sign_index(utils->envp[k]);
 		if (equal_i > 0)
 		{
 			// Compare the variable name exactly (considering its length)
 			if (ft_strncmp(utils->envp[k], var_name, var_len) == 0 && utils->envp[k][var_len] == '=')
 			{
-				printf("[DEBUG] Match found: '%s'\n", utils->envp[k]);
+				
 				tmp2 = ft_strdup(utils->envp[k] + var_len + 1);
 				if (!tmp2)
 				{
@@ -79,7 +78,8 @@ int	subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
                 if (!tmp3)
                 {
                     fprintf(stderr, "[ERROR] Memory allocation failed for tmp3\n");
-                    return (0);
+                    free(tmp2);
+					return (0);
                 }
 				free(*tmp);
 				*tmp = tmp3;
@@ -91,7 +91,6 @@ int	subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
 	}
 
 	// If variable not found, skip it
-	printf("[DEBUG] Variable not found: %s\n", var_name);
 	return (var_len + 1); // Skip past the variable name and $
 }
 
