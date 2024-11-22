@@ -75,7 +75,10 @@ void	clean_cmd(t_cmds **cmds)
 		if ((*cmds)->str)
 			free_array((*cmds)->str);
 		if ((*cmds)->hd_file_name)
+		{
+			unlink((*cmds)->hd_file_name);
 			free((*cmds)->hd_file_name);
+		}
 		free(*cmds);
 		*cmds = ptr;
 	}
