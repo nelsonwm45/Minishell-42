@@ -34,64 +34,54 @@ t_cmds	*call_expander(t_general *utils, t_cmds *cmds)
 		2. return length of the string till the "equal sign" + 1 if found matched env variable
 		3. return the length of str after the dollar sign if no matched env variable found
 */
-int	subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
+int    subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
 {
-	int		k;
-	int		equal_i;
-	int		var_len;
-	char	*tmp2;
-	char	*tmp3;
-	char	var_name[256]; // Buffer for the variable name
+    int    k;
+    int    equal_i;
+    int    var_len;
+    char   *tmp2;
+    char   *tmp3;
 
-	k = 0;
-	var_len = 0;
+    k = 0;
+    // Calculate variable length first
+    var_len = 0;
+    while (str[j + 1 + var_len] && (ft_isalnum(str[j + 1 + var_len]) || str[j + 1 + var_len] == '_'))
+        var_len++;
 
-	// Extract the variable name from str[j + 1]
-	while (str[j + 1 + var_len] && (ft_isalnum(str[j + 1 + var_len]) || str[j + 1 + var_len] == '_'))
-		var_len++;
+    // If no valid variable name after $, skip it
+    if (var_len == 0)
+        return (1);
 
-	// If there's no valid variable name after $, skip it
-	if (var_len == 0)
-		return (1); // Skip the $
-
-	// Copy the variable name into var_name
-	ft_strlcpy(var_name, &str[j + 1], var_len + 1); // +1 for null terminator
-
-	// Search for the variable in the environment variables
-	while (utils->envp[k])
-	{
-		
-		equal_i = get_equal_sign_index(utils->envp[k]);
-		if (equal_i > 0)
-		{
-			// Compare the variable name exactly (considering its length)
-			if (ft_strncmp(utils->envp[k], var_name, var_len) == 0 && utils->envp[k][var_len] == '=')
-			{
-				
-				tmp2 = ft_strdup(utils->envp[k] + var_len + 1);
-				if (!tmp2)
-				{
-					fprintf(stderr, "[ERROR] Memory allocation failed for tmp2\n");
-					return (0);
-				}
-				tmp3 = ft_strjoin(*tmp, tmp2);
-                if (!tmp3)
-                {
-                    fprintf(stderr, "[ERROR] Memory allocation failed for tmp3\n");
-                    free(tmp2);
-					return (0);
-                }
-				free(*tmp);
-				*tmp = tmp3;
-				free(tmp2);
-				return (var_len + 1);
-			}
-		}
-		k++;
-	}
-
-	// If variable not found, skip it
-	return (var_len + 1); // Skip past the variable name and $
+    while (utils->envp[k])
+    {
+        equal_i = get_equal_sign_index(utils->envp[k]);
+        // Compare only the variable name part and check for exact match
+        if (equal_i > 0 && ft_strncmp(utils->envp[k], &str[j + 1], var_len) == 0 
+            && utils->envp[k][var_len] == '=')
+        {
+            // Get value after '=' sign
+            tmp2 = ft_strdup(utils->envp[k] + equal_i + 1);
+            if (!tmp2)
+            {
+                fprintf(stderr, "[ERROR] Memory allocation failed for tmp2\n");
+                return (0);
+            }
+            tmp3 = ft_strjoin(*tmp, tmp2);
+            if (!tmp3)
+            {
+                fprintf(stderr, "[ERROR] Memory allocation failed for tmp3\n");
+                free(tmp2);
+                return (0);
+            }
+            free(*tmp);
+            *tmp = tmp3;
+            free(tmp2);
+            return (var_len + 1);
+        }
+        k++;
+    }
+    // If variable not found, skip the name
+    return (var_len + 1);
 }
 
 
@@ -119,7 +109,6 @@ char *replace_to_env(t_general *utils, char *str)
     char *tmp2 = NULL;
     char *tmp3 = NULL;
 
-    printf("[DEBUG] Starting replace_to_env with input str: %s\n", str);
     if (!tmp)
     {
         fprintf(stderr, "[ERROR] Memory allocation failed for tmp\n");
@@ -128,7 +117,6 @@ char *replace_to_env(t_general *utils, char *str)
 
     while (str[j])
     {
-        printf("[DEBUG] Current character: %c, index: %d\n", str[j], j);
 
         // Skip characters after dollar if they are digits
         j += skipped_char_after_dollar(j, str);
@@ -136,44 +124,38 @@ char *replace_to_env(t_general *utils, char *str)
         // Handle "$?"
         if (str[j] == '$' && str[j + 1] == '?')
         {
-            printf("[DEBUG] Found $? at index: %d\n", j);
             j += replace_question_mark(utils, &tmp);
             if (!tmp)
             {
                 fprintf(stderr, "[ERROR] replace_question_mark failed\n");
                 return NULL;
             }
-            printf("[DEBUG] tmp after $? replacement: %s\n", tmp);
         }
         // Handle "$" followed by variable names
         else if (str[j] == '$' && (str[j + 1] != ' ' &&
                  (str[j + 1] != '"' || str[j + 2] != '\0')) &&
                  str[j + 1] != '\0')
         {
-            printf("[DEBUG] Found variable starting with $ at index: %d\n", j);
+            
             j += subs_dollar_var(utils, str, &tmp, j);
             if (!tmp)
             {
                 fprintf(stderr, "[ERROR] subs_dollar_var failed or returned NULL\n");
                 return NULL;
             }
-            printf("[DEBUG] tmp after variable replacement: %s\n", tmp);
         }
         // Handle other characters
         else
         {
-            printf("[DEBUG] Appending character to tmp at index: %d\n", j);
             j = append_str(&tmp, &tmp2, &tmp3, j);
             if (!tmp)
             {
                 fprintf(stderr, "[ERROR] append_str failed\n");
                 return NULL;
             }
-            printf("[DEBUG] tmp after append: %s\n", tmp);
         }
     }
 
-    printf("[DEBUG] Final expanded string: %s\n", tmp);
     return tmp;
 }
 
