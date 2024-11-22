@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:11:04 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/22 15:18:52 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/22 17:06:44 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,12 @@ int	exec_complex_cmd(t_general *utils)
 	fd_in = STDIN_FILENO; // Start with standard input
 	while (utils->cmds)
 	{
-		printf ("Before Complex~~cmds->str[0]: %s\n", utils->cmds->str[0]);
 		utils->cmds = call_expander(utils, utils->cmds);
-		printf("After Complex~~cmds->str[0]: %s\n", utils->cmds->str[0]);
 		if (utils->cmds->next)
 			pipe(pipe_fd); // Create pipe for the current command
 		start_heredoc(utils, utils->cmds);
 		ft_fork(utils, pipe_fd, utils->cmds, fd_in);
-		close_pipes(pipe_fd);
+		close(pipe_fd[1]); // Close write end of the pipe
 		if (utils->cmds->prev)
 			close(fd_in);
 		fd_in = check_fd_heredoc(utils, utils->cmds, pipe_fd);

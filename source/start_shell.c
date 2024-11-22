@@ -127,13 +127,13 @@ int	start_shell(t_general *utils)
 	}
 }
 
-void	print_cmds(t_general *utils)
+void	print_cmds(t_cmds *cmds)
 {
 	t_cmds *ptr;
 	int i;
 	int count;
 
-	ptr = utils->cmds;
+	ptr = cmds;
 	count = 0;
 	printf("------printing cmds------\n");
 	while (ptr)
@@ -152,11 +152,11 @@ void	print_cmds(t_general *utils)
 	}
 }
 
-void	print_lexer(t_general *utils)
+void	print_lexer(t_lexer *lst)
 {
 	t_lexer *ptr;
 
-	ptr = utils->lexer_list;
+	ptr = lst;
 	printf("------printing lexer------\n");
 	while (ptr)
 	{

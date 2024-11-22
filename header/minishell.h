@@ -289,8 +289,8 @@ void	init_signal(t_general *utils);
 void	sigint_handler(int sig);
 
 /* Printing Functions */
-void	print_lexer(t_general *utils);
-void	print_cmds(t_general *utils);
+void	print_lexer(t_lexer *lst);
+void	print_cmds(t_cmds *cmds);
 
 /* Builtin Functions */
 int	ft_cd(char **args, t_env *env);
