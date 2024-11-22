@@ -181,13 +181,13 @@ char	**expander(t_general *utils, char **str)
 	while (str[i])
 	{
 		j = find_dollar(str[i]); // get the index of cha after dollar sign
-		if (str[i][j - 2] != '\'' && j != 0 && str[i][j] != '\0') // check if the current char is not in single quotes
+		if (str[i][j - 2] != '\'' && j != 0 && str[i][j] != '\0') 
 		{
 			temp = replace_to_env(utils, str[i]); 
 			free(str[i]); // free old str memory
 			str[i] = temp; 
 		}
-		if (ft_strncmp(str[0], "export", ft_strlen(str[0]) - 1) != 0) // remove quotes if not export
+		if (ft_strncmp(str[0], "export", ft_strlen(str[0]) - 1) != 0) 
 		{
 			str[i] = remove_quotes(str[i], '\"');
 			str[i] = remove_quotes(str[i], '\'');
