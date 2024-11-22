@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:47:46 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/20 13:36:35 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/22 17:12:40 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ char	**form_str(char **str, int size, t_parser *parser)
 
 	ptr = parser->lexer_list;
 	i = 0;
-	while (ptr && size > 0)
+	while (size > 0 && ptr->token_type != PIPE)
 	{
-		if (ptr->token_type != PIPE && ptr->str != NULL)
+		if (ptr->str != NULL)
 		{
 			str[i] = ft_strdup(ptr->str);  // Copy string only if not a pipe
 			i++;

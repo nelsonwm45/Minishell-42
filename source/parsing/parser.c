@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:45:12 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/20 13:36:17 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/22 17:13:35 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	start_parsing(t_general *utils)
 		// If we encounter a PIPE token, this means we have reached the end of a command.
 		// We need to prepare to start parsing the next command after the pipe.
 		// Remove the PIPE token from the lexer list as it's not part of any command
-		
 		if (utils->lexer_list->token_type == PIPE)
 			del_one_node(&utils->lexer_list, utils->lexer_list->i);
 		// Check for pipe-related syntax errors before proceeding
@@ -94,5 +93,7 @@ int	start_parsing(t_general *utils)
 		// This allows us to start parsing the next command (if any) in the next iteration
 		utils->lexer_list = parser.lexer_list;
 	}
+	print_cmds(utils->cmds);
 	return (EXIT_SUCCESS);
 }
+
