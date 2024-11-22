@@ -110,7 +110,6 @@ int ft_export(char **args, t_env *env, t_env *secret)
         printf("Error: env or secret is NULL\n");
         return (-1);
     }
-
     printf("Entering ft_export\n");
 
     new_env = 0;
@@ -142,11 +141,13 @@ int ft_export(char **args, t_env *env, t_env *secret)
                 printf("Adding new environment variable to env: %s\n", args[1]);
                 env_add(args[1], env);
             }
-            printf("Adding new environment variable to secret: %s\n", args[1]);
-            env_add(args[1], secret);
+            else
+            {
+                printf("Adding new environment variable to secret: %s\n", args[1]);
+                env_add(args[1], secret);
+            }
         }
     }
-
     printf("Exiting ft_export\n");
     return (SUCCESS);
 }
