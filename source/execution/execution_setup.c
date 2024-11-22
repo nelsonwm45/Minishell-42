@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/20 17:52:38 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/22 12:05:09 by nchok            ###   ########.fr       */
+/*   Created: 2024/11/12 11:11:04 by nchok             #+#    #+#             */
+/*   Updated: 2024/11/22 12:05:50 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,33 +31,22 @@ int	setup_executor(t_general *utils)
 
 void	exec_simple_cmd(t_general *utils, t_cmds *cmds)
 {
-	int pid;
-	int status;
+	int	pid;
+	int	status;
 
 	utils->cmds = call_expander(utils, utils->cmds);
-	if (cmds->builtin == CD || cmds->builtin == EXPORT
-		|| cmds->builtin == UNSET || cmds->builtin == EXIT)
+	if (cmds->builtin == CD || cmds->builtin == PWD || cmds->builtin == EXPORT || cmds->builtin == UNSET)
 	{
 		utils->exit_status = prep_builtin(utils, cmds, utils->mini);
 		return ;
 	}
-	//   // Handle `exit` in the parent shell process
-	// if (cmds->builtin == EXIT)
-	// {
-	// 	prep_builtin(utils, cmds, utils->mini);
-	// 	return ;
-	// }
-	// {
-	// 	utils->exit_status = prep_builtin(utils, cmds, utils->mini);
-	// 	return ;
-	// }
 
-	//   // Handle `exit` in the parent shell process
-	// if (cmds->builtin == EXIT)
-	// {
-	//     prep_builtin(utils, cmds, utils->mini);
-	//     return ;
-	// }
+	  // Handle `exit` in the parent shell process
+    if (cmds->builtin == EXIT)
+    {
+        prep_builtin(utils, cmds, utils->mini);
+        return;
+    }
 	start_heredoc(utils, cmds);
 	pid = fork();
 	if (pid < 0)
@@ -71,8 +60,8 @@ void	exec_simple_cmd(t_general *utils, t_cmds *cmds)
 
 int	exec_complex_cmd(t_general *utils)
 {
-	int pipe_fd[2];
-	int fd_in;
+	int	pipe_fd[2];
+	int	fd_in;
 
 	fd_in = STDIN_FILENO;
 	while (utils->cmds)
