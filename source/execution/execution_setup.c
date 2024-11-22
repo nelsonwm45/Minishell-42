@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:11:04 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/22 12:05:50 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/22 12:09:12 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,18 @@ void	exec_simple_cmd(t_general *utils, t_cmds *cmds)
 	int	status;
 
 	utils->cmds = call_expander(utils, utils->cmds);
-	if (cmds->builtin == CD || cmds->builtin == PWD || cmds->builtin == EXPORT || cmds->builtin == UNSET)
+	if (cmds->builtin == EXIT || cmds->builtin == CD || cmds->builtin == EXPORT || cmds->builtin == UNSET)
 	{
 		utils->exit_status = prep_builtin(utils, cmds, utils->mini);
 		return ;
 	}
 
-	  // Handle `exit` in the parent shell process
-    if (cmds->builtin == EXIT)
-    {
-        prep_builtin(utils, cmds, utils->mini);
-        return;
-    }
+	//   // Handle `exit` in the parent shell process
+    // if (cmds->builtin == EXIT)
+    // {
+    //     prep_builtin(utils, cmds, utils->mini);
+    //     return;
+    // }
 	start_heredoc(utils, cmds);
 	pid = fork();
 	if (pid < 0)
