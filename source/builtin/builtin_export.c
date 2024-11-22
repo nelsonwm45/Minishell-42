@@ -79,9 +79,11 @@ int is_in_env(t_env *env, char *args)
 {
     char var_name[BUFF_SIZE];
     char env_name[BUFF_SIZE];
+    t_env *ptr;
 
     get_env_name(var_name, args);
 
+   ptr = env;
     while (env)
     {
         if (env->value)  // Ensure env->value is not NULL before using it
@@ -97,6 +99,7 @@ int is_in_env(t_env *env, char *args)
         }
         env = env->next;
     }
+    env = ptr;
     return (0);
 }
 

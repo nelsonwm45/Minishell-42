@@ -108,7 +108,7 @@ int	start_shell(t_general *utils)
 		setup_executor(utils);
 		// Restore signals for the main process after execution
 		run_signals(1);
-		clean_utils(utils);
+		// clean_utils(utils);
 
 		token = malloc(sizeof(t_token));
 		if (!token)
@@ -118,7 +118,7 @@ int	start_shell(t_general *utils)
 			free(line);
 			continue ;
 		}
-
+		
 		token->str = utils->line;
 		token->type = COMMAND;
 		token->next = NULL;
