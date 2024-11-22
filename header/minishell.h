@@ -240,7 +240,7 @@ int	prep_builtin(t_general *utils, t_cmds *cmds, t_shell *mini);
 void	exec_simple_cmd(t_general *utils, t_cmds *cmds);
 int		exec_complex_cmd(t_general *utils);
 void	handle_cmd(t_general *utils, t_cmds *cmds);
-int	search_cmd(t_general *utils, t_cmds *cmds);
+int		search_cmd(t_general *utils, t_cmds *cmds);
 int		cmd_not_found(char *cmd);
 char	*join_split_str(char **split_str, char *new_str);
 char	**resplit_str(char **double_arr);
@@ -249,11 +249,10 @@ char	**resplit_str(char **double_arr);
 void	dup2_cmd(t_cmds *cmds, t_general *utils, int pipe_fd[2], int fd_in);
 int		wait_pipe(t_general *utils, int *pid, int pipecount);
 t_cmds	*travel_first_cmds(t_cmds *cmds);
+int	close_pipes(int fd[2]);
 
 int	check_fd_heredoc(t_general *utils, t_cmds *cmds, int pipe_fd[2]);
 int	ft_fork(t_general *utils, int pipe_fd[2], int fd_in, t_cmds *cmds);
-
-
 
 /* Expander */
 t_cmds	*call_expander(t_general *utils, t_cmds *cmds);
@@ -273,9 +272,11 @@ char	*char_to_str(char c);
 
 /* Heredoc */
 int	start_heredoc(t_general *utils, t_cmds *cmds);
-char	*create_hd_filename(void);
+char	*create_hd_filename(t_general *utils);
 int	mini_heredoc(t_general *utils, t_lexer *ptr, char *filename);
 int	create_heredoc(t_general *utils, t_lexer *ptr, char *filename, int have_quote);
+void	print_redir(t_lexer *ptr);
+char	*remove_pwd(char *pwd);
 
 /* Redirections */
 int	check_redir(t_cmds *cmds);

@@ -63,7 +63,6 @@ SRC_FILES	=	main.c \
 				signal.c \
 				clean.c \
 
-
 BUILTIN_FILES =	builtin_cd.c \
 				builtin_echo.c \
 				builtin_env.c \
@@ -77,6 +76,7 @@ EXECUTE_FILES = builtin.c\
 				handle_cmd.c\
 				handle_cmd_utils.c\
 				pipe.c \
+				pipe_utils.c \
 
 ENVIRONMENT_FILES = env.c\
 				 env_tools.c\
@@ -102,6 +102,7 @@ EXPANDER_FILES	=	expander.c \
 
 HEREDOC_FILES = heredoc.c \
 				redirection.c \
+				heredoc_utils.c \
 
 OBJ_FILES = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o)) \
 			$(addprefix $(OBJ_DIR), $(BUILTIN_FILES:.c=.o))\

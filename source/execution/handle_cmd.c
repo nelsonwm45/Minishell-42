@@ -32,10 +32,11 @@ void	handle_cmd(t_general *utils, t_cmds *cmds)
 
 int	search_cmd(t_general *utils, t_cmds *cmds)
 {
-	int	i;
+	int		i;
 	char	*new_cmd;
 
 	cmds->str = resplit_str(cmds->str);
+	i = 0;
 	if (!access(cmds->str[0], F_OK))
 		execve(cmds->str[0], cmds->str, utils->envp);
 	while (utils->path[i])
