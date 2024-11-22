@@ -16,7 +16,9 @@ static void print_error(char **args)
 {
     ft_putstr_fd("cd: ", 2);
     if (args[2])
+    {
         ft_putstr_fd("string not in pwd: ", 2);
+    }
     else
     {
         ft_putstr_fd(strerror(errno), 2);
