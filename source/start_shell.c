@@ -78,50 +78,53 @@ int	start_shell(t_general *utils)
 	char *line;
 
 	init_shell(&mini, utils);
-	line = readline("\033[31m42Minishell-1.0$ \033[0m");
-	utils->line = ft_strtrim(line, " ");
-	if (!utils->line)
+	while (1)
 	{
-		ft_putendl_fd("exit", STDOUT_FILENO);
-		exit(EXIT_SUCCESS);
-	}
-	if (utils->line[0] == '\0')
-		return (clean_utils(utils));
-	add_history(line);
-	free(line);
+		line = readline("\033[31m42Minishell-1.0$ \033[0m");
+		utils->line = ft_strtrim(line, " ");
+		if (!utils->line)
+		{
+			ft_putendl_fd("exit", STDOUT_FILENO);
+			exit(EXIT_SUCCESS);
+		}
+		if (utils->line[0] == '\0')
+			return (clean_utils(utils));
+		add_history(line);
+		free(line);
 
-	if (closed_quotes(utils->line) == FALSE)
-	{
-		return (error_message(2, utils));
-	}
-	utils->mini = &mini;
-	// Modify signals for child process
-	run_signals(2);
-	if (read_token(utils) == 0)
-	{
-		return (error_message(1, utils));
-	}
-	start_parsing(utils);
-	setup_executor(utils);
-	// Restore signals for the main process after execution
-	run_signals(1);
-	clean_utils(utils);
-	return (0);
+		if (closed_quotes(utils->line) == FALSE)
+		{
+			return (error_message(2, utils));
+		}
+		utils->mini = &mini;
+		// Modify signals for child process
+		run_signals(2);
+		if (read_token(utils) == 0)
+		{
+			return (error_message(1, utils));
+		}
+		start_parsing(utils);
+		setup_executor(utils);
+		// Restore signals for the main process after execution
+		run_signals(1);
+		// clean_utils(utils);
+		return (0);
 
-		// token = malloc(sizeof(t_token));
-		// if (!token)
-		// {
-		// 	ft_putendl_fd("Failed to allocate memory for token",
-		// 		STDERR_FILENO);
-		// 	free(line);
-		// 	continue ;
-		// }
-		
-		// token->str = utils->line;
-		// token->type = COMMAND;
-		// token->next = NULL;
+			// token = malloc(sizeof(t_token));
+			// if (!token)
+			// {
+			// 	ft_putendl_fd("Failed to allocate memory for token",
+			// 		STDERR_FILENO);
+			// 	free(line);
+			// 	continue ;
+			// }
+			
+			// token->str = utils->line;
+			// token->type = COMMAND;
+			// token->next = NULL;
 
-		// free(token);
+			// free(token);
+	}
 }
 
 void	print_cmds(t_cmds *cmds)
