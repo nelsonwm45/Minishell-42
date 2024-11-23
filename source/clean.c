@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:10:40 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/20 13:54:29 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/23 16:15:20 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	clean_utils(t_general *utils)
 		free(utils->pid);
 	process_envp(utils->envp, utils);
 	utils->reset = 1;
-	start_shell(utils);
+	// start_shell(utils);
 	return (0);
 }
 
@@ -84,3 +84,9 @@ void	clean_cmd(t_cmds **cmds)
 	}
 	*cmds = NULL;
 }
+
+// int	reset_utils(t_general *utils)
+// {
+
+// 	return (0);
+// }

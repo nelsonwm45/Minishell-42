@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 02:11:34 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/22 02:11:34 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/23 16:31:29 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,9 @@ char	*create_hd_filename(t_general *utils)
 	file_index = ft_itoa(i);
 	i++;
 	pwd = utils->pwd;
-	printf("pwd: %s\n", pwd);
 	pwd = remove_pwd(pwd);
 	tmp = ft_strjoin(pwd, "/.minishell_hd_");
-	printf("tmp: %s\n", tmp);
 	filename = ft_strjoin(tmp, file_index);
-	printf("filename: %s\n", filename);
 	free(tmp);
 	free(file_index);
 	return (filename);
@@ -129,17 +126,12 @@ int	create_heredoc(t_general *utils, t_lexer *ptr, char *filename,
 {
 	int		fd;
 	char	*line;
-	int		cmp;
 
 	fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	printf("filename: %s\n", filename);
-	print_redir(ptr);
 	line = readline("\033[0;32mHeredoc> \033[0m");
 	while (line && ft_strncmp(ptr->str, line, ft_strlen(ptr->str)) != 0
 		&& utils->stop_heredoc != 1)
 	{
-		cmp = ft_strncmp(ptr->str, line, ft_strlen(ptr->str));
-		printf("cmp: %d\n", cmp);
 		if (have_quote == 0)
 			line = expand_str(utils, line);
 		ft_putendl_fd(line, fd);
