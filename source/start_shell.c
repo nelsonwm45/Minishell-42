@@ -147,6 +147,8 @@ void	print_cmds(t_cmds *cmds)
 		}
 		printf("builtin: %d\n", ptr->builtin);
 		printf("redir_count: %d\n", ptr->redir_count);
+		if (ptr->hd_file_name)
+			printf("hd_file_name: %s\n", ptr->hd_file_name);
 		count++;
 		ptr = ptr->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:11:04 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/22 17:06:44 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/23 17:06:57 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	exec_complex_cmd(t_general *utils)
 		if (utils->cmds->prev)
 			close(fd_in);
 		fd_in = check_fd_heredoc(utils, utils->cmds, pipe_fd);
+
 		if (utils->cmds->next)
 			utils->cmds = utils->cmds->next;
 		else
