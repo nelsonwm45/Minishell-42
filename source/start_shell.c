@@ -108,7 +108,6 @@ int	start_shell(t_general *utils)
 		// Restore signals for the main process after execution
 		run_signals(1);
 		// clean_utils(utils);
-		return (0);
 
 			// token = malloc(sizeof(t_token));
 			// if (!token)
@@ -125,6 +124,7 @@ int	start_shell(t_general *utils)
 
 			// free(token);
 	}
+	return (0);
 }
 
 void	print_cmds(t_cmds *cmds)
