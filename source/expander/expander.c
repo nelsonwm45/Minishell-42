@@ -34,13 +34,13 @@ t_cmds	*call_expander(t_general *utils, t_cmds *cmds)
 		2. return length of the string till the "equal sign" + 1 if found matched env variable
 		3. return the length of str after the dollar sign if no matched env variable found
 */
-int    subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
+int subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
 {
-    int    k;
-    int    equal_i;
-    int    var_len;
-    char   *tmp2;
-    char   *tmp3;
+    int k;
+    int equal_i;
+    int var_len;
+    char *tmp2;
+    char *tmp3;
 
     k = 0;
     // Calculate variable length first
@@ -52,11 +52,19 @@ int    subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
     if (var_len == 0)
         return (1);
 
+    printf("[DEBUG] Variable name length: %d, name: %.*s\n", var_len, var_len, &str[j + 1]);
+
+    // Debug: Print envp before searching
+    printf("[DEBUG] Current envp:\n");
+    for (int i = 0; utils->envp[i] != NULL; i++) {
+        printf("envp[%d]: %s\n", i, utils->envp[i]);
+    }
+
     while (utils->envp[k])
     {
         equal_i = get_equal_sign_index(utils->envp[k]);
         // Compare only the variable name part and check for exact match
-        if (equal_i > 0 && ft_strncmp(utils->envp[k], &str[j + 1], var_len) == 0 
+        if (equal_i > 0 && strncmp(utils->envp[k], &str[j + 1], var_len) == 0 
             && utils->envp[k][var_len] == '=')
         {
             // Get value after '=' sign
@@ -76,11 +84,14 @@ int    subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
             free(*tmp);
             *tmp = tmp3;
             free(tmp2);
+            printf("[DEBUG] Substituted value: %s\n", *tmp);
             return (var_len + 1);
         }
         k++;
     }
+
     // If variable not found, skip the name
+    printf("[DEBUG] Variable '%.*s' not found in envp\n", var_len, &str[j + 1]);
     return (var_len + 1);
 }
 
