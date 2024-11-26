@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void print_error(char **args)
+static void    print_error(char **args)
 {
     ft_putstr_fd("cd: ", 2);
     if (args[2])
@@ -33,7 +33,7 @@ static char *get_env_path(t_env *env, const char *var, size_t len)
     int i;
     int j;
     int s_alloc;
-
+    
     while (env && env->next != NULL)
     {
         if (ft_strncmp(env->value, var, len) == 0 && env->value[len] == '=')

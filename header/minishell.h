@@ -194,7 +194,7 @@ void	process_token(t_general *utils, int *ret);
 /* Env Functions */
 int	process_envp(char **envp, t_general *utils);
 char	**duplicate_env(char **envp);
-// int	get_pwd(t_general *utils);
+int	get_pwd(t_general *utils);
 int	print_envp(t_general *utils); // debug purpose
 
 /* Error Functions */
@@ -285,6 +285,7 @@ int	mini_heredoc(t_general *utils, t_lexer *ptr, char *filename);
 int	create_heredoc(t_general *utils, t_lexer *ptr, char *filename, int have_quote);
 void	print_redir(t_lexer *ptr);
 char	*remove_pwd(char *pwd);
+int check_child_interrupt(int pid);
 
 /* Redirections */
 int	check_redir(t_cmds *cmds);
@@ -340,5 +341,7 @@ char	*check_dir(char *bin, char *command);
 void	run_signals(int sig);
 void	restore_prompt(int sig);
 void	sig_init(int sig);
-void	sig_quit(int sig);
+
+/*Global variable*/
+extern int g_ret_number;
 #endif

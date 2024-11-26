@@ -37,12 +37,12 @@ int		skipped_char_after_dollar(int j, char *str)
 */
 int	append_str(char **tmp, char **tmp2, char **tmp3, int j)
 {
-	*tmp2 = char_to_str(j);
-	*tmp3 = ft_strjoin(*tmp, *tmp2);
-	free(*tmp);
-	*tmp = *tmp3;
-	free(*tmp2);
-	return (j++);
+    *tmp2 = char_to_str((*tmp)[j]);
+    *tmp3 = ft_strjoin(*tmp, *tmp2);
+    free(*tmp);
+    *tmp = *tmp3;
+    free(*tmp2);
+    return (j + 1);
 }
 
 /*
