@@ -69,15 +69,17 @@ void	init_shell(t_shell *mini, t_general *utils)
 	mini->pipe_input_fd = -1;
 	mini->pipe_output_fd = -1;
 	mini->return_code = 0;
+	utils->mini = mini;
 }
 
 int	start_shell(t_general *utils)
 {
 	t_shell mini;
-	// t_token *token;
 	char *line;
+	int ret;
 
 	init_shell(&mini, utils);
+	ret = EXIT_SUCCESS;
 	while (1)
 	{
 		line = readline("\033[31m42Minishell-1.0$ \033[0m");
@@ -88,41 +90,26 @@ int	start_shell(t_general *utils)
 			exit(EXIT_SUCCESS);
 		}
 		if (utils->line[0] == '\0')
-			return (clean_utils(utils));
+			ret = EXIT_FAILURE;
 		add_history(line);
 		free(line);
-
-		if (closed_quotes(utils->line) == FALSE)
+		if (ret != EXIT_FAILURE)
 		{
-			return (error_message(2, utils));
+			if (closed_quotes(utils->line) == FALSE)
+				ret = error_message(2, utils);
+			if (read_token(utils) == 0)
+				ret = error_message(1, utils);
+			if (first_single_token(utils->lexer_list) == EXIT_FAILURE)
+				ret = EXIT_FAILURE;
 		}
-		utils->mini = &mini;
-		// Modify signals for child process
 		run_signals(2);
-		if (read_token(utils) == 0)
-		{
-			return (error_message(1, utils));
-		}
-		start_parsing(utils);
-		setup_executor(utils);
-		// Restore signals for the main process after execution
+		if (ret != EXIT_FAILURE)
+			ret = start_parsing(utils);
+		if (ret != EXIT_FAILURE)
+			ret = setup_executor(utils);
 		run_signals(1);
 		clean_utils(utils);
-
-			// token = malloc(sizeof(t_token));
-			// if (!token)
-			// {
-			// 	ft_putendl_fd("Failed to allocate memory for token",
-			// 		STDERR_FILENO);
-			// 	free(line);
-			// 	continue ;
-			// }
-			
-			// token->str = utils->line;
-			// token->type = COMMAND;
-			// token->next = NULL;
-
-			// free(token);
+		ret = EXIT_SUCCESS;
 	}
 	return (0);
 }

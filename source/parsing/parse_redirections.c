@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:58:34 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/20 13:39:23 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/26 12:31:45 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	recog_redirections(t_parser *parser)
 	if (!ptr->next) // if next is NULL
 		parsing_error(1, parser->utils, parser->utils->lexer_list);
 	if (ptr->next->token_type)
-		double_token_error(parser->utils, parser->lexer_list, ptr->next->token_type);
+		double_token_error(parser->lexer_list, ptr->next->token_type);
 	if (ptr->token_type >= BIG && ptr->token_type <= SMALLSMALL) // check if token is redirections
 		add_redirections(parser, ptr);
 	recog_redirections(parser);
