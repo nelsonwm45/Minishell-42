@@ -6,18 +6,18 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:45:12 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/26 12:34:13 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/26 16:47:50 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../header/minishell.h"
+#include "../../header/minishell.h"
 
 /*
 	count the number of pipes in the lexer list
 */
 int	count_pipes(t_general *utils)
 {
-	t_lexer *ptr;
+	t_lexer	*ptr;
 
 	ptr = utils->lexer_list;
 	utils->pipecount = 0;
@@ -58,9 +58,7 @@ t_parser	init_parser(t_general *utils, t_lexer *lexer_list)
 
 int	start_parsing(t_general *utils)
 {
-	// t_cmds			*cmds;
-	// t_parser		parser;
-	t_type			token;
+	t_type	token;
 
 	utils->cmds = NULL;
 	count_pipes(utils);
@@ -69,29 +67,20 @@ int	start_parsing(t_general *utils)
 		return (double_token_error(utils->lexer_list, token));
 	if (process_parser(utils) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	// while (utils->lexer_list)
-	// {
-	// 	if (utils->lexer_list->token_type == PIPE)
-	// 		del_one_node(&utils->lexer_list, utils->lexer_list->i);
-	// 	if (pipes_errors(utils, utils->lexer_list->token_type))
-	// 		return (EXIT_FAILURE);
-	// 	parser = init_parser(utils, utils->lexer_list);
-	// 	cmds = init_cmds(&parser);
-	// 	print_lexer(cmds->redir);
-	// 	if (!cmds)
-	// 		parsing_error(1, utils, utils->lexer_list);
-	// 	if (!utils->cmds)
-	// 		utils->cmds = cmds; // Set the head of the list if it's empty
-	// 	else
-	// 		add_to_backcmds(&utils->cmds, cmds); // Append to the end of the list otherwise
-	// 	utils->lexer_list = parser.lexer_list;
-	// }
 	return (EXIT_SUCCESS);
 }
 
+/*
+	@brief
+	- process the lexer list
+	- create a cmds node for each command
+	- append the cmds node to the back of the cmds list
+	- update the lexer list to the next command
+	- return EXIT_SUCCESS if successful
+*/
 int	process_parser(t_general *utils)
 {
-	t_cmds	*cmds;
+	t_cmds		*cmds;
 	t_parser	parser;
 
 	while (utils->lexer_list)
@@ -105,11 +94,10 @@ int	process_parser(t_general *utils)
 		if (!cmds)
 			parsing_error(1, utils, utils->lexer_list);
 		if (!utils->cmds)
-			utils->cmds = cmds; // Set the head of the list if it's empty
+			utils->cmds = cmds;
 		else
-			add_to_backcmds(&utils->cmds, cmds); // Append to the end of the list otherwise
+			add_to_backcmds(&utils->cmds, cmds);
 		utils->lexer_list = parser.lexer_list;
 	}
 	return (EXIT_SUCCESS);
 }
-
