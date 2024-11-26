@@ -24,7 +24,10 @@ t_lexer	*create_node(char *str, t_type token_type)
 		node->str = str;
 	else
 		node->str = NULL;
-	node->token_type = token_type;
+	if (token_type) 
+		node->token_type = token_type;
+	else
+		node->token_type = 0;
 	node->i = i++;
 	node->prev = NULL;
 	node->next = NULL;

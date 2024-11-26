@@ -89,11 +89,13 @@ SIGNAL_FILES = signal.c\
 
 PARSING_FILES = read_token.c \
 				parser.c \
+				parser_utils.c \
 				parse_redirections.c \
 				lexer.c \
 				lexer_utils.c \
 				cmds_utils.c \
 				cmds.c \
+				single_token.c \
 				
 
 EXPANDER_FILES	=	expander.c \

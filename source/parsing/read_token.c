@@ -157,6 +157,7 @@ int	add_node_to_lexer(char *str, t_type token_type, t_lexer **lexer_list)
 	add_to_backlexer(node, lexer_list);
 	return (1);
 }
+
 /*
 	still need to fix
 */

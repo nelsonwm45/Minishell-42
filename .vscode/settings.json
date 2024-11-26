@@ -2,7 +2,8 @@
 	"files.associations": {
 		"libft.h": "c",
 		"minishell.h": "c",
-		"dirent.h": "c"
+		"dirent.h": "c",
+		"ranges": "c"
 	},
 	"better-comments.highlightPlainText": true
 }

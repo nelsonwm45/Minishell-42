@@ -185,6 +185,8 @@ t_type	get_token_type(int c);
 int	handle_token(char *str, int i, t_lexer **lexer_list);
 int	handle_word(char *str, int i, t_lexer **lexer_list);
 int	handle_quotes(int i, char *str, char quote);
+int	first_single_token(t_lexer *lexer);
+t_type	scan_first_token(t_lexer *lexer);
 
 /* Env Functions */
 int	process_envp(char **envp, t_general *utils);
@@ -193,7 +195,7 @@ char	**duplicate_env(char **envp);
 int	print_envp(t_general *utils); // debug purpose
 
 /* Error Functions */
-int	double_token_error(t_general *utils, t_lexer *lexer, t_type token_type);
+int	double_token_error(t_lexer *lexer, t_type token_type);
 void	parsing_error(int error, t_general *utils, t_lexer *lexer);
 int	pipes_errors(t_general *utils, t_type token_type);
 
@@ -219,6 +221,9 @@ int	count_pipes(t_general *utils);
 int	pipes_errors(t_general *utils, t_type token_type);
 t_parser	init_parser(t_general *utils, t_lexer *lexer_list);
 int	start_parsing(t_general *utils);
+int	process_parser(t_general *utils);
+t_type	scan_double_token(t_lexer *lexer);
+int	pipe_first(t_lexer *lexer);
 
 /* Parsing - Commands Structs */
 t_cmds	*init_cmds(t_parser *parser);

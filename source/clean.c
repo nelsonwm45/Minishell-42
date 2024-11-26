@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:10:40 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/23 16:15:20 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/26 11:20:56 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	free_array(char **arr)
 
 int	clean_utils(t_general *utils)
 {
-	clean_cmd(&utils->cmds);
+	if (utils->cmds)
+		clean_cmd(&utils->cmds);
 	free_array(utils->path);
 	free(utils->line);
 	if (utils->pid)
