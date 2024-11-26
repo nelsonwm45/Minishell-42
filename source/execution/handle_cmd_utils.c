@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:55:02 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/18 13:29:31 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/26 17:04:51 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,5 @@ char	**resplit_str(char **double_arr)
 	free_array(double_arr);
 	ret_str = ft_split(joined_str, ' ');
 	free(joined_str);
-	// joined_str = join_split_str(ret_str, NULL);
-	// free_array(ret_str);
-	// ret_str = ft_split(joined_str, ' ');
-	// free(joined_str);
 	return (ret_str);
 }

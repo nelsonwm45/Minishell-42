@@ -14,14 +14,14 @@
 
 void	ft_skip_spacenl(const char *str, int *i)
 {
-	while ((str[*i] == ' ' || str[*i] == '\t' || str[*i] == '\n')
-	|| (str[*i] == '\r' || str[*i] == '\v' || str[*i] == '\f'))
+	while ((str[*i] == ' ' || str[*i] == '\t' || str[*i] == '\n') 
+		|| (str[*i] == '\r' || str[*i] == '\v' || str[*i] == '\f'))
 		(*i)++;
 }
 
-static int			invalid_lvl(const char *str)
+static int	invalid_lvl(const char *str)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -33,7 +33,7 @@ static int			invalid_lvl(const char *str)
 	return (0);
 }
 
-static int			get_lvl(const char *str)
+static int	get_lvl(const char *str)
 {
 	int	i;
 	int	sign;
@@ -54,7 +54,7 @@ static int			get_lvl(const char *str)
 	return (num * sign);
 }
 
-void				increment_shell_level(t_env *env)
+void	increment_shell_level(t_env *env)
 {
 	int		shell_level;
 	char	env_name[BUFF_SIZE];
