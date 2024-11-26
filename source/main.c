@@ -83,6 +83,7 @@ t_env	*convert_envp_to_list(char **envp)
 int	main(int ac, char **av, char **envp)
 {
 	t_general utils;
+	t_shell mini;
 
 	if (ac != 1 || av[1] != NULL)
 	{
@@ -91,6 +92,7 @@ int	main(int ac, char **av, char **envp)
 	}
 	process_envp(envp, &utils);
 	utils.env_vars = convert_envp_to_list(envp);
+	init_shell(&mini, &utils);
 	run_signals(1); // Set up signals for the main process
 	start_shell(&utils);
 	return (0);

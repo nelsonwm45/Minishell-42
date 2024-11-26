@@ -187,6 +187,8 @@ int	handle_word(char *str, int i, t_lexer **lexer_list);
 int	handle_quotes(int i, char *str, char quote);
 int	first_single_token(t_lexer *lexer);
 t_type	scan_first_token(t_lexer *lexer);
+int	ft_readline(t_general *utils);
+void	process_token(t_general *utils, int *ret);
 
 /* Env Functions */
 int	process_envp(char **envp, t_general *utils);

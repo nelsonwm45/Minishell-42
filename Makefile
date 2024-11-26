@@ -62,6 +62,8 @@ SRC_FILES	=	main.c \
 				error.c \
 				signal.c \
 				clean.c \
+				quote_error.c \
+				print.c \
 
 BUILTIN_FILES =	builtin_cd.c \
 				builtin_echo.c \
