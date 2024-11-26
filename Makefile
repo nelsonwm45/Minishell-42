@@ -87,6 +87,7 @@ ENVIRONMENT_FILES = env.c\
 				 sort_env.c\
 				 env_utils.c \
 				
+				
 SIGNAL_FILES = signal.c\
 
 PARSING_FILES = read_token.c \
@@ -98,6 +99,7 @@ PARSING_FILES = read_token.c \
 				cmds_utils.c \
 				cmds.c \
 				single_token.c \
+				read_token_utils.c \
 				
 
 EXPANDER_FILES	=	expander.c \
