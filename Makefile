@@ -64,6 +64,7 @@ SRC_FILES	=	main.c \
 				clean.c \
 				quote_error.c \
 				print.c \
+				prep_shell.c \
 
 BUILTIN_FILES =	builtin_cd.c \
 				builtin_echo.c \

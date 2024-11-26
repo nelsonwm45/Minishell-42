@@ -2,19 +2,15 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   read_token.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
-	+:+     */
-/*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+      
-	+#+        */
-/*                                                +#+#+#+#+#+  
-	+#+           */
-/*   Created: 2024/10/18 02:16:40 by nchok             #+#    #+#             */
-/*   Updated: 2024/10/28 16:24:51 by nchok            ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/26 16:48:16 by nchok             #+#    #+#             */
+/*   Updated: 2024/11/26 16:48:16 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
-
 
 /*
 	@brief
@@ -30,16 +26,16 @@
 */
 int	handle_token(char *str, int i, t_lexer **lexer_list)
 {
-	t_type token;
+	t_type	token;
 
-	token = get_token_type(str[i]);// get token type in str-num format
-	if (token == BIG && str[i + 1] == '>') // check if double token
+	token = get_token_type(str[i]);
+	if (token == BIG && str[i + 1] == '>')
 	{
 		if (add_node_to_lexer(ft_strdup(">>"), BIGBIG, lexer_list) == 0)
 			return (ERROR);
 		return (2);
 	}
-	else if (token == SMALL && str[i + 1] == '<') // check if double token
+	else if (token == SMALL && str[i + 1] == '<')
 	{
 		if (add_node_to_lexer(ft_strdup("<<"), SMALLSMALL, lexer_list) == 0)
 			return (ERROR);
@@ -56,7 +52,7 @@ int	handle_token(char *str, int i, t_lexer **lexer_list)
 
 int	add_node_to_lexer(char *str, t_type token_type, t_lexer **lexer_list)
 {
-	t_lexer *node;
+	t_lexer	*node;
 
 	node = create_node(str, token_type);
 	if (!node)
@@ -66,18 +62,19 @@ int	add_node_to_lexer(char *str, t_type token_type, t_lexer **lexer_list)
 }
 
 /*
-	still need to fix
+	@brief
+	- handle the word in the line
 */
 int	handle_word(char *str, int i, t_lexer **lexer_list)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (str[i + j] && is_token(str[i + j]) == FALSE)
 	{
 		j += handle_quotes(i + j, str, '\"');
 		j += handle_quotes(i + j, str, '\'');
-		if (is_spaces(str[i + j]) == TRUE) // if space found, break
+		if (is_spaces(str[i + j]) == TRUE)
 			break ;
 		else
 			j++;
@@ -87,10 +84,15 @@ int	handle_word(char *str, int i, t_lexer **lexer_list)
 	return (j);
 }
 
+/*
+	@brief
+	- read the token from the line
+	- pass the token to the lexer
+*/
 int	read_token(t_general *utils)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (utils->line[i])

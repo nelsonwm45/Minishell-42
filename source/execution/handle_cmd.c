@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:26:00 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/23 16:30:24 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/26 17:12:24 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	handle_cmd(t_general *utils, t_cmds *cmds)
 	if (cmds->redir)
 		if (check_redir(cmds))
 			exit(1);
-	if (cmds->builtin != 0) // execute builtin here
+	if (cmds->builtin != 0)
 	{
 		exit_code = prep_builtin(utils, cmds, utils->mini);
 		exit(exit_code);
@@ -49,4 +49,3 @@ int	search_cmd(t_general *utils, t_cmds *cmds)
 	}
 	return (cmd_not_found(cmds->str[0]));
 }
-

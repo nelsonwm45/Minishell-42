@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:11:04 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/26 10:28:44 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/26 17:12:43 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	exec_simple_cmd(t_general *utils, t_cmds *cmds)
 	int	status;
 
 	utils->cmds = call_expander(utils, utils->cmds);
-	if (cmds->builtin == EXIT || cmds->builtin == CD || cmds->builtin == EXPORT || cmds->builtin == UNSET)
+	if (cmds->builtin == EXIT || cmds->builtin == CD || cmds->builtin == EXPORT
+		|| cmds->builtin == UNSET)
 	{
 		utils->exit_status = prep_builtin(utils, cmds, utils->mini);
 		return ;
@@ -56,16 +57,15 @@ int	exec_complex_cmd(t_general *utils)
 	int	pipe_fd[2];
 	int	fd_in;
 
-
-	fd_in = STDIN_FILENO; // Start with standard input
+	fd_in = STDIN_FILENO;
 	while (utils->cmds)
 	{
 		utils->cmds = call_expander(utils, utils->cmds);
 		if (utils->cmds->next)
-			pipe(pipe_fd); // Create pipe for the current command
+			pipe(pipe_fd);
 		start_heredoc(utils, utils->cmds);
 		ft_fork(utils, pipe_fd, utils->cmds, fd_in);
-		close(pipe_fd[1]); // Close write end of the pipe
+		close(pipe_fd[1]);
 		if (utils->cmds->prev)
 			close(fd_in);
 		fd_in = check_fd_heredoc(utils, utils->cmds, pipe_fd);

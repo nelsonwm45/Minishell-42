@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:27:37 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/26 15:28:04 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/26 17:16:24 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,18 @@ void	print_lexer(t_lexer *lst)
 		printf("token_type: %d\n", ptr->token_type);
 		ptr = ptr->next;
 	}
+}
+
+int	print_envp(t_general *utils)
+{
+	int	i;
+
+	i = 0;
+	while (utils->envp[i])
+	{
+		ft_putstr_fd(utils->envp[i], 1);
+		write(1, "\n", 1);
+		i++;
+	}
+	return (0);
 }
