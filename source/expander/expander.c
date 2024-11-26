@@ -42,46 +42,51 @@ int    subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
     char   *tmp2;
     char   *tmp3;
 
-    k = 0;
-    // Calculate variable length first
-    var_len = 0;
-    while (str[j + 1 + var_len] && (ft_isalnum(str[j + 1 + var_len]) || str[j + 1 + var_len] == '_'))
-        var_len++;
+   k = 0;
+// Calculate variable length first
+var_len = 0;
+while (str[j + 1 + var_len] && (ft_isalnum(str[j + 1 + var_len]) || str[j + 1 + var_len] == '_'))
+    var_len++;
 
-    // If no valid variable name after $, skip it
-    if (var_len == 0)
-        return (1);
+// If no valid variable name after $, skip it
+if (var_len == 0)
+    return (1);
 
-    while (utils->envp[k])
+while (utils->envp[k])
+{
+    equal_i = get_equal_sign_index(utils->envp[k]);
+    // Compare only the variable name part and check for exact match
+    if (equal_i > 0 && ft_strncmp(utils->envp[k], &str[j + 1], var_len) == 0 
+        && utils->envp[k][var_len] == '=')
     {
-        equal_i = get_equal_sign_index(utils->envp[k]);
-        // Compare only the variable name part and check for exact match
-        if (equal_i > 0 && ft_strncmp(utils->envp[k], &str[j + 1], var_len) == 0 
-            && utils->envp[k][var_len] == '=')
+        printf("Variable found: %.*s\n", var_len, &str[j + 1]);
+        printf("Full envp entry: %s\n", utils->envp[k]);
+
+        // Get value after '=' sign
+        tmp2 = ft_strdup(utils->envp[k] + equal_i + 1);
+        if (!tmp2)
         {
-            // Get value after '=' sign
-            tmp2 = ft_strdup(utils->envp[k] + equal_i + 1);
-            if (!tmp2)
-            {
-                fprintf(stderr, "[ERROR] Memory allocation failed for tmp2\n");
-                return (0);
-            }
-            tmp3 = ft_strjoin(*tmp, tmp2);
-            if (!tmp3)
-            {
-                fprintf(stderr, "[ERROR] Memory allocation failed for tmp3\n");
-                free(tmp2);
-                return (0);
-            }
-            free(*tmp);
-            *tmp = tmp3;
-            free(tmp2);
-            return (var_len + 1);
+            printf("[ERROR] Memory allocation failed for tmp2\n");
+            return (0);
         }
-        k++;
+        tmp3 = ft_strjoin(*tmp, tmp2);
+        if (!tmp3)
+        {
+            printf("[ERROR] Memory allocation failed for tmp3\n");
+            free(tmp2);
+            return (0);
+        }
+        free(*tmp);
+        *tmp = tmp3;
+        free(tmp2);
+        return (var_len + 1);
     }
-    // If variable not found, skip the name
-    return (var_len + 1);
+    printf("Checked envp entry: %s\n", utils->envp[k]);
+    k++;
+}
+// If variable not found, skip the name
+printf("Variable not found: %.*s\n", var_len, &str[j + 1]);
+return (var_len + 1);
 }
 
 
