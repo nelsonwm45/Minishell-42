@@ -285,6 +285,7 @@ int	mini_heredoc(t_general *utils, t_lexer *ptr, char *filename);
 int	create_heredoc(t_general *utils, t_lexer *ptr, char *filename, int have_quote);
 void	print_redir(t_lexer *ptr);
 char	*remove_pwd(char *pwd);
+int check_child_interrupt(int pid);
 
 /* Redirections */
 int	check_redir(t_cmds *cmds);
@@ -341,4 +342,7 @@ void	run_signals(int sig);
 void	restore_prompt(int sig);
 void	sig_init(int sig);
 void	sig_quit(int sig);
+
+/*Global variable*/
+extern int g_ret_number;
 #endif

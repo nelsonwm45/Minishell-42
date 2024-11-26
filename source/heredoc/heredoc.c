@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
+/*   By: hheng < hheng@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 02:11:34 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/26 16:27:43 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/27 04:27:43 by hheng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,26 +121,70 @@ int	mini_heredoc(t_general *utils, t_lexer *ptr, char *filename)
 	- write the input to the file
 	- close the file
 */
-int	create_heredoc(t_general *utils, t_lexer *ptr, char *filename,
-		int have_quote)
+int create_heredoc(t_general *utils, t_lexer *ptr, char *filename, int have_quote)
 {
-	int		fd;
-	char	*line;
+    int fd;
+    char *line;
+    int pid;
 
-	fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	line = readline("\033[0;32mHeredoc> \033[0m");
-	while (line && ft_strncmp(ptr->str, line, ft_strlen(ptr->str)) != 0
-		&& utils->stop_heredoc != 1)
-	{
-		if (have_quote == 0)
-			line = expand_str(utils, line);
-		ft_putendl_fd(line, fd);
-		free(line);
-		line = readline("\033[0;32mHeredoc> \033[0m");
-	}
-	free(line);
-	if (utils->stop_heredoc == 1 || !line)
-		return (EXIT_FAILURE);
-	close(fd);
-	return (EXIT_SUCCESS);
+    fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
+    if (fd < 0)
+        return (EXIT_FAILURE); // Handle file opening error
+
+    pid = fork();
+    if (pid == 0) // Child process
+    {
+        signal(SIGINT, SIG_DFL); // Restore default signal handling
+        line = readline("\033[0;32mHeredoc> \033[0m");
+        while (line && ft_strncmp(ptr->str, line, ft_strlen(ptr->str)) != 0 && utils->stop_heredoc != 1)
+        {
+            if (have_quote == 0)
+                line = expand_str(utils, line);
+            ft_putendl_fd(line, fd);
+            free(line);
+            line = readline("\033[0;32mHeredoc> \033[0m");
+        }
+        free(line);
+        close(fd);
+        if (utils->stop_heredoc == 1) // Check if interrupted
+        {
+            close(fd);
+            unlink(filename); // Remove the file
+            exit(EXIT_FAILURE);
+        }
+        exit(EXIT_SUCCESS);
+    }
+    else if (pid > 0) // Parent process
+    {
+        close(fd);
+        if (check_child_interrupt(pid) != EXIT_SUCCESS) // Check for interruption
+        {
+            utils->stop_heredoc = 1; // Mark heredoc as interrupted
+            unlink(filename); // Delete the file if created
+            write(STDERR_FILENO, "signal SIGINT interrupt\n", 24);
+			return (EXIT_FAILURE); // Exit parent heredoc processing
+        }
+    }
+    else
+    {
+        close(fd);
+        unlink(filename); // Cleanup in case of fork failure
+        return (EXIT_FAILURE); // Handle fork failure
+    }
+    return (EXIT_SUCCESS);
 }
+
+
+
+int check_child_interrupt(int pid)
+{
+    int status;
+
+    waitpid(pid, &status, 0); // Wait for the child process
+    if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT) // Child interrupted
+        return (EXIT_FAILURE);
+    if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE) // Child exited with failure
+        return (EXIT_FAILURE);
+    return (EXIT_SUCCESS); // Child completed successfully
+}
+
