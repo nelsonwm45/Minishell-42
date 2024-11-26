@@ -341,7 +341,6 @@ char	*check_dir(char *bin, char *command);
 void	run_signals(int sig);
 void	restore_prompt(int sig);
 void	sig_init(int sig);
-void	sig_quit(int sig);
 
 /*Global variable*/
 extern int g_ret_number;

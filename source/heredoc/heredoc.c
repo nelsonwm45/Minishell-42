@@ -6,7 +6,7 @@
 /*   By: hheng < hheng@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 02:11:34 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/27 04:27:43 by hheng            ###   ########.fr       */
+/*   Updated: 2024/11/27 04:54:23 by hheng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,14 +127,18 @@ int create_heredoc(t_general *utils, t_lexer *ptr, char *filename, int have_quot
     char *line;
     int pid;
 
-    fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
-    if (fd < 0)
-        return (EXIT_FAILURE); // Handle file opening error
-
     pid = fork();
     if (pid == 0) // Child process
     {
         signal(SIGINT, SIG_DFL); // Restore default signal handling
+		 signal(SIGQUIT, SIG_IGN); // Handle SIGQUIT
+		fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
+        if (fd < 0)
+        {
+            perror("open");
+            exit(EXIT_FAILURE); // Handle file opening error
+        }
+
         line = readline("\033[0;32mHeredoc> \033[0m");
         while (line && ft_strncmp(ptr->str, line, ft_strlen(ptr->str)) != 0 && utils->stop_heredoc != 1)
         {
@@ -146,33 +150,33 @@ int create_heredoc(t_general *utils, t_lexer *ptr, char *filename, int have_quot
         }
         free(line);
         close(fd);
+
         if (utils->stop_heredoc == 1) // Check if interrupted
         {
-            close(fd);
             unlink(filename); // Remove the file
             exit(EXIT_FAILURE);
         }
         exit(EXIT_SUCCESS);
     }
     else if (pid > 0) // Parent process
-    {
-        close(fd);
+    { 
         if (check_child_interrupt(pid) != EXIT_SUCCESS) // Check for interruption
         {
             utils->stop_heredoc = 1; // Mark heredoc as interrupted
             unlink(filename); // Delete the file if created
             write(STDERR_FILENO, "signal SIGINT interrupt\n", 24);
-			return (EXIT_FAILURE); // Exit parent heredoc processing
+            return (EXIT_FAILURE) ; // Exit parent heredoc processing
         }
     }
     else
     {
-        close(fd);
-        unlink(filename); // Cleanup in case of fork failure
+        perror("fork");
         return (EXIT_FAILURE); // Handle fork failure
     }
+
     return (EXIT_SUCCESS);
 }
+
 
 
 
