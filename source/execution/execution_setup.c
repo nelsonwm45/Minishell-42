@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_setup.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
+/*   By: hheng < hheng@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:11:04 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/26 10:28:44 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/27 05:28:51 by hheng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	setup_executor(t_general *utils)
 {
-	signal(SIGQUIT, sig_quit);
+	signal(SIGQUIT, SIG_IGN);
 	utils->in_cmd = 1;
 	if (utils->pipecount == 0)
 		exec_simple_cmd(utils, utils->cmds);
