@@ -23,6 +23,7 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <limits.h> // For PATH_MAX
+# include <linux/limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h> // For signal handling
