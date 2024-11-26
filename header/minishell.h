@@ -194,7 +194,7 @@ void	process_token(t_general *utils, int *ret);
 /* Env Functions */
 int	process_envp(char **envp, t_general *utils);
 char	**duplicate_env(char **envp);
-// int	get_pwd(t_general *utils);
+int	get_pwd(t_general *utils);
 int	print_envp(t_general *utils); // debug purpose
 
 /* Error Functions */
