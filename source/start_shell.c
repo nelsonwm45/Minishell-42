@@ -47,9 +47,9 @@ void	init_shell(t_shell *mini, t_general *utils)
 void	process_token(t_general *utils, int *ret)
 {
 	if (read_token(utils) == 0)
-			*ret = error_message(1, utils);
+		*ret = error_message(1, utils);
 	if (first_single_token(utils->lexer_list) == EXIT_FAILURE)
-			*ret = EXIT_FAILURE;
+		*ret = EXIT_FAILURE;
 }
 
 int	start_shell(t_general *utils)

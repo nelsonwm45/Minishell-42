@@ -37,6 +37,7 @@ void	parsing_error(int error, t_general *utils, t_lexer *lexer)
 		clean_lexer(&lexer);
 	error_message(error, utils);
 }
+
 int	error_message(int error_code, t_general *utils)
 {
 	if (error_code == 0)
@@ -57,6 +58,7 @@ int	error_message(int error_code, t_general *utils)
 		clean_utils(utils);
 	return (EXIT_FAILURE);
 }
+
 int	cmd_not_found(char *cmd)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
