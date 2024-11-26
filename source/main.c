@@ -91,6 +91,7 @@ int	main(int ac, char **av, char **envp)
 		exit(EXIT_FAILURE);
 	}
 	process_envp(envp, &utils);
+	utils.exit_status = 0;
 	utils.env_vars = convert_envp_to_list(envp);
 	init_shell(&mini, &utils);
 	run_signals(1); // Set up signals for the main process

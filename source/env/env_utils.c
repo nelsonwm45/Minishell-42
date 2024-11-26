@@ -101,3 +101,37 @@ void	store_path(t_general *utils)
 		i++;
 	}
 }
+<<<<<<< HEAD
+=======
+
+int	init_utils(t_general *utils)
+{
+	utils->line = NULL;
+	utils->env_vars = NULL;
+	utils->lexer_list = NULL;
+	utils->cmds = NULL;
+	utils->envp = NULL;
+	utils->path = NULL;
+	utils->pwd = NULL;
+	utils->oldpwd = NULL;
+	utils->pipecount = 0;
+	utils->in_cmd = 0;
+	utils->pid = 0;
+	utils->reset = 0;
+	utils->stop_heredoc = 0;
+	utils->in_heredoc = 0;
+	utils->heredoc = 0;
+	return (0);
+}
+
+int	process_envp(char **envp, t_general *utils)
+{
+	init_utils(utils);
+	utils->envp = duplicate_env(envp);
+	get_pwd(utils);
+	get_oldpwd(utils);
+	store_path(utils);
+	// init_signal(utils);
+	return (0);
+}
+>>>>>>> exit_status2
