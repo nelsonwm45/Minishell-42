@@ -56,9 +56,9 @@ int	start_shell(t_general *utils)
 {
 	int ret;
 
-	ret = EXIT_SUCCESS;
 	while (1)
 	{
+		ret = EXIT_SUCCESS;
 		ret = ft_readline(utils);
 		if (ret != EXIT_FAILURE)
 		{
@@ -74,7 +74,6 @@ int	start_shell(t_general *utils)
 			ret = setup_executor(utils);
 		run_signals(1);
 		clean_utils(utils);
-		ret = EXIT_SUCCESS;
 	}
 	return (0);
 }
