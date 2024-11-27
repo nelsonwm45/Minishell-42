@@ -35,7 +35,6 @@ int env_add(const char *value, t_env *env)
     t_env *new;
     t_env *tmp;
 
-    // Handle case where env is NULL or env->value is NULL
     if (!env)
         return (-1);
 
@@ -45,14 +44,10 @@ int env_add(const char *value, t_env *env)
         env->next = NULL;
         return (SUCCESS);
     }
-
-    // Create new environment node
     if (!(new = malloc(sizeof(t_env))))
         return (-1);
     new->value = ft_strdup(value);
     new->next = NULL;
-
-    // Traverse to the end of the list
     tmp = env;
     while (tmp->next)
         tmp = tmp->next;
@@ -86,16 +81,15 @@ int is_in_env(t_env *env, char *args)
    ptr = env;
     while (env)
     {
-        if (env->value)  // Ensure env->value is not NULL before using it
+        if (env->value)
         {
             get_env_name(env_name, env->value);
             if (ft_strcmp(var_name, env_name) == 0)
             {
-                // ft_memdel((void **)&env->value);  // Safely delete the existing value
-                free(env->value); 
+                free(env->value);
                 env->value = ft_strdup(args);
                 return (1);
-            }
+                }
         }
         env = env->next;
     }
@@ -108,17 +102,12 @@ int ft_export(char **args, t_env *env, t_env *secret)
     int new_env;
     int error_ret;
 
-    if (!env || !secret)  // Check if env and secret are NULL
-    {
-        printf("Error: env or secret is NULL\n");
+    if (!env || !secret)
         return (-1);
-    }
-    printf("Entering ft_export\n");
 
     new_env = 0;
     if (!args[1])
     {
-        printf("No arguments provided to export. Printing sorted environment.\n");
         print_sorted_env(secret);
         return (SUCCESS);
     }

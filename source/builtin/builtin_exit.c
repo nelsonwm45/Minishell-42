@@ -40,8 +40,5 @@ void	ft_exit(t_shell *mini, char **cmd)
 		mini->return_code = ft_atoi(cmd[1]);
 	else
 		mini->return_code = 0;
-
-	// printf("Exiting minishell...\n");
-    // free_tab(cmd);
-     exit(mini->return_code);
+    exit(mini->return_code);
 }
