@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../header/minishell.h"
 
 int	get_pwd(t_general *utils)
 {
