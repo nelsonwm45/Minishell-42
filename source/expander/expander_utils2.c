@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 13:52:59 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/19 17:21:54 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/27 11:24:54 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ int		skipped_char_after_dollar(int j, char *str)
 */
 int	append_str(char **tmp, char **tmp2, char **tmp3, int j)
 {
-    *tmp2 = char_to_str((*tmp)[j]);
-    *tmp3 = ft_strjoin(*tmp, *tmp2);
-    free(*tmp);
-    *tmp = *tmp3;
-    free(*tmp2);
-    return (j + 1);
+	*tmp2 = char_to_str((*tmp)[j]);
+	*tmp3 = ft_strjoin(*tmp, *tmp2);
+	free(*tmp);
+	*tmp = *tmp3;
+	free(*tmp2);
+	return (j + 1);
 }
 
 /*
@@ -86,4 +86,16 @@ char *remove_quotes(char *str, char quote)
 			i++;
 	}
 	return (str);
+}
+
+int	get_var_equal_len(char *str, int j)
+{
+	int		var_len;
+
+	var_len = 0;
+	while (str[j + 1 + var_len] && (ft_isalnum(str[j + 1 + var_len]) || str[j + 1 + var_len] == '_'))
+		var_len++;
+	if (var_len == 0)
+		return (1);
+	return (var_len);
 }

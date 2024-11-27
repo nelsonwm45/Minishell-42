@@ -273,6 +273,7 @@ char	*replace_to_env(t_general *utils, char *str);
 int	find_dollar(char *str);
 char	*replace_to_env(t_general *utils, char *str);
 int	subs_dollar_var(t_general *utils, char *str, char **tmp, int j);
+int	get_var_equal_len(char *str, int j);
 int	append_str(char **tmp, char **tmp2, char **tmp3, int j);
 int	dollar_str_len(char *str, int j);
 int	get_equal_sign_index(char *str);
