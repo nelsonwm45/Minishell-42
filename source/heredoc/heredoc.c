@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 02:11:34 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/27 14:37:03 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/27 15:57:52 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	mini_heredoc(t_general *utils, t_lexer *ptr, char *filename)
 	- write the input to the file
 	- close the file
 */
-int create_heredoc(t_general *utils, t_lexer *ptr, char *filename, int have_quote)
+int	create_heredoc(t_general *utils, t_lexer *ptr, char *filename, int have_quote)
 {
     int fd;
     char *line;
