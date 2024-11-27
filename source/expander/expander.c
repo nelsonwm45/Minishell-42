@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:52:07 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/27 13:51:41 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/27 16:50:51 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ t_cmds	*call_expander(t_general *utils, t_cmds *cmds)
 /*
 	@brief
 		1. get the str after dollar sign & concatenante
-		2. return length of the string till the "equal sign" + 1 if found matched env variable
-		3. return the length of str after the dollar sign if no matched env variable found
+		2. return length of the string till the "equal sign" + 1 
+			if found matched env variable
+		3. return the length of str after the dollar sign 
+			if no matched env variable found
 */
 int	subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
 {
@@ -47,7 +49,7 @@ int	subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
 	while (ptr)
 	{
 		equal_i = get_equal_sign_index(ptr->value);
-		if (equal_i > 0 && ft_strncmp(ptr->value, &str[j + 1], var_len) == 0 
+		if (equal_i > 0 && ft_strncmp(ptr->value, &str[j + 1], var_len) == 0
 			&& ptr->value[var_len] == '=')
 		{
 			tmp2 = ft_strdup(ptr->value + equal_i);
@@ -62,8 +64,6 @@ int	subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
 	return (var_len + 1);
 }
 
-
-
 /*
 	@todo
 		1. Put back the if statement to skipped char after dollar
@@ -72,42 +72,46 @@ int	subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
 	@brief
 		check current char is $
 			1. if next char is digit, skipped the digit
-			2. if next char is ?, replace the current str with the exit status
+			2. if next char is ?, replace the current str 
+				with the exit status
 			3. if next char is str, 
-				->check if matched env variable, replace the current str with the env value
-				->if not matched, get the length of the str after the dollar sign
+				->check if matched env variable, 
+					replace the current str with the env value
+				->if not matched, get the length 
+					of the str after the dollar sign
 
-		if the current is not $ || the next char after $ is digit, concatenate the current char to the str
+		if the current is not $ || the next char after $ is digit, 
+			concatenate the current char to the str
 
 */
-char *replace_to_env(t_general *utils, char *str)
+char	*replace_to_env(t_general *utils, char *str)
 {
-	int j = 0;
-	char *tmp;
+	int		j;
+	char	*tmp;
 
 	tmp = ft_strdup("\0");
+	j = 0;
 	while (str[j])
 	{
-
 		j += skipped_char_after_dollar(j, str);
 		if (str[j] == '$' && str[j + 1] == '?')
 			j += replace_question_mark(utils, &tmp);
-		else if (str[j] == '$' && (str[j + 1] != ' ' &&
-				 (str[j + 1] != '"' || str[j + 2] != '\0')) &&
-				 str[j + 1] != '\0')
+		else if (str[j] == '$' && (str[j + 1] != ' '
+				&& (str[j + 1] != '"' || str[j + 2] != '\0'))
+			&& str[j + 1] != '\0')
 			j += subs_dollar_var(utils, str, &tmp, j);
 		else
 			j = append_str(&tmp, str[j], j);
 	}
-
 	return (tmp);
 }
 
-
 /*
 	@brief
-		1. check if the current char is not in single quotes && current str need to have dollar && the cha after dollar is not null character
-			replace the current str with the env value
+		1. check if the current char is not in single quotes && 
+			current str need to have dollar && 
+			the cha after dollar is not null character
+				-replace the current str with the env value
 		2. remove quotes if the current command is not export
 
 	returns
@@ -125,13 +129,13 @@ char	**expander(t_general *utils, char **str)
 	while (str[i])
 	{
 		j = find_dollar(str[i]);
-		if (str[i][j - 2] != '\'' && j != 0 && str[i][j] != '\0') 
+		if (str[i][j - 2] != '\'' && j != 0 && str[i][j] != '\0')
 		{
-			temp = replace_to_env(utils, str[i]); 
+			temp = replace_to_env(utils, str[i]);
 			free(str[i]);
-			str[i] = temp; 
+			str[i] = temp;
 		}
-		if (ft_strncmp(str[0], "export", ft_strlen(str[0]) - 1) != 0) 
+		if (ft_strncmp(str[0], "export", ft_strlen(str[0]) - 1) != 0)
 		{
 			str[i] = remove_quotes(str[i], '\"');
 			str[i] = remove_quotes(str[i], '\'');
