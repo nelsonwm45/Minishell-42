@@ -6,11 +6,11 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 11:27:48 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/26 12:17:31 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/26 16:56:02 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../header/minishell.h"
+#include "../../header/minishell.h"
 
 t_type	scan_double_token(t_lexer *lexer)
 {

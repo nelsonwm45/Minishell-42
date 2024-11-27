@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hheng < hheng@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:52:07 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/22 15:46:45 by hheng            ###   ########.fr       */
+/*   Updated: 2024/11/27 11:23:54 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,59 +34,32 @@ t_cmds	*call_expander(t_general *utils, t_cmds *cmds)
 		2. return length of the string till the "equal sign" + 1 if found matched env variable
 		3. return the length of str after the dollar sign if no matched env variable found
 */
-int    subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
+int	subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
 {
-    int    k;
-    int    equal_i;
-    int    var_len;
-    char   *tmp2;
-    char   *tmp3;
+	int		equal_i;
+	int		var_len;
+	t_env	*ptr;
+	char	*tmp2;
+	char	*tmp3;
 
-   k = 0;
-// Calculate variable length first
-var_len = 0;
-while (str[j + 1 + var_len] && (ft_isalnum(str[j + 1 + var_len]) || str[j + 1 + var_len] == '_'))
-    var_len++;
-
-// If no valid variable name after $, skip it
-if (var_len == 0)
-    return (1);
-
-while (utils->envp[k])
-{
-    equal_i = get_equal_sign_index(utils->envp[k]);
-    // Compare only the variable name part and check for exact match
-    if (equal_i > 0 && ft_strncmp(utils->envp[k], &str[j + 1], var_len) == 0 
-        && utils->envp[k][var_len] == '=')
-    {
-        printf("Variable found: %.*s\n", var_len, &str[j + 1]);
-        printf("Full envp entry: %s\n", utils->envp[k]);
-
-        // Get value after '=' sign
-        tmp2 = ft_strdup(utils->envp[k] + equal_i + 1);
-        if (!tmp2)
-        {
-            printf("[ERROR] Memory allocation failed for tmp2\n");
-            return (0);
-        }
-        tmp3 = ft_strjoin(*tmp, tmp2);
-        if (!tmp3)
-        {
-            printf("[ERROR] Memory allocation failed for tmp3\n");
-            free(tmp2);
-            return (0);
-        }
-        free(*tmp);
-        *tmp = tmp3;
-        free(tmp2);
-        return (var_len + 1);
-    }
-    printf("Checked envp entry: %s\n", utils->envp[k]);
-    k++;
-}
-// If variable not found, skip the name
-printf("Variable not found: %.*s\n", var_len, &str[j + 1]);
-return (var_len + 1);
+	var_len = get_var_equal_len(str, j);
+	ptr = utils->mini->env_vars;
+	while (ptr)
+	{
+		equal_i = get_equal_sign_index(ptr->value);
+		if (equal_i > 0 && ft_strncmp(ptr->value, &str[j + 1], var_len) == 0 
+			&& ptr->value[var_len] == '=')
+		{
+			tmp2 = ft_strdup(ptr->value + equal_i);
+			tmp3 = ft_strjoin(*tmp, tmp2);
+			free(*tmp);
+			*tmp = tmp3;
+			free(tmp2);
+			return (var_len + 1);
+		}
+		ptr = ptr->next;
+	}
+	return (var_len + 1);
 }
 
 
@@ -109,59 +82,27 @@ return (var_len + 1);
 */
 char *replace_to_env(t_general *utils, char *str)
 {
-    int j = 0;
-    char *tmp = ft_strdup("\0"); // Initialize tmp as an empty string
-    char *tmp2 = NULL;
-    char *tmp3 = NULL;
+	int j = 0;
+	char *tmp;
+	char *tmp2;;
+	char *tmp3;
 
-    if (!tmp)
-    {
-        fprintf(stderr, "[ERROR] Memory allocation failed for tmp\n");
-        return NULL;
-    }
+	tmp = ft_strdup("\0");
+	while (str[j])
+	{
 
-    while (str[j])
-    {
+		j += skipped_char_after_dollar(j, str);
+		if (str[j] == '$' && str[j + 1] == '?')
+			j += replace_question_mark(utils, &tmp);
+		else if (str[j] == '$' && (str[j + 1] != ' ' &&
+				 (str[j + 1] != '"' || str[j + 2] != '\0')) &&
+				 str[j + 1] != '\0')
+			j += subs_dollar_var(utils, str, &tmp, j);
+		else
+			j = append_str(&tmp, &tmp2, &tmp3, j);
+	}
 
-        // Skip characters after dollar if they are digits
-        j += skipped_char_after_dollar(j, str);
-
-        // Handle "$?"
-        if (str[j] == '$' && str[j + 1] == '?')
-        {
-            j += replace_question_mark(utils, &tmp);
-            if (!tmp)
-            {
-                fprintf(stderr, "[ERROR] replace_question_mark failed\n");
-                return NULL;
-            }
-        }
-        // Handle "$" followed by variable names
-        else if (str[j] == '$' && (str[j + 1] != ' ' &&
-                 (str[j + 1] != '"' || str[j + 2] != '\0')) &&
-                 str[j + 1] != '\0')
-        {
-            
-            j += subs_dollar_var(utils, str, &tmp, j);
-            if (!tmp)
-            {
-                fprintf(stderr, "[ERROR] subs_dollar_var failed or returned NULL\n");
-                return NULL;
-            }
-        }
-        // Handle other characters
-        else
-        {
-            j = append_str(&tmp, &tmp2, &tmp3, j);
-            if (!tmp)
-            {
-                fprintf(stderr, "[ERROR] append_str failed\n");
-                return NULL;
-            }
-        }
-    }
-
-    return tmp;
+	return (tmp);
 }
 
 
@@ -185,11 +126,11 @@ char	**expander(t_general *utils, char **str)
 	temp = NULL;
 	while (str[i])
 	{
-		j = find_dollar(str[i]); // get the index of cha after dollar sign
+		j = find_dollar(str[i]);
 		if (str[i][j - 2] != '\'' && j != 0 && str[i][j] != '\0') 
 		{
 			temp = replace_to_env(utils, str[i]); 
-			free(str[i]); // free old str memory
+			free(str[i]);
 			str[i] = temp; 
 		}
 		if (ft_strncmp(str[0], "export", ft_strlen(str[0]) - 1) != 0) 
@@ -214,14 +155,14 @@ char	*expand_str(t_general *utils, char *str)
 	int		i;
 
 	tmp = NULL;
-	i = find_dollar(str); // index after dollar sign
-	while (str[i - 2] == '\'' && i != 0 && str[i] != '\0') // check if the current char is in single quotes
+	i = find_dollar(str);
+	while (str[i - 2] == '\'' && i != 0 && str[i] != '\0')
 	{
-		tmp = replace_to_env(utils, str); // replace the current str with the env value
-		free(str); // free the old str memory
-		str = tmp; // assign the new str to the old str
+		tmp = replace_to_env(utils, str);
+		free(str);
+		str = tmp;
 	}
-	str = remove_quotes(str, '\''); // remove the single quotes
-	str = remove_quotes(str, '\"'); // remove the double quotes
+	str = remove_quotes(str, '\'');
+	str = remove_quotes(str, '\"');
 	return (str);
 }

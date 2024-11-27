@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:43:07 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/26 15:43:28 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/26 17:18:21 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	find_next_quote(char *line, int *i, int *num_quote, char quote)
 {
-	int j;
+	int	j;
 
 	j = *i + 1; // go to next cha after the quote
 	while (line[j])
@@ -32,9 +32,9 @@ int	find_next_quote(char *line, int *i, int *num_quote, char quote)
 
 int	closed_quotes(char *line)
 {
-	int i;
-	int sing_q;
-	int doub_q;
+	int	i;
+	int	sing_q;
+	int	doub_q;
 
 	i = 0;
 	sing_q = 0;

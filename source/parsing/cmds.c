@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:47:46 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/22 17:12:40 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/26 16:54:44 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,18 @@ char	**form_str(char **str, int size, t_parser *parser)
 	{
 		if (ptr->str != NULL)
 		{
-			str[i] = ft_strdup(ptr->str);  // Copy string only if not a pipe
+			str[i] = ft_strdup(ptr->str);
 			i++;
 		}
-		del_one_node(&parser->lexer_list, ptr->i); // Remove the current node after processing
-		ptr = parser->lexer_list; // Update ptr to the new head of the list
+		del_one_node(&parser->lexer_list, ptr->i);
+		ptr = parser->lexer_list;
 		size--;
 	}
-	str[i] = NULL; // Null-terminate the array
+	str[i] = NULL;
 	return (str);
 }
 
-t_cmds	*init_cmds(t_parser	*parser)
+t_cmds	*init_cmds(t_parser *parser)
 {
 	char	**str;
 	int		size;

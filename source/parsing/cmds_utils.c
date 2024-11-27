@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 16:51:28 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/19 16:25:17 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/26 16:42:33 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,3 @@ t_builtin	check_builtin(char *str)
 		return (EXIT);
 	return (NOT_BUILTIN);
 }
-
-

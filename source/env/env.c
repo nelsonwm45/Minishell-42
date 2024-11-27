@@ -10,10 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
 
-size_t			size_env(t_env *lst)
+size_t	size_env(t_env *lst)
 {
 	size_t	lst_len;
 
@@ -30,7 +29,7 @@ size_t			size_env(t_env *lst)
 	return (lst_len);
 }
 
-char			*env_to_str(t_env *lst)
+char	*env_to_str(t_env *lst)
 {
 	char	*env;
 	int		i;
@@ -59,7 +58,7 @@ char			*env_to_str(t_env *lst)
 	return (env);
 }
 
-int				env_init(t_shell *mini, char **env_array)
+int	env_init(t_shell *mini, char **env_array)
 {
 	t_env	*env;
 	t_env	*new;
@@ -84,7 +83,7 @@ int				env_init(t_shell *mini, char **env_array)
 	return (0);
 }
 
-int				secret_env_init(t_shell *mini, char **env_array)
+int	secret_env_init(t_shell *mini, char **env_array)
 {
 	t_env	*env;
 	t_env	*new;

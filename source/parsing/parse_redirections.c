@@ -6,18 +6,18 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:58:34 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/26 12:31:45 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/26 16:47:38 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../header/minishell.h"
+#include "../../header/minishell.h"
 
 /*
 	create a lexer node
 	delete the node with the redirections
 	add redirections to the back of redirection list
 */
-int		add_redirections(t_parser *parser, t_lexer *ptr)
+int	add_redirections(t_parser *parser, t_lexer *ptr)
 {
 	t_lexer	*node;
 	int		i;
@@ -46,18 +46,18 @@ int		add_redirections(t_parser *parser, t_lexer *ptr)
 */
 void	recog_redirections(t_parser *parser)
 {
-	t_lexer *ptr;
+	t_lexer	*ptr;
 
 	ptr = parser->lexer_list;
-	while (ptr && ptr->token_type == 0) // skip words token
+	while (ptr && ptr->token_type == 0)
 		ptr = ptr->next;
-	if (!ptr || ptr->token_type == PIPE) // empty or pipe token
+	if (!ptr || ptr->token_type == PIPE)
 		return ;
-	if (!ptr->next) // if next is NULL
+	if (!ptr->next)
 		parsing_error(1, parser->utils, parser->utils->lexer_list);
 	if (ptr->next->token_type)
 		double_token_error(parser->lexer_list, ptr->next->token_type);
-	if (ptr->token_type >= BIG && ptr->token_type <= SMALLSMALL) // check if token is redirections
+	if (ptr->token_type >= BIG && ptr->token_type <= SMALLSMALL)
 		add_redirections(parser, ptr);
 	recog_redirections(parser);
 }

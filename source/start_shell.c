@@ -54,7 +54,7 @@ void	process_token(t_general *utils, int *ret)
 
 int	start_shell(t_general *utils)
 {
-	int ret;
+	int	ret;
 
 	while (1)
 	{

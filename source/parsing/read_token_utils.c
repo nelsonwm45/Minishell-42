@@ -6,11 +6,11 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:14:41 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/26 16:17:33 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/26 17:01:15 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../header/minishell.h"
+#include "../../header/minishell.h"
 
 /*
 	@brief
@@ -41,7 +41,7 @@ int	is_spaces(char c)
 int	remove_space(char *line, int *i)
 {
 	int	j;
-	
+
 	j = *i;
 	while (is_spaces(line[j]) == TRUE)
 		j++;
@@ -51,11 +51,9 @@ int	remove_space(char *line, int *i)
 
 /*
 	@brief
-	- check if the character is a token (>, <, |)
-
+	-check if the character is a token (>, <, |)
 	@param
-	- c: the character to be checked
-
+	-c: the character to be checked
 	@return
 	- TRUE if it is a token
 	- FALSE if it is not a token

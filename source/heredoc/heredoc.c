@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hheng < hheng@student.42kl.edu.my>         +#+  +:+       +#+        */
+/*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 02:11:34 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/27 04:54:23 by hheng            ###   ########.fr       */
+/*   Updated: 2024/11/27 12:45:42 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int create_heredoc(t_general *utils, t_lexer *ptr, char *filename, int have_quot
         }
 
         line = readline("\033[0;32mHeredoc> \033[0m");
-        while (line && ft_strncmp(ptr->str, line, ft_strlen(ptr->str)) != 0 && utils->stop_heredoc != 1)
+        while (line && same_str(ptr->str, line) == 0 && utils->stop_heredoc != 1)
         {
             if (have_quote == 0)
                 line = expand_str(utils, line);
