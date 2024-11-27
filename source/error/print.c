@@ -6,17 +6,17 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:27:37 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/26 17:16:24 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/27 17:35:09 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/minishell.h"
+#include "../../header/minishell.h"
 
 void	print_cmds(t_cmds *cmds)
 {
-	t_cmds *ptr;
-	int i;
-	int count;
+	t_cmds	*ptr;
+	int		i;
+	int		count;
 
 	ptr = cmds;
 	count = 0;
@@ -39,7 +39,7 @@ void	print_cmds(t_cmds *cmds)
 
 void	print_lexer(t_lexer *lst)
 {
-	t_lexer *ptr;
+	t_lexer	*ptr;
 
 	ptr = lst;
 	printf("------printing lexer------\n");
@@ -63,4 +63,13 @@ int	print_envp(t_general *utils)
 		i++;
 	}
 	return (0);
+}
+
+void	print_redir(t_lexer *ptr)
+{
+	while (ptr)
+	{
+		printf("ptr->str: %s\n", ptr->str);
+		ptr = ptr->next;
+	}
 }

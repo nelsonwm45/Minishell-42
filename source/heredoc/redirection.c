@@ -6,11 +6,11 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:34:47 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/27 14:20:06 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/27 17:27:26 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../header/minishell.h"
+#include "../../header/minishell.h"
 
 int	check_redir(t_cmds *cmds)
 {
@@ -24,7 +24,8 @@ int	check_redir(t_cmds *cmds)
 			if (handle_infile(cmds->redir->str))
 				return (EXIT_FAILURE);
 		}
-		else if (cmds->redir->token_type == BIG || cmds->redir->token_type == BIGBIG)
+		else if (cmds->redir->token_type == BIG
+			|| cmds->redir->token_type == BIGBIG)
 		{
 			if (handle_outfile(cmds->redir))
 				return (EXIT_FAILURE);
@@ -92,4 +93,3 @@ int	append_or_trunc(t_lexer *redir)
 		fd = open(redir->str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	return (fd);
 }
-	

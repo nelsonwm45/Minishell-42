@@ -66,7 +66,7 @@ int	start_shell(t_general *utils)
 				ret = error_message(2, utils);
 		}
 		if (ret != EXIT_FAILURE)
-			process_token(utils, &ret);	
+			process_token(utils, &ret);
 		run_signals(2);
 		if (ret != EXIT_FAILURE)
 			ret = start_parsing(utils);

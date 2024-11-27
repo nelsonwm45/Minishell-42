@@ -6,11 +6,11 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:10:40 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/26 11:20:56 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/27 17:34:57 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../header/minishell.h"
+#include "../../header/minishell.h"
 
 /*
 	@brief
@@ -39,7 +39,6 @@ int	clean_utils(t_general *utils)
 		free(utils->pid);
 	process_envp(utils->envp, utils);
 	utils->reset = 1;
-	// start_shell(utils);
 	return (0);
 }
 

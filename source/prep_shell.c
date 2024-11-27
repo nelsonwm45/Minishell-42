@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 17:19:54 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/27 10:00:47 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/27 17:22:35 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	init_utils(t_general *utils)
 	utils->in_cmd = 0;
 	utils->pid = 0;
 	utils->reset = 0;
-	// utils->exit_status = 0;
 	utils->stop_heredoc = 0;
 	utils->in_heredoc = 0;
 	utils->heredoc = 0;
