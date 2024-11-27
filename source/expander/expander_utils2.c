@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 13:52:59 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/27 11:24:54 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/27 13:59:20 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,16 @@ int		skipped_char_after_dollar(int j, char *str)
 /*
 	append the char to the str
 */
-int	append_str(char **tmp, char **tmp2, char **tmp3, int j)
+int	append_str(char **tmp, char c, int j)
 {
-	*tmp2 = char_to_str((*tmp)[j]);
-	*tmp3 = ft_strjoin(*tmp, *tmp2);
+	char	*tmp2;
+	char	*tmp3;
+
+	tmp2 = char_to_str(c);
+	tmp3 = ft_strjoin(*tmp, tmp2);
 	free(*tmp);
-	*tmp = *tmp3;
-	free(*tmp2);
+	*tmp = tmp3;
+	free(tmp2);
 	return (j + 1);
 }
 

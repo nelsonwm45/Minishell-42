@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:52:07 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/27 11:23:54 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/27 13:51:41 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ char *replace_to_env(t_general *utils, char *str)
 {
 	int j = 0;
 	char *tmp;
-	char *tmp2;;
-	char *tmp3;
 
 	tmp = ft_strdup("\0");
 	while (str[j])
@@ -99,7 +97,7 @@ char *replace_to_env(t_general *utils, char *str)
 				 str[j + 1] != '\0')
 			j += subs_dollar_var(utils, str, &tmp, j);
 		else
-			j = append_str(&tmp, &tmp2, &tmp3, j);
+			j = append_str(&tmp, str[j], j);
 	}
 
 	return (tmp);

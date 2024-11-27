@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 02:11:34 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/27 12:45:42 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/27 14:06:29 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ int create_heredoc(t_general *utils, t_lexer *ptr, char *filename, int have_quot
         {
             if (have_quote == 0)
                 line = expand_str(utils, line);
+			line = check_if_var(utils, line);
             ft_putendl_fd(line, fd);
             free(line);
             line = readline("\033[0;32mHeredoc> \033[0m");
