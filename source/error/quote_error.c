@@ -6,17 +6,17 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:43:07 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/26 17:18:21 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/27 17:35:15 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../header/minishell.h"
+#include "../../header/minishell.h"
 
 int	find_next_quote(char *line, int *i, int *num_quote, char quote)
 {
 	int	j;
 
-	j = *i + 1; // go to next cha after the quote
+	j = *i + 1;
 	while (line[j])
 	{
 		if (line[j] == quote)

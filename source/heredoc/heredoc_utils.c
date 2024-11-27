@@ -6,20 +6,11 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 02:20:36 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/27 14:06:44 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/27 17:26:45 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../header/minishell.h"
-
-void	print_redir(t_lexer *ptr)
-{
-	while (ptr)
-	{
-		printf("ptr->str: %s\n", ptr->str);
-		ptr = ptr->next;
-	}
-}
+#include "../../header/minishell.h"
 
 char	*check_if_var(t_general *utils, char *line)
 {

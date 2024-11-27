@@ -6,30 +6,31 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 13:52:59 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/27 13:59:20 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/27 16:53:00 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../header/minishell.h"
+#include "../../header/minishell.h"
 
 /*
 	@brief
-		return the number of char needs to skip if current char is $ and next char is digit
+		return the number of char needs to skip 
+			if current char is $ and next char is digit
 		0 - if no dollar sign found
 		1 - if dollar sign found but next char not digit
 		2 - if dollar sign found and next char is digit
 */
-int		skipped_char_after_dollar(int j, char *str)
+int	skipped_char_after_dollar(int j, char *str)
 {
 	int		i;
 
-	i = j; // save the initial index
-	if (str[j] == '$') // check if current char is '$'
+	i = j;
+	if (str[j] == '$')
 	{
-		if (ft_isdigit(str[j + 1])) // check if the char after '$' is a digit
-			j += 2; // skip the digit and dollar sign
+		if (ft_isdigit(str[j + 1]))
+			j += 2;
 	}
-	return (j - i); // return the number of char need to skip
+	return (j - i);
 }
 
 /*
@@ -67,7 +68,7 @@ int	append_str(char **tmp, char c, int j)
 		7. remove_quotes("hello'", '\'') -> "hello"
 	
 */
-char *remove_quotes(char *str, char quote)
+char	*remove_quotes(char *str, char quote)
 {
 	int		i;
 	int		j;
@@ -96,7 +97,8 @@ int	get_var_equal_len(char *str, int j)
 	int		var_len;
 
 	var_len = 0;
-	while (str[j + 1 + var_len] && (ft_isalnum(str[j + 1 + var_len]) || str[j + 1 + var_len] == '_'))
+	while (str[j + 1 + var_len] && (ft_isalnum(str[j + 1 + var_len])
+			|| str[j + 1 + var_len] == '_'))
 		var_len++;
 	if (var_len == 0)
 		return (1);

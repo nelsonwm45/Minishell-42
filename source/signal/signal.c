@@ -30,7 +30,7 @@ g_ret_number = global variable
 
 */
 
-int g_ret_number = 0;
+int	g_ret_number = 0;
 
 void	run_signals(int sig)
 {
@@ -67,5 +67,3 @@ void	sig_init(int sig)
 	write(1, "\n", 1);
 	(void)sig;
 }
-
-

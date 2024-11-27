@@ -6,11 +6,11 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 12:30:15 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/13 15:43:17 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/27 16:43:11 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../header/minishell.h"
+#include "../../header/minishell.h"
 
 /*
 	@brief
@@ -25,8 +25,8 @@ int	find_dollar(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '$') // check if current char is '$'
-			return (i + 1); // return the index of the char after '$'
+		if (str[i] == '$')
+			return (i + 1);
 		i++;
 	}
 	return (i);
@@ -43,10 +43,10 @@ int	replace_question_mark(t_general *utils, char **tmp)
 	int	len;
 
 	len = 0;
-	free(*tmp); // free the old str memory
-	*tmp = ft_itoa(utils->exit_status); // convert the exit status to string
-	len = ft_strlen(*tmp); // get the length of the new str
-	return (len + 1); // return the length of the new str
+	free(*tmp);
+	*tmp = ft_itoa(utils->exit_status);
+	len = ft_strlen(*tmp);
+	return (len + 1);
 }
 
 /*
@@ -74,13 +74,13 @@ int	get_equal_sign_index(char *str)
 */
 int	dollar_str_len(char *str, int j)
 {
-	int len;
+	int	len;
 
 	len = j;
-	while (str[len] != ' ' && str[len] != '\0' && str[len] != '$' 
-		&& str[len] != '\"' && str[len] != '\'' && str[len] != '=' 
+	while (str[len] != ' ' && str[len] != '\0' && str[len] != '$'
+		&& str[len] != '\"' && str[len] != '\'' && str[len] != '='
 		&& str[len] != ':' && str[len] != '-')
-			len++;
+		len++;
 	return (len);
 }
 
