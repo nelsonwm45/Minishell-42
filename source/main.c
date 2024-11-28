@@ -13,17 +13,17 @@
 #include "../header/minishell.h"
 
 /*
-	@brief
-	- compare both string
-	@return
-	- return 1 if exactly same string
-	- return 0 if not same string
-	@error handling
-	- can't compare null string
+@brief
+- compare both string
+@return
+- return 1 if exactly same string
+- return 0 if not same string
+@error handling
+- can't compare null string
 */
 int	same_str(char *s1, char *s2)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!s1 || !s2)
@@ -37,38 +37,42 @@ int	same_str(char *s1, char *s2)
 	}
 	if (!s1[i] && !s2[i])
 		return (1);
-	else
-		return (0);
+	return (0);
+}
+
+static t_env	*create_env_node(char *env_str)
+{
+	t_env	*new_node;
+
+	new_node = malloc(sizeof(t_env));
+	if (!new_node)
+		return (NULL);
+	new_node->value = ft_strdup(env_str);
+	if (!new_node->value)
+	{
+		free(new_node);
+		return (NULL);
+	}
+	new_node->next = NULL;
+	return (new_node);
 }
 
 t_env	*convert_envp_to_list(char **envp)
 {
-	t_env *env_list = NULL;
-	t_env *new_node;
-	t_env *current;
-	char **env;
+	t_env	*env_list;
+	t_env	*new_node;
+	t_env	*current;
+	char	**env;
 
-	for (env = envp; *env != NULL; env++)
+	env_list = NULL;
+	env = envp;
+	while (*env)
 	{
-		new_node = malloc(sizeof(t_env));
+		new_node = create_env_node(*env);
 		if (!new_node)
-		{
-			perror("malloc");
 			return (NULL);
-		}
-		new_node->value = strdup(*env);
-		if (!new_node->value)
-		{
-			perror("strdup");
-			free(new_node);
-			return (NULL);
-		}
-		new_node->next = NULL;
-
 		if (!env_list)
-		{
 			env_list = new_node;
-		}
 		else
 		{
 			current = env_list;
@@ -76,14 +80,15 @@ t_env	*convert_envp_to_list(char **envp)
 				current = current->next;
 			current->next = new_node;
 		}
+		env++;
 	}
 	return (env_list);
 }
 
 int	main(int ac, char **av, char **envp)
 {
-	t_general utils;
-	t_shell mini;
+	t_general	utils;
+	t_shell		mini;
 
 	if (ac != 1 || av[1] != NULL)
 	{
@@ -94,7 +99,7 @@ int	main(int ac, char **av, char **envp)
 	utils.exit_status = 0;
 	utils.env_vars = convert_envp_to_list(envp);
 	init_shell(&mini, &utils);
-	run_signals(1); // Set up signals for the main process
+	run_signals(1);
 	start_shell(&utils);
 	return (0);
 }

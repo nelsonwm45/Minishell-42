@@ -6,30 +6,28 @@
 /*   By: hheng < hheng@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 14:52:51 by hheng             #+#    #+#             */
-/*   Updated: 2024/11/06 14:52:51 by hheng            ###   ########.fr       */
+/*   Updated: 2024/11/29 05:38:10 by hheng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int ft_numlen(int num)
+int	ft_numlen(int num)
 {
-    int len = 0;
+	int	len;
 
-    if (num == 0)
-        return 1;
-
-    if (num < 0)
-    {
-        len++;
-        num = -num;
-    }
-
-    while (num > 0)
-    {
-        len++;
-        num /= 10;
-    }
-
-    return len;
+	len = 0;
+	if (num == 0)
+		return (1);
+	if (num < 0)
+	{
+		len++;
+		num = -num;
+	}
+	while (num > 0)
+	{
+		len++;
+		num /= 10;
+	}
+	return (len);
 }
