@@ -6,7 +6,7 @@
 /*   By: hheng < hheng@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:27:44 by hheng             #+#    #+#             */
-/*   Updated: 2024/11/05 13:27:44 by hheng            ###   ########.fr       */
+/*   Updated: 2024/11/29 04:47:04 by hheng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_skip_spacenl(const char *str, int *i)
 {
-	while ((str[*i] == ' ' || str[*i] == '\t' || str[*i] == '\n') 
+	while ((str[*i] == ' ' || str[*i] == '\t' || str[*i] == '\n')
 		|| (str[*i] == '\r' || str[*i] == '\v' || str[*i] == '\f'))
 		(*i)++;
 }

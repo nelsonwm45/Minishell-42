@@ -6,12 +6,11 @@
 /*   By: hheng < hheng@student.42kl.edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:09:52 by hheng             #+#    #+#             */
-/*   Updated: 2024/07/03 08:44:19 by hheng            ###   ########.fr       */
+/*   Updated: 2024/11/29 05:45:20 by hheng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-
 
 char	*ft_strjoin_special(char const *s1, char const *s2, int bytes_read)
 {
