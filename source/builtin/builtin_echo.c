@@ -29,6 +29,8 @@ static	int	nb_args(char **args)
 	return (size);
 }
 
+// n_option = 0 , -n flag not been encountered
+// n_option = 1 , -n flag found
 int	ft_echo(char **args)
 {
 	int		i;

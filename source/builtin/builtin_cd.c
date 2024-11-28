@@ -25,6 +25,7 @@ static void	print_error(char **args)
 	ft_putendl_fd(args[1], 2);
 }
 
+// Retrieves the value of an environment variable from the linked list `env`
 static char	*get_env_path(t_env *env, const char *var, size_t len)
 {
 	int		i;
@@ -52,6 +53,7 @@ static char	*get_env_path(t_env *env, const char *var, size_t len)
 	return (NULL);
 }
 
+// Updates the OLDPWD environment variable with the current working directory
 static int	update_oldpwd(t_env *env)
 {
 	char	cwd[PATH_MAX];
@@ -68,6 +70,8 @@ static int	update_oldpwd(t_env *env)
 	return (SUCCESS);
 }
 
+// Changes the current directory to a predefined path (HOME or OLDPWD)
+// option 0 = HOME, option 1 = OLDPWD
 static int	go_to_path(int option, t_env *env)
 {
 	int		ret;
@@ -97,6 +101,10 @@ static int	go_to_path(int option, t_env *env)
 	return (ret);
 }
 
+// changes the current directory to the specified path
+// no arguments = change to HOME
+// "-" = change to OLDPWD
+// otherwise, change to the specified path
 int	ft_cd(char **args, t_env *env)
 {
 	int		cd_ret;
