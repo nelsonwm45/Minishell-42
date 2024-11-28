@@ -6,7 +6,7 @@
 /*   By: hheng <hheng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 13:45:21 by hheng             #+#    #+#             */
-/*   Updated: 2024/10/30 13:45:21 by hheng            ###   ########.fr       */
+/*   Updated: 2024/11/29 04:36:45 by hheng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static size_t	env_size(char *env)
 	return (i);
 }
 
-static void		free_node(t_shell *mini, t_env *env)
+static void	free_node(t_shell *mini, t_env *env)
 {
 	if (mini->env_vars == env && env->next == NULL)
 	{
@@ -35,17 +35,18 @@ static void		free_node(t_shell *mini, t_env *env)
 	ft_memdel(env);
 }
 
-int				ft_unset(char **a, t_shell *mini)
+int	ft_unset(char **a, t_shell *mini)
 {
 	t_env	*env;
 	t_env	*tmp;
 
 	env = mini->env_vars;
-	if (!(a[1]))
+	if (!a[1])
 		return (SUCCESS);
 	if (ft_strncmp(a[1], env->value, env_size(env->value)) == 0)
 	{
-		mini->env_vars = (env->next) ? env->next : mini->env_vars;
+		if (env->next)
+			mini->env_vars = env->next;
 		free_node(mini, env);
 		return (SUCCESS);
 	}
