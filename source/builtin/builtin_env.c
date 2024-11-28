@@ -6,7 +6,7 @@
 /*   By: hheng <hheng@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 13:44:51 by hheng             #+#    #+#             */
-/*   Updated: 2024/10/30 13:44:51 by hheng            ###   ########.fr       */
+/*   Updated: 2024/11/29 04:16:46 by hheng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@
  *   - Returns SUCCESS upon completion.
  */
 
-int		ft_env(t_env *env)
+int	ft_env(t_env *env)
 {
 	t_env	*ptr;
 
 	ptr = env;
 	while (env && env->next != NULL)
 	{
-		ft_putendl_fd(env->value,1);
+		ft_putendl_fd (env->value, 1);
 		env = env->next;
 	}
 	if (env)
