@@ -35,22 +35,19 @@ char	*env_to_str(t_env *lst)
 	int		i;
 	int		j;
 
-	if (!(env = malloc(sizeof(char) * size_env(lst) + 1)))
+	env = malloc(sizeof(char) * size_env(lst) + 1);
+	if (!env)
 		return (NULL);
 	i = 0;
-	while (lst && lst->next != NULL)
+	while (lst && lst->next)
 	{
-		if (lst->value != NULL)
+		if (lst->value)
 		{
-			j = 0;
-			while (lst->value[j])
-			{
-				env[i] = lst->value[j];
-				i++;
-				j++;
-			}
+			j = -1;
+			while (lst->value[++j])
+				env[i++] = lst->value[j];
 		}
-		if (lst->next->next != NULL)
+		if (lst->next->next)
 			env[i++] = '\n';
 		lst = lst->next;
 	}
@@ -64,7 +61,8 @@ int	env_init(t_shell *mini, char **env_array)
 	t_env	*new;
 	int		i;
 
-	if (!(env = malloc(sizeof(t_env))))
+	env = malloc(sizeof(t_env));
+	if (!env)
 		return (1);
 	env->value = ft_strdup(env_array[0]);
 	env->next = NULL;
@@ -72,7 +70,8 @@ int	env_init(t_shell *mini, char **env_array)
 	i = 1;
 	while (env_array && env_array[0] && env_array[i])
 	{
-		if (!(new = malloc(sizeof(t_env))))
+		new = malloc(sizeof(t_env));
+		if (!new)
 			return (1);
 		new->value = ft_strdup(env_array[i]);
 		new->next = NULL;
@@ -89,7 +88,8 @@ int	secret_env_init(t_shell *mini, char **env_array)
 	t_env	*new;
 	int		i;
 
-	if (!(env = malloc(sizeof(t_env))))
+	env = malloc(sizeof(t_env));
+	if (!env)
 		return (1);
 	env->value = ft_strdup(env_array[0]);
 	env->next = NULL;
@@ -97,7 +97,8 @@ int	secret_env_init(t_shell *mini, char **env_array)
 	i = 1;
 	while (env_array && env_array[0] && env_array[i])
 	{
-		if (!(new = malloc(sizeof(t_env))))
+		new = malloc(sizeof(t_env));
+		if (!new)
 			return (1);
 		new->value = ft_strdup(env_array[i]);
 		new->next = NULL;
