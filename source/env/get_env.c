@@ -63,7 +63,8 @@ char	*env_value(char *env)
 	char	*env_value;
 
 	size_alloc = env_value_len(env) + 1;
-	if (!(env_value = malloc(sizeof(char) * size_alloc)))
+	env_value = malloc(sizeof(char) * size_alloc);
+	if (!env_value)
 		return (NULL);
 	i = 0;
 	while (env[i] && env[i] != '=')
@@ -71,7 +72,11 @@ char	*env_value(char *env)
 	i += 1;
 	j = 0;
 	while (env[i])
-		env_value[j++] = env[i++];
+	{
+		env_value[j] = env[i];
+		j++;
+		i++;
+	}
 	env_value[j] = '\0';
 	return (env_value);
 }
