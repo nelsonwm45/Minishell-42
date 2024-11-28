@@ -13,7 +13,21 @@
 #include "../../header/minishell.h"
 
 static void	process_heredoc_input(t_general *utils, t_lexer *ptr,
-	int fd, int have_quote);
+	int fd, int have_quote)
+{
+	char	*line;
+
+	line = readline("\033[0;32mHeredoc> \033[0m");
+	while (line && same_str(ptr->str, line) == 0 && utils->stop_heredoc != 1)
+	{
+		if (have_quote == 0)
+			line = check_if_var(utils, line);
+		ft_putendl_fd(line, fd);
+		free(line);
+		line = readline("\033[0;32mHeredoc> \033[0m");
+	}
+	free(line);
+}
 
 char	*check_if_var(t_general *utils, char *line)
 {
@@ -59,23 +73,6 @@ static int	handle_heredoc_child(t_general *utils, t_lexer *ptr,
 		exit(EXIT_FAILURE);
 	}
 	exit(EXIT_SUCCESS);
-}
-
-static void	process_heredoc_input(t_general *utils, t_lexer *ptr,
-	int fd, int have_quote)
-{
-	char	*line;
-
-	line = readline("\033[0;32mHeredoc> \033[0m");
-	while (line && same_str(ptr->str, line) == 0 && utils->stop_heredoc != 1)
-	{
-		if (have_quote == 0)
-			line = check_if_var(utils, line);
-		ft_putendl_fd(line, fd);
-		free(line);
-		line = readline("\033[0;32mHeredoc> \033[0m");
-	}
-	free(line);
 }
 
 int	create_heredoc(t_general *utils, t_lexer *ptr, char *filename,
