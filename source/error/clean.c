@@ -84,9 +84,3 @@ void	clean_cmd(t_cmds **cmds)
 	}
 	*cmds = NULL;
 }
-
-// int	reset_utils(t_general *utils)
-// {
-
-// 	return (0);
-// }
