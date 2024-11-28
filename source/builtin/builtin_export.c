@@ -12,22 +12,23 @@
 
 #include "minishell.h"
 
-static int	print_error(int error, const char *arg)
+static int  print_error(int error, const char *arg)
 {
-	int		i;
+    int		i;
 
 	if (error == -1)
-		ft_putstr_fd("export: not valid in this context: ", 2);
-	else if (error == 0 || error == -3)
-		ft_putstr_fd("export: not a valid identifier: ", 2);
-	i = 0;
-	while (arg[i] && (arg[i] != '=' || error == -3))
-	{
-		write(2, &arg[i], 1);
-		i++;
-	}
-	write(2, "\n", 1);
-	return (ERROR);
+    ft_putstr_fd("export: not valid in this context: ", 2);
+    else if (error == 0 || error == -3)
+    ft_putstr_fd("export: not a valid identifier: ", 2);
+    
+    i = 0;
+    while (arg[i] && (arg[i] != '=' || error == -3))
+    {
+        write(2, &arg[i], 1);
+        i++;
+    }
+    write(2, "\n", 1);
+    return (ERROR);
 }
 
 int env_add(const char *value, t_env *env)
@@ -108,32 +109,27 @@ int ft_export(char **args, t_env *env, t_env *secret)
     int new_env;
     int error_ret;
 
-    if (!env || !secret)  // Check if env and secret are NULL
+    if (!env || !secret)
     {
         printf("Error: env or secret is NULL\n");
         return (-1);
     }
-    printf("Entering ft_export\n");
 
     new_env = 0;
     if (!args[1])
     {
-        printf("No arguments provided to export. Printing sorted environment.\n");
         print_sorted_env(secret);
         return (SUCCESS);
     }
     else
     {
-        printf("Argument provided to export: %s\n", args[1]);
         error_ret = is_valid_env(args[1]);
         if (args[1][0] == '=')
         {
             error_ret = -3;
-            printf("Invalid environment variable: starts with '='\n");
         }
         if (error_ret <= 0)
         {
-            printf("Invalid environment variable: %s\n", args[1]);
             return (print_error(error_ret, args[1]));
         }
         new_env = error_ret == 2 ? 1 : is_in_env(env, args[1]);
@@ -141,16 +137,13 @@ int ft_export(char **args, t_env *env, t_env *secret)
         {
             if (error_ret == 1)
             {
-                printf("Adding new environment variable to env: %s\n", args[1]);
                 env_add(args[1], env);
             }
             else
             {
-                printf("Adding new environment variable to secret: %s\n", args[1]);
                 env_add(args[1], secret);
             }
         }
     }
-    printf("Exiting ft_export\n");
     return (SUCCESS);
 }

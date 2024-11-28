@@ -313,6 +313,7 @@ int	ft_unset(char **args, t_shell *mini);
 void	ft_exit(t_shell *mini, char **cmd);
 int	ft_export(char **args, t_env *env, t_env *secret);
 int	update_oldpwd(t_env *env);
+void update_existing_oldpwd(t_env *env, char *oldpwd);
 int	go_to_path(int option, t_env *env);
 
 /* Environment Function*/
