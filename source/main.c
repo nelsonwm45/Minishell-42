@@ -85,6 +85,22 @@ t_env	*convert_envp_to_list(char **envp)
 	return (env_list);
 }
 
+void	cleanup_before_exit(t_general *utils)
+{
+	if (utils->line)
+		free(utils->line);
+	if (utils->envp)
+		free_array(utils->envp);
+	if (utils->path)
+		free_array(utils->path);
+	if (utils->pwd)
+		free(utils->pwd);
+	if (utils->oldpwd)
+		free(utils->oldpwd);
+	if (utils->pid)
+		free(utils->pid);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_general	utils;
@@ -101,5 +117,6 @@ int	main(int ac, char **av, char **envp)
 	init_shell(&mini, &utils);
 	run_signals(1);
 	start_shell(&utils);
+	cleanup_before_exit(&utils);
 	return (0);
 }

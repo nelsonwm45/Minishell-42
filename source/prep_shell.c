@@ -18,10 +18,6 @@ int	init_utils(t_general *utils)
 	utils->env_vars = NULL;
 	utils->lexer_list = NULL;
 	utils->cmds = NULL;
-	utils->envp = NULL;
-	utils->path = NULL;
-	utils->pwd = NULL;
-	utils->oldpwd = NULL;
 	utils->pipecount = 0;
 	utils->in_cmd = 0;
 	utils->pid = 0;
@@ -35,6 +31,10 @@ int	init_utils(t_general *utils)
 int	process_envp(char **envp, t_general *utils)
 {
 	init_utils(utils);
+	utils->envp = NULL;
+	utils->path = NULL;
+	utils->pwd = NULL;
+	utils->oldpwd = NULL;
 	if (utils->envp)
 		free_array(utils->envp);
 	utils->envp = duplicate_env(envp);

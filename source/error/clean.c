@@ -35,11 +35,10 @@ int	clean_utils(t_general *utils)
 {
 	if (utils->cmds)
 		clean_cmd(&utils->cmds);
-	free_array(utils->path);
 	free(utils->line);
 	if (utils->pid)
 		free(utils->pid);
-	process_envp(utils->envp, utils);
+	init_utils(utils);
 	utils->reset = 1;
 	return (0);
 }
