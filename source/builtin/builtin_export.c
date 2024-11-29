@@ -105,7 +105,8 @@ int	ft_export(char **args, t_env *env, t_env *secret)
 	{
 		if (error_ret == 1)
 			env_add(args[1], env);
-		env_add(args[1], secret);
+		else
+			env_add(args[1], secret);
 	}
 	return (SUCCESS);
 }
