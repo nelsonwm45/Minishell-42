@@ -198,6 +198,7 @@ int			get_array_size(char **arr);
 char		*get_path(t_general *utils);
 void		store_path(t_general *utils);
 void		join_path(t_general *utils, char **path);
+void		cleanup_before_exit(t_general *utils);
 int			print_envp(t_general *utils); // debug purpose
 
 /* Error Functions */
@@ -254,7 +255,7 @@ int			exec_complex_cmd(t_general *utils);
 void		handle_cmd(t_general *utils, t_cmds *cmds);
 int			search_cmd(t_general *utils, t_cmds *cmds);
 int			cmd_not_found(char *cmd);
-char		*join_split_str(char **split_str, char *new_str);
+char		*join_split_str(char **split_str);
 char		**resplit_str(char **double_arr);
 
 /* Pipe */

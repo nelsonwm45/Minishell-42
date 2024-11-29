@@ -17,7 +17,7 @@
 
 	return a new long str with spaces
 */
-char	*join_split_str(char **split_str, char *new_str)
+char	*join_split_str(char **split_str)
 {
 	char	*tmp;
 	char	*str_space;
@@ -27,15 +27,13 @@ char	*join_split_str(char **split_str, char *new_str)
 	i = 1;
 	while (split_str[i])
 	{
-		new_str = tmp;
-		str_space = ft_strjoin(new_str, " ");
-		free(new_str);
+		str_space = ft_strjoin(tmp, " ");
+		free(tmp);
 		tmp = ft_strjoin(str_space, split_str[i]);
 		free(str_space);
 		i++;
 	}
-	new_str = tmp;
-	return (new_str);
+	return (tmp);
 }
 
 /*
@@ -47,7 +45,9 @@ char	**resplit_str(char **double_arr)
 	char	**ret_str;
 	char	*joined_str;
 
-	joined_str = join_split_str(double_arr, NULL);
+	if (!double_arr)
+		return (NULL);
+	joined_str = join_split_str(double_arr);
 	free_array(double_arr);
 	ret_str = ft_split(joined_str, ' ');
 	free(joined_str);

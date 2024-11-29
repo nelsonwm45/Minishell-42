@@ -74,7 +74,7 @@ int	handle_word(char *str, int i, t_lexer **lexer_list)
 	{
 		j += handle_quotes(i + j, str, '\"');
 		j += handle_quotes(i + j, str, '\'');
-		if (is_spaces(str[i + j]) == TRUE)
+		if (is_spaces(str[i + j]) == TRUE || str[i + j] == '\0')
 			break ;
 		else
 			j++;
