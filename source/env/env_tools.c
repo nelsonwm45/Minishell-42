@@ -75,3 +75,25 @@ char	*check_dir(char *bin, char *command)
 	closedir(folder);
 	return (path);
 }
+
+void	join_path(t_general *utils, char **path)
+{
+	int		i;
+	char	*temp;
+
+	i = 0;
+	while (path[i])
+	{
+		if (path[i][ft_strlen(path[i]) - 1] != '/')
+		{
+			temp = path[i];
+			path[i] = ft_strjoin(path[i], "/");
+			free(temp);
+		}
+		if (ft_strncmp(path[i], "PATH=", 5) == 0)
+			path[i] = ft_strtrim(path[i], "PATH=");
+		utils->path[i] = path[i];
+		i++;
+	}
+	utils->path[i] = NULL;
+}
