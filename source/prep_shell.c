@@ -18,9 +18,6 @@ int	init_utils(t_general *utils)
 	utils->env_vars = NULL;
 	utils->lexer_list = NULL;
 	utils->cmds = NULL;
-	// utils->path = NULL;
-	// utils->pwd = NULL;
-	// utils->oldpwd = NULL;
 	utils->pipecount = 0;
 	utils->in_cmd = 0;
 	utils->pid = 0;
