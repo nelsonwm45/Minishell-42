@@ -20,7 +20,7 @@ int	setup_executor(t_general *utils)
 		exec_simple_cmd(utils, utils->cmds);
 	else
 	{
-		utils->pid = ft_calloc(utils->pipecount, sizeof(pid_t));
+		utils->pid = ft_calloc(utils->pipecount + 1, sizeof(pid_t));
 		if (!utils->pid)
 			return (error_message(0, utils));
 		exec_complex_cmd(utils);
