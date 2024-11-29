@@ -48,7 +48,7 @@ RLLIB = -L $(READLINE_LIB_DIR)
 
 #------Command-------#
 CC = gcc
-CFLAGS = -Werror -Wextra -Wall $(FSAN)
+CFLAGS = -Werror -Wextra -Wall # $(FSAN)
 RLFLAGS = -lreadline -lncurses
 FSAN = -fsanitize=address -g3
 LEAKS = Leaks --atExit --
