@@ -168,7 +168,6 @@ typedef struct s_expansions
 }	t_expansions;
 
 /* Functions */
-// void	print_welcome(void);
 int			same_str(char *s1, char *s2);
 int			start_shell(t_general *utils);
 void		init_shell(t_shell *mini, t_general *utils);
