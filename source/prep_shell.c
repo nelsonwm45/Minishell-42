@@ -35,6 +35,8 @@ int	init_utils(t_general *utils)
 int	process_envp(char **envp, t_general *utils)
 {
 	init_utils(utils);
+	if (utils->envp)
+		free_array(utils->envp);
 	utils->envp = duplicate_env(envp);
 	get_pwd(utils);
 	get_oldpwd(utils);
@@ -58,10 +60,10 @@ char	**duplicate_env(char **envp)
 	while (envp[i] != NULL)
 	{
 		arr[i] = ft_strdup(envp[i]);
-		if (arr[i] == NULL)
+		if (!arr[i])
 		{
 			free_array(arr);
-			return (arr);
+			return (NULL);
 		}
 		i++;
 	}
