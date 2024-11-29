@@ -95,6 +95,7 @@ int	main(int ac, char **av, char **envp)
 		ft_putendl_fd("Program does not accept arguments", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
+	
 	process_envp(envp, &utils);
 	utils.exit_status = 0;
 	utils.env_vars = convert_envp_to_list(envp);
