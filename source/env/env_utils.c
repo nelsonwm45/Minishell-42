@@ -88,6 +88,7 @@ void	store_path(t_general *utils)
 
 	longpath = get_path(utils);
 	path = ft_split(longpath, ':');
+	free(longpath);
 	i = get_array_size(path);
 	utils->path = ft_calloc(i + 1, sizeof(char *));
 	i = 0;
@@ -98,6 +99,8 @@ void	store_path(t_general *utils)
 		if (ft_strncmp(path[i], "PATH=", 5) == 0)
 			path[i] = ft_strtrim(path[i], "PATH=");
 		utils->path[i] = path[i];
+		free(path[i]);
 		i++;
 	}
+	free(path);
 }

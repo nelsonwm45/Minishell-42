@@ -18,7 +18,6 @@
 
 /* Own Library */
 # include "../libft/libft.h"
-# include "./color.h"
 
 /* Macros */
 /* Standard Library */
