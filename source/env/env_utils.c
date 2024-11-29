@@ -99,7 +99,6 @@ void	store_path(t_general *utils)
 		if (ft_strncmp(path[i], "PATH=", 5) == 0)
 			path[i] = ft_strtrim(path[i], "PATH=");
 		utils->path[i] = path[i];
-		free(path[i]);
 		i++;
 	}
 	free(path);
