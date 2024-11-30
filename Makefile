@@ -214,4 +214,7 @@ norm :
 	norminette ./libft
 	norminette ./source
 
+valgrind :
+	valgrind --leak-check=full ./minishell
+
 .PHONY : all bonus clean fclean re execlib execrd clean_readline

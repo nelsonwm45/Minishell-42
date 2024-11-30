@@ -203,7 +203,7 @@ int			print_envp(t_general *utils); // debug purpose
 
 /* Error Functions */
 int			double_token_error(t_lexer *lexer, t_type token_type);
-void		parsing_error(int error, t_general *utils, t_lexer *lexer);
+int			parsing_error(int error, t_general *utils, t_lexer *lexer);
 int			pipes_errors(t_general *utils, t_type token_type);
 
 /* Cleanning Structs */
@@ -232,6 +232,7 @@ int			start_parsing(t_general *utils);
 int			process_parser(t_general *utils);
 t_type		scan_double_token(t_lexer *lexer);
 int			pipe_first(t_lexer *lexer);
+int			scan_redir_error(t_lexer *lexer, t_general *utils);
 
 /* Parsing - Commands Structs */
 t_cmds		*init_cmds(t_parser *parser);

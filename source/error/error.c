@@ -30,11 +30,12 @@ int	double_token_error(t_lexer *lexer, t_type token_type)
 	return (EXIT_FAILURE);
 }
 
-void	parsing_error(int error, t_general *utils, t_lexer *lexer)
+int	parsing_error(int error, t_general *utils, t_lexer *lexer)
 {
 	if (lexer)
 		clean_lexer(&lexer);
 	error_message(error, utils);
+	return (EXIT_FAILURE);
 }
 
 int	error_message(int error_code, t_general *utils)
