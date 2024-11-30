@@ -135,7 +135,7 @@ char	**expander(t_general *utils, char **str)
 			free(str[i]);
 			str[i] = temp;
 		}
-		if (ft_strncmp(str[0], "export", ft_strlen(str[0]) - 1) != 0)
+		if (ft_strncmp(str[0], "export", ft_strlen(str[0]) - 1) == 0)
 		{
 			str[i] = remove_quotes(str[i], '\"');
 			str[i] = remove_quotes(str[i], '\'');
