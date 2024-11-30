@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+// Calculates the number of strings (lines) in a given 
+//	array of environment variables.
 int	str_env_len(char **env)
 {
 	int		i;
@@ -22,6 +24,17 @@ int	str_env_len(char **env)
 	return (i);
 }
 
+/*
+
+@brief : Sorts an array of strings (environment variables) 
+in  (alphabetical) order.
+
+1. Use a bubble sort algorithm to repeatedly compare
+	and swap adjacent strings if they are not in order (ft_strcmp).
+2. Continue until no swaps are needed (indicated by ordered being 1).
+3. Reduce the length to optimize the sorting process (env_len--) 
+	as the largest elements are already in place.
+*/
 void	sort_env(char **tab, int env_len)
 {
 	int		ordered;
@@ -48,6 +61,19 @@ void	sort_env(char **tab, int env_len)
 	}
 }
 
+/*
+@brief : Prints all environment variables in sorted order with the 
+	prefix declare -x.
+
+1. Prints all environment variables in sorted order with the 
+	prefix declare -x.
+2. Split the string into an array of strings (tab) using ft_split.
+3. Free the string after splitting (ft_memdel(str_env)).
+4. Sort the array using sort_env.
+5. Iterate through the sorted array:
+6. Print each string prefixed by declare -x 
+7. Free the array using free_tab.
+*/
 void	print_sorted_env(t_env *env)
 {
 	int		i;

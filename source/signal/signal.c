@@ -37,12 +37,12 @@ void	run_signals(int sig)
 	if (sig == 1)
 	{
 		signal(SIGINT, restore_prompt);
-		signal(SIGQUIT, SIG_IGN);
+		signal(SIGQUIT, sig_quit);
 	}
 	if (sig == 2)
 	{
 		signal(SIGINT, sig_init);
-		signal(SIGQUIT, SIG_IGN);
+		signal(SIGQUIT, sig_quit);
 	}
 	if (sig == 3)
 	{
@@ -65,5 +65,12 @@ void	sig_init(int sig)
 {
 	g_ret_number = 130;
 	write(1, "\n", 1);
+	(void)sig;
+}
+
+void	sig_quit(int sig)
+{
+	g_ret_number = 131;
+	write(1, "Quit (core dumped)\n", 19);
 	(void)sig;
 }

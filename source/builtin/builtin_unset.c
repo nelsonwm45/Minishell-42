@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+// Determines the size of the environment variable's name 
+// (the length up to, but not including, the = sign
 static size_t	env_size(char *env)
 {
 	size_t		i;
@@ -22,6 +24,7 @@ static size_t	env_size(char *env)
 	return (i);
 }
 
+// Frees a node from the linked list of environment variables.
 static void	free_node(t_shell *mini, t_env *env)
 {
 	if (mini->env_vars == env && env->next == NULL)
@@ -35,6 +38,13 @@ static void	free_node(t_shell *mini, t_env *env)
 	ft_memdel(env);
 }
 
+/*
+-  Removes the specified environment variable (a[1]) from list.
+- if no arguments, return SUCCESS
+- if the first node matches the variable, update the head
+- if the next node matches the variable, update the next node
+- Update env->next to skip the matched node and free it
+*/
 int	ft_unset(char **a, t_shell *mini)
 {
 	t_env	*env;

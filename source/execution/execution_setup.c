@@ -14,7 +14,7 @@
 
 int	setup_executor(t_general *utils)
 {
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, sig_quit);
 	utils->in_cmd = 1;
 	if (utils->pipecount == 0)
 		exec_simple_cmd(utils, utils->cmds);
@@ -49,7 +49,7 @@ void	exec_simple_cmd(t_general *utils, t_cmds *cmds)
 		handle_cmd(utils, cmds);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-		utils->exit_status = WEXITSTATUS(status);
+		g_ret_number = WEXITSTATUS(status);
 }
 
 int	exec_complex_cmd(t_general *utils)

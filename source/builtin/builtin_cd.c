@@ -26,6 +26,8 @@ static void	print_error(char **args)
 }
 
 // Retrieves the value of an environment variable from the linked list `env`
+// i = value after the '=' sign ; j = initialized index  for oldpwd
+// while loop thru [i],  copy [i] to old pwd
 static char	*get_env_path(t_env *env, const char *var, size_t len)
 {
 	int		i;
@@ -105,6 +107,7 @@ static int	go_to_path(int option, t_env *env)
 // no arguments = change to HOME
 // "-" = change to OLDPWD
 // otherwise, change to the specified path
+// chdir = 0 if successful, -1 if failed
 int	ft_cd(char **args, t_env *env)
 {
 	int		cd_ret;

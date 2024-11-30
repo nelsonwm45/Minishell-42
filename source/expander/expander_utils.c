@@ -44,7 +44,8 @@ int	replace_question_mark(t_general *utils, char **tmp)
 
 	len = 0;
 	free(*tmp);
-	*tmp = ft_itoa(utils->exit_status);
+	utils->exit_status = g_ret_number;
+	*tmp = ft_itoa(g_ret_number);
 	len = ft_strlen(*tmp);
 	return (len + 1);
 }

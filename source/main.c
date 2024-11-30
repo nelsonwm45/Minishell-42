@@ -118,5 +118,5 @@ int	main(int ac, char **av, char **envp)
 	run_signals(1);
 	start_shell(&utils);
 	cleanup_before_exit(&utils);
-	return (0);
+	return (g_ret_number);
 }

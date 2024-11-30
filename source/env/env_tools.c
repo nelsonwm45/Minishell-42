@@ -55,6 +55,14 @@ char	*path_join(const char *s1, const char *s2)
 	return (path);
 }
 
+/*
+1. Opens the directory specified by bin using opendir.
+2. Loops through the directory entries (readdir) to check 
+	if the command matches a file in the directory.
+3. If found, constructs the full path using path_join.
+4. Closes the directory with closedir.
+5. Returns the full path if found; otherwise, returns NULL.
+*/
 char	*check_dir(char *bin, char *command)
 {
 	DIR				*folder;
@@ -75,6 +83,15 @@ char	*check_dir(char *bin, char *command)
 	closedir(folder);
 	return (path);
 }
+/*
+@brief : Processes the PATH environment variable into individual paths and 
+			stores them in utils->path.
+
+1. Loops through the path array, which contains parts of the PATH variable.
+2. Ensures each path ends with a / by appending it if needed.
+3. Removes the "PATH=" prefix from any entry that contains it.
+4. Stores the processed paths into utils->path, ending the array with NULL.
+*/
 
 void	join_path(t_general *utils, char **path)
 {

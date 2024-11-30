@@ -12,13 +12,17 @@
 
 #include "minishell.h"
 
-int	is_env_char(int c)
-{
-	if (ft_isalnum(c) == 1 || c == '_')
-		return (1);
-	return (0);
-}
+/*
+@brief : Checks if the string is a valid environment variable.
 
+1. If the first character is a digit (ft_isdigit returns 1), 
+	it’s invalid → Return 0.
+2. Iterate through each character before the = sign:
+3. If any character is not alphanumeric (ft_isalnum returns 0), 
+	return -1 (invalid).
+4. If the string does not contain an = at all, return 2 (missing =).
+5. If all checks pass, return 1 (valid).
+*/
 int	is_valid_env(const char *env)
 {
 	int	i;
@@ -37,6 +41,12 @@ int	is_valid_env(const char *env)
 	return (1);
 }
 
+/*
+@brief : Calculates the length of the value part 
+	of the environment variable (everything after the = sign).
+
+- Start counting characters after =
+*/
 int	env_value_len(const char *env)
 {
 	int	i;
@@ -55,6 +65,17 @@ int	env_value_len(const char *env)
 	return (size_name);
 }
 
+/*
+@brief : Extracts and returns the value part
+	 (everything after =) from an environment variable.
+
+1. Calculate how much memory is needed for the 
+	value (env_value_len(env) + 1 for \0).
+2. Allocate memory for the value string.
+3. Find the position of = and start copying characters after =.
+4. Add a \0 at the end to terminate the string.
+5. Return the value string.
+*/
 char	*env_value(char *env)
 {
 	int		i;
@@ -81,6 +102,23 @@ char	*env_value(char *env)
 	return (env_value);
 }
 
+/*
+@brief: Searches for a specific environment variable 
+	by name and returns its value.
+
+1. Create a buffer (env_name) to hold the name part of 
+	the current environment variable.
+2. Start with an empty string for env_val.
+3. Loop through the environment list (t_env):
+-  Extract the name part using get_env_name.
+- Compare the name (arg) with the current environment 
+	variable’s name.
+- If it matches:
+	-Free the current env_val.
+	-Extract the value using env_value and return it.
+4. If no match is found, return the empty string.
+
+*/
 char	*get_env_value(char *arg, t_env *env)
 {
 	char	env_name[BUFF_SIZE];

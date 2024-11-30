@@ -12,6 +12,19 @@
 
 #include "minishell.h"
 
+/*
+@brief : Calculates the total length of all the strings in a linked list of
+		environment variables (t_env) plus the newline characters between them.
+
+1. Start with lst_len = 0 to keep track of the total size.
+2. Go through each node in the environment list (t_env):
+3. If the value (the environment variable) is not empty, 
+	add its length to lst_len.
+4. Add 1 more space for a newline character (\n) to separate it from the 
+	next variable.
+5. Stop when you reach the end of the list (lst->next == NULL).
+6. Return the total size you calculated.
+*/
 size_t	size_env(t_env *lst)
 {
 	size_t	lst_len;
@@ -29,6 +42,14 @@ size_t	size_env(t_env *lst)
 	return (lst_len);
 }
 
+/*
+@brief : t combines all the environment variables into 
+		a single string, with each variable separated by a newline (\n).
+exp: 
+- Copy "USER=root" into the string → Add a newline (\n).
+- Copy "HOME=/root" after it → Add a newline (\n).
+- Copy "PATH=/bin" last, with no newline.
+*/
 char	*env_to_str(t_env *lst)
 {
 	char	*env;
@@ -53,58 +74,4 @@ char	*env_to_str(t_env *lst)
 	}
 	env[i] = '\0';
 	return (env);
-}
-
-int	env_init(t_shell *mini, char **env_array)
-{
-	t_env	*env;
-	t_env	*new;
-	int		i;
-
-	env = malloc(sizeof(t_env));
-	if (!env)
-		return (1);
-	env->value = ft_strdup(env_array[0]);
-	env->next = NULL;
-	mini->env_vars = env;
-	i = 1;
-	while (env_array && env_array[0] && env_array[i])
-	{
-		new = malloc(sizeof(t_env));
-		if (!new)
-			return (1);
-		new->value = ft_strdup(env_array[i]);
-		new->next = NULL;
-		env->next = new;
-		env = new;
-		i++;
-	}
-	return (0);
-}
-
-int	secret_env_init(t_shell *mini, char **env_array)
-{
-	t_env	*env;
-	t_env	*new;
-	int		i;
-
-	env = malloc(sizeof(t_env));
-	if (!env)
-		return (1);
-	env->value = ft_strdup(env_array[0]);
-	env->next = NULL;
-	mini->hidden_env_vars = env;
-	i = 1;
-	while (env_array && env_array[0] && env_array[i])
-	{
-		new = malloc(sizeof(t_env));
-		if (!new)
-			return (1);
-		new->value = ft_strdup(env_array[i]);
-		new->next = NULL;
-		env->next = new;
-		env = new;
-		i++;
-	}
-	return (0);
 }

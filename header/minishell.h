@@ -336,7 +336,6 @@ int			is_env_char(int c);
 int			env_value_len(const char *env);
 char		*env_value(char *env);
 char		*get_env_value(char *var_name, t_env *env);
-void		increment_shell_level(t_env *env);
 int			str_env_len(char **env);
 void		sort_env(char **tab, int env_len);
 void		print_sorted_env(t_env *env);
@@ -351,6 +350,7 @@ char		*check_dir(char *bin, char *command);
 void		run_signals(int sig);
 void		restore_prompt(int sig);
 void		sig_init(int sig);
+void		sig_quit(int sig);
 
 /*Global variable*/
 extern int	g_ret_number;
