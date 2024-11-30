@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:26:00 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/30 12:58:55 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/30 15:14:40 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	search_cmd(t_general *utils, t_cmds *cmds)
 	path = find_path(utils->mini->env_vars);
 	if (!access(cmds->str[0], F_OK))
 		execve(cmds->str[0], cmds->str, envp);
-	while (path[i])
+	while (path != NULL && path[i])
 	{
 		new_cmd = ft_strjoin(path[i], cmds->str[0]);
 		if (!access(new_cmd, F_OK))
