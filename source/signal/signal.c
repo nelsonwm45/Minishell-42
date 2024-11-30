@@ -27,7 +27,6 @@ g_ret_number = global variable
 ** Case sig == 2: Handle child signal
 
 ** Case sig == 3: for cleaning and termination purpose
-
 */
 
 int	g_ret_number = 0;

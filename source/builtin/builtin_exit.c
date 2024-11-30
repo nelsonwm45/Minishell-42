@@ -52,5 +52,10 @@ void	ft_exit(t_shell *mini, char **cmd)
 	}
 	else
 		mini->return_code = 0;
+<<<<<<< HEAD
 	exit(mini->return_code);
 }
+=======
+    exit(mini->return_code);
+}
+>>>>>>> origin/check

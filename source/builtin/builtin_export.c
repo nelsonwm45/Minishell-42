@@ -44,6 +44,7 @@ int	env_add(const char *value, t_env *env)
 	t_env	*new;
 	t_env	*tmp;
 
+<<<<<<< HEAD
 	if (env && env->value == NULL)
 	{
 		env->value = ft_strdup(value);
@@ -59,6 +60,27 @@ int	env_add(const char *value, t_env *env)
 	env->next = new;
 	new->next = tmp;
 	return (SUCCESS);
+=======
+    if (!env)
+        return (-1);
+
+    if (env->value == NULL)
+    {
+        env->value = ft_strdup(value);
+        env->next = NULL;
+        return (SUCCESS);
+    }
+    if (!(new = malloc(sizeof(t_env))))
+        return (-1);
+    new->value = ft_strdup(value);
+    new->next = NULL;
+    tmp = env;
+    while (tmp->next)
+        tmp = tmp->next;
+
+    tmp->next = new;
+    return (SUCCESS);
+>>>>>>> origin/check
 }
 
 /*
@@ -93,6 +115,7 @@ int	is_in_env(t_env *env, char *args)
 	char	var_name[BUFF_SIZE];
 	char	env_name[BUFF_SIZE];
 
+<<<<<<< HEAD
 	get_env_name(var_name, args);
 	while (env && env->next)
 	{
@@ -106,6 +129,27 @@ int	is_in_env(t_env *env, char *args)
 		env = env->next;
 	}
 	return (SUCCESS);
+=======
+    get_env_name(var_name, args);
+
+   ptr = env;
+    while (env)
+    {
+        if (env->value)
+        {
+            get_env_name(env_name, env->value);
+            if (ft_strcmp(var_name, env_name) == 0)
+            {
+                free(env->value);
+                env->value = ft_strdup(args);
+                return (1);
+                }
+        }
+        env = env->next;
+    }
+    env = ptr;
+    return (0);
+>>>>>>> origin/check
 }
 
 /*
@@ -124,6 +168,7 @@ int	ft_export(char **args, t_env *env, t_env *secret)
 	int		error_ret;
 	int		new_env;
 
+<<<<<<< HEAD
 	if (!args[1])
 		return (print_sorted_env(secret), SUCCESS);
 	error_ret = is_valid_env(args[1]);
@@ -143,3 +188,46 @@ int	ft_export(char **args, t_env *env, t_env *secret)
 	}
 	return (SUCCESS);
 }
+=======
+    if (!env || !secret)
+        return (-1);
+
+    new_env = 0;
+    if (!args[1])
+    {
+        print_sorted_env(secret);
+        return (SUCCESS);
+    }
+    else
+    {
+        printf("Argument provided to export: %s\n", args[1]);
+        error_ret = is_valid_env(args[1]);
+        if (args[1][0] == '=')
+        {
+            error_ret = -3;
+            printf("Invalid environment variable: starts with '='\n");
+        }
+        if (error_ret <= 0)
+        {
+            printf("Invalid environment variable: %s\n", args[1]);
+            return (print_error(error_ret, args[1]));
+        }
+        new_env = error_ret == 2 ? 1 : is_in_env(env, args[1]);
+        if (new_env == 0)
+        {
+            if (error_ret == 1)
+            {
+                printf("Adding new environment variable to env: %s\n", args[1]);
+                env_add(args[1], env);
+            }
+            else
+            {
+                printf("Adding new environment variable to secret: %s\n", args[1]);
+                env_add(args[1], secret);
+            }
+        }
+    }
+    printf("Exiting ft_export\n");
+    return (SUCCESS);
+}
+>>>>>>> origin/check
