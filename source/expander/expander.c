@@ -29,12 +29,26 @@ t_cmds	*call_expander(t_general *utils, t_cmds *cmds)
 }
 
 /*
-	@brief
-		1. get the str after dollar sign & concatenante
-		2. return length of the string till the "equal sign" + 1 
-			if found matched env variable
-		3. return the length of str after the dollar sign 
-			if no matched env variable found
+	@brief : substitutes a variable prefixed with $ in the input string str
+	 with its value from the environment variables linked list.
+
+	 exp : 
+	 Get Variable Name Length:
+
+1. Variable name = "USER".
+2. var_len = 4.
+3. Iterate Through Environment Variables:
+
+4. Find "USER=root" where the name matches "USER".
+5. Substitute Value:
+
+	tmp2 = strdup("root");
+	tmp3 = strjoin("Hello ", "root");
+	Result: "Hello root".
+	Free old tmp and update it with "Hello root".
+Return:
+	Return 5 (var_len + 1)
+
 */
 int	subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
 {
