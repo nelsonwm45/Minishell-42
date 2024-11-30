@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:55:02 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/30 15:13:54 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/30 15:20:44 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	**find_path(t_env *env)
 		ptr = ptr->next;
 	}
 	if (!path)
-		return (NULL); 
+		return (NULL);
 	path_arr = ft_split(path, ':');
 	free(path);
 	path_arr = make_dir(path_arr);
