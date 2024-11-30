@@ -58,8 +58,10 @@ int	start_shell(t_general *utils)
 
 	while (1)
 	{
+		utils->exit_status = g_ret_number;
 		ret = EXIT_SUCCESS;
 		ret = ft_readline(utils);
+		utils->exit_status = g_ret_number;
 		if (ret != EXIT_FAILURE)
 		{
 			if (closed_quotes(utils->line) == FALSE)
@@ -72,6 +74,7 @@ int	start_shell(t_general *utils)
 			ret = start_parsing(utils);
 		if (ret != EXIT_FAILURE)
 			ret = setup_executor(utils);
+		utils->exit_status = g_ret_number;
 		run_signals(1);
 		clean_utils(utils);
 	}

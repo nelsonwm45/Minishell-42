@@ -143,7 +143,7 @@ char	**expander(t_general *utils, char **str)
 	while (str[i])
 	{
 		j = find_dollar(str[i]);
-		if (str[i][j - 2] != '\'' && j != 0 && str[i][j] != '\0')
+		if (str[i][0] != '\'' && j != 0 && str[i][j] != '\0')
 		{
 			temp = replace_to_env(utils, str[i]);
 			free(str[i]);
