@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+// Check if the variable is valid
 static int	print_error(int error, const char *arg)
 {
 	int		i;
@@ -30,6 +31,14 @@ static int	print_error(int error, const char *arg)
 	return (ERROR);
 }
 
+/*
+1. Adds a new environment variable to the linked list `env`
+- If the first node is empty, add the value there
+- Allocate memory for the new environment variable node
+- Duplicate the value string and add it to the new node
+- save the reference to the last node
+- inset to new node then link it to the rest
+*/
 int	env_add(const char *value, t_env *env)
 {
 	t_env	*new;
@@ -52,6 +61,12 @@ int	env_add(const char *value, t_env *env)
 	return (SUCCESS);
 }
 
+/*
+1. Extracts the name part of an environment variable
+(before the '=')
+- Copy characters from `src` to `dest` until '=' or
+	end of string
+*/
 char	*get_env_name(char *dest, const char *src)
 {
 	int		i;
@@ -66,6 +81,13 @@ char	*get_env_name(char *dest, const char *src)
 	return (dest);
 }
 
+/*
+- Checks if a given variable already exists in the environment
+- If it exists, updates its value; otherwise, returns 0
+- Extract the variable name from `args` KEY=VALUE (name)
+- Extract the name from the current `env` node
+- return 1 indicate updated & found
+*/
 int	is_in_env(t_env *env, char *args)
 {
 	char	var_name[BUFF_SIZE];
@@ -86,6 +108,17 @@ int	is_in_env(t_env *env, char *args)
 	return (SUCCESS);
 }
 
+/*
+- Handles the `export` command for the shell
+- Adds or updates variables in the environment or secret lis
+-
+- Print an error if the variable is invalid and return
+- Check if the variable already exists in the environment
+- if no , add it to the list
+- error_ret = 0, invalid
+- error_ret = 1, valid , add or update
+- error_ret = 2, valid , but only KEY part
+*/
 int	ft_export(char **args, t_env *env, t_env *secret)
 {
 	int		error_ret;
