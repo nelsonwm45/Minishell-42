@@ -48,7 +48,7 @@ RLLIB = -L $(READLINE_LIB_DIR)
 
 #------Command-------#
 CC = gcc
-CFLAGS = -Werror -Wextra -Wall # $(FSAN)
+CFLAGS = -Werror -Wextra -Wall #$(FSAN)
 RLFLAGS = -lreadline -lncurses
 FSAN = -fsanitize=address -g3
 LEAKS = Leaks --atExit --
@@ -212,5 +212,8 @@ norm :
 	norminette ./header
 	norminette ./libft
 	norminette ./source
+
+valgrind :
+	valgrind --leak-check=full ./minishell
 
 .PHONY : all bonus clean fclean re execlib execrd clean_readline
