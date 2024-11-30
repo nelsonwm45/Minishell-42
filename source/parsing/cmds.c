@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:47:46 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/26 16:54:44 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/30 11:32:00 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_cmds	*init_cmds(t_parser *parser)
 	recog_redirections(parser);
 	size = count_no_pipe(parser->lexer_list);
 	str = ft_calloc(size + 1, sizeof(char *));
-	while (!str)
+	if (!str)
 		parsing_error(1, parser->utils, parser->lexer_list);
 	str = form_str(str, size, parser);
 	cmds = create_cmds(str, parser->redirections, parser->redirections_count);

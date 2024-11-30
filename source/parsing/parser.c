@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:45:12 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/26 16:47:50 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/30 11:44:44 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	start_parsing(t_general *utils)
 	token = scan_double_token(utils->lexer_list);
 	if (token != 0)
 		return (double_token_error(utils->lexer_list, token));
+	if (scan_redir_error(utils->lexer_list, utils))
+		return (EXIT_FAILURE);
 	if (process_parser(utils) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
