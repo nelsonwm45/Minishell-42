@@ -49,7 +49,7 @@ void	exec_simple_cmd(t_general *utils, t_cmds *cmds)
 		handle_cmd(utils, cmds);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-		utils->exit_status = WEXITSTATUS(status);
+		g_ret_number = WEXITSTATUS(status);
 }
 
 int	exec_complex_cmd(t_general *utils)

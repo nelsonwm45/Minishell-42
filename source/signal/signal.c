@@ -72,6 +72,5 @@ void	sig_quit(int sig)
 {
 	g_ret_number = 131;
 	write(1, "Quit (core dumped)\n", 19);
-	exit(131);
 	(void)sig;
 }
