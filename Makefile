@@ -85,7 +85,6 @@ EXECUTE_FILES	=	builtin.c\
 ENVIRONMENT_FILES	=	env.c\
 						env_tools.c\
 						get_env.c\
-						shell_level.c\
 						sort_env.c\
 						env_utils.c \
 						
