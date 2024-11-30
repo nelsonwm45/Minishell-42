@@ -20,6 +20,10 @@ void	handle_cmd(t_general *utils, t_cmds *cmds)
 	if (cmds->redir)
 		if (check_redir(cmds))
 			exit(1);
+	if (!cmds->str || cmds->str[0] == NULL || cmds->str[0][0] == '\0')
+	{
+		exit(0);
+	}
 	if (cmds->builtin != 0)
 	{
 		exit_code = prep_builtin(utils, cmds, utils->mini);
