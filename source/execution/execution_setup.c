@@ -42,7 +42,7 @@ void	exec_simple_cmd(t_general *utils, t_cmds *cmds)
 	if (cmds->builtin == EXIT || cmds->builtin == CD || cmds->builtin == EXPORT
 		|| cmds->builtin == UNSET)
 	{
-		utils->exit_status = prep_builtin(utils, cmds, utils->mini);
+		g_ret_number = prep_builtin(utils, cmds, utils->mini);
 		return ;
 	}
 	start_heredoc(utils, cmds);
