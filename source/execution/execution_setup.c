@@ -14,7 +14,7 @@
 
 int	setup_executor(t_general *utils)
 {
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, sig_quit);
 	utils->in_cmd = 1;
 	if (utils->pipecount == 0)
 		exec_simple_cmd(utils, utils->cmds);
