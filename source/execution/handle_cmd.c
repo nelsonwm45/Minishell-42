@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:26:00 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/26 17:12:24 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/30 12:58:55 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,52 @@ int	search_cmd(t_general *utils, t_cmds *cmds)
 {
 	int		i;
 	char	*new_cmd;
+	char	**envp;
+	char	**path;
 
+	path = NULL;
+	envp = NULL;
 	cmds->str = resplit_str(cmds->str);
 	i = 0;
+	envp = convert_envp_to_str(utils->mini->env_vars);
+	path = find_path(utils->mini->env_vars);
 	if (!access(cmds->str[0], F_OK))
-		execve(cmds->str[0], cmds->str, utils->envp);
-	while (utils->path[i])
+		execve(cmds->str[0], cmds->str, envp);
+	while (path[i])
 	{
-		new_cmd = ft_strjoin(utils->path[i], cmds->str[0]);
+		new_cmd = ft_strjoin(path[i], cmds->str[0]);
 		if (!access(new_cmd, F_OK))
-			execve(new_cmd, cmds->str, utils->envp);
+			execve(new_cmd, cmds->str, envp);
 		free(new_cmd);
 		i++;
 	}
+	free_array(envp);
+	free_array(path);
 	return (cmd_not_found(cmds->str[0]));
+}
+
+char	**convert_envp_to_str(t_env *env)
+{
+	int		i;
+	char	**envp;
+	t_env	*ptr;
+
+	i = 0;
+	ptr = env;
+	while (ptr)
+	{
+		i++;
+		ptr = ptr->next;
+	}
+	envp = ft_calloc(i + 1, sizeof(char *));
+	i = 0;
+	ptr = env;
+	while (ptr)
+	{
+		envp[i] = ft_strdup(ptr->value);
+		i++;
+		ptr = ptr->next;
+	}
+	envp[i] = NULL;
+	return (envp);
 }
