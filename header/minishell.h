@@ -258,6 +258,9 @@ int			search_cmd(t_general *utils, t_cmds *cmds);
 int			cmd_not_found(char *cmd);
 char		*join_split_str(char **split_str);
 char		**resplit_str(char **double_arr);
+char		**find_path(t_env *env);
+char		**convert_envp_to_str(t_env *env);
+char		**make_dir(char **path_arr);
 
 /* Pipe */
 void		dup2_cmd(t_cmds *cmds, t_general *utils, int pipe_fd[2], int fd_in);
