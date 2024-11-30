@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:52:07 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/30 10:59:35 by nchok            ###   ########.fr       */
+/*   Updated: 2024/11/30 18:57:28 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ char	**expander(t_general *utils, char **str)
 			free(str[i]);
 			str[i] = temp;
 		}
-		if (ft_strncmp(str[0], "export", ft_strlen(str[0]) - 1) != 0)
+		if (ft_strncmp(str[0], "export", ft_strlen(str[0]) - 1) == 0)
 		{
 			str[i] = remove_quotes(str[i], '\"');
 			str[i] = remove_quotes(str[i], '\'');
