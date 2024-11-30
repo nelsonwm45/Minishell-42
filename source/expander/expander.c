@@ -172,6 +172,7 @@ char	*expand_str(t_general *utils, char *str)
 
 	tmp = NULL;
 	i = find_dollar(str);
+	printf("str: %s\n", str);
 	while (str[i - 2] == '\'' && i != 0 && str[i] != '\0')
 	{
 		tmp = replace_to_env(utils, str);

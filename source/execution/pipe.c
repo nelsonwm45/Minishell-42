@@ -105,6 +105,7 @@ int	wait_pipe(t_general *utils, int *pid, int pipecount)
 	int	i;
 	int	status;
 
+	(void)utils;
 	i = 0;
 	while (i < pipecount)
 	{
@@ -113,6 +114,6 @@ int	wait_pipe(t_general *utils, int *pid, int pipecount)
 	}
 	waitpid(pid[i], &status, 0);
 	if (WIFEXITED(status))
-		utils->exit_status = WEXITSTATUS(status);
+		g_ret_number = WEXITSTATUS(status);
 	return (EXIT_SUCCESS);
 }

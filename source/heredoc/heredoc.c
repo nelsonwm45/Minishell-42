@@ -29,7 +29,7 @@ int	start_heredoc(t_general *utils, t_cmds *cmds)
 			status = mini_heredoc(utils, ptr, cmds->hd_file_name);
 			if (status != EXIT_SUCCESS)
 			{
-				utils->exit_status = 1;
+				g_ret_number = 1;
 				return (clean_utils(utils));
 			}
 		}
