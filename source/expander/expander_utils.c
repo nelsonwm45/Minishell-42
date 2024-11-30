@@ -41,6 +41,7 @@ int	find_dollar(char *str)
 int	replace_question_mark(t_general *utils, char **tmp)
 {
 	int	len;
+
 	len = 0;
 	free(*tmp);
 	*tmp = ft_itoa(utils->exit_status);
