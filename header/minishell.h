@@ -288,6 +288,11 @@ char		*remove_quotes(char *str, char quote);
 char		*expand_str(t_general *utils, char *str);
 char		*char_to_str(char c);
 
+char		*expand_decision(t_general *utils, char *str);
+int			next_quote(char *str, int i, char quote, int len);
+char		is_quote(char c);
+char		*remove_specific_quotes(char *str, char quote, int open, int close);
+
 /* Heredoc */
 int			start_heredoc(t_general *utils, t_cmds *cmds);
 char		*create_hd_filename(t_general *utils);
