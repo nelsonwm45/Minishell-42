@@ -135,25 +135,12 @@ char	*replace_to_env(t_general *utils, char *str)
 char	**expander(t_general *utils, char **str)
 {
 	int		i;
-	// int		j;
-	// char	quote;
 	char	*temp;
 
 	i = 0;
 	temp = NULL;
 	while (str[i])
 	{
-		// j = find_dollar(str[i]);
-		// if ((str[i][0] != '\'' || (str[i][0] == '\'' && str[i][1] == '\'')) && j != 0 && str[i][j] != '\0')
-		// {
-		// 	quote = str[i][0];
-		// 	temp = replace_to_env(utils, str[i]);
-		// 	free(str[i]);
-		// 	str[i] = temp;
-		// 	str[i] = remove_quotes(str[i], quote);
-		// }
-		// else
-		// 	str[i] = remove_quotes(str[i], '\'');
 		temp = expand_decision(utils, str[i]);
 		free(str[i]);
 		str[i] = temp;

@@ -129,6 +129,9 @@ typedef struct s_general
 	int				in_heredoc;
 	int				heredoc;
 
+	int				last_q_i;
+	char			found_quote;
+
 	char			**envp;
 	char			**path;
 	char			*pwd;
@@ -289,9 +292,10 @@ char		*expand_str(t_general *utils, char *str);
 char		*char_to_str(char c);
 
 char		*expand_decision(t_general *utils, char *str);
-int			next_quote(char *str, int i, char quote, int len);
-char		is_quote(char c);
-char		*remove_specific_quotes(char *str, char quote, int open, int close);
+int			process_unquoted(t_general *utils, char *str, int *i, char **new);
+int			process_quoted(t_general *utils, char *str, int *i, char **new);
+int			process_end(t_general *utils, char *str, int *i, char **new);
+
 
 /* Heredoc */
 int			start_heredoc(t_general *utils, t_cmds *cmds);
