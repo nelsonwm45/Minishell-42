@@ -37,12 +37,12 @@ void	run_signals(int sig)
 	if (sig == 1)
 	{
 		signal(SIGINT, restore_prompt);
-		signal(SIGQUIT, sig_quit);
+		signal(SIGQUIT, SIG_IGN);
 	}
 	if (sig == 2)
 	{
 		signal(SIGINT, sig_init);
-		signal(SIGQUIT, sig_quit);
+		signal(SIGQUIT, SIG_DFL);
 	}
 	if (sig == 3)
 	{
