@@ -101,14 +101,16 @@ int	subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
 char	*replace_to_env(t_general *utils, char *str)
 {
 	int		j;
+	int		skip;
 	char	*tmp;
 
-	tmp = ft_strdup("\0");
+	tmp = NULL;
 	j = 0;
 	while (str[j])
 	{
-		j += skipped_char_after_dollar(j, str);
-		if (str[j] == '$' && str[j + 1] == '?')
+		skip = skipped_char_after_dollar(j, str);
+		j += skip;
+		if (str[j] == '$' && str[j + 1] && str[j + 1] == '?')
 			j += replace_question_mark(utils, &tmp);
 		else if (str[j] == '$' && (str[j + 1] != ' '
 				&& (str[j + 1] != '"' || str[j + 2] != '\0'))

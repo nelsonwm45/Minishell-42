@@ -44,9 +44,10 @@ int	append_str(char **tmp, char c, int j)
 	tmp2 = char_to_str(c);
 	tmp3 = ft_strjoin(*tmp, tmp2);
 	free(*tmp);
-	*tmp = tmp3;
 	free(tmp2);
-	return (j + 1);
+	*tmp = tmp3;
+	j = j + 1;
+	return (j);
 }
 
 /*
