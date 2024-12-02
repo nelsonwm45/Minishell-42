@@ -70,6 +70,7 @@ void	sig_init(int sig)
 
 void	sig_quit(int sig)
 {
+	g_ret_number = 131;
 	write(1, "Quit (core dumped)\n", 19);
 	(void)sig;
 }
