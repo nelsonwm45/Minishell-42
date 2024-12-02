@@ -296,7 +296,6 @@ int			process_unquoted(t_general *utils, char *str, int *i, char **new);
 int			process_quoted(t_general *utils, char *str, int *i, char **new);
 int			process_end(t_general *utils, char *str, int *i, char **new);
 
-
 /* Heredoc */
 int			start_heredoc(t_general *utils, t_cmds *cmds);
 char		*create_hd_filename(t_general *utils);
