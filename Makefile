@@ -106,6 +106,7 @@ PARSING_FILES	=	read_token.c \
 EXPANDER_FILES	=	expander.c \
 					expander_utils.c \
 					expander_utils2.c \
+					quotes_case.c \
 
 HEREDOC_FILES	=	heredoc.c \
 					redirection.c \
