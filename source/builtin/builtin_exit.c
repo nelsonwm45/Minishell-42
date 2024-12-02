@@ -17,6 +17,7 @@
 	- No arguments.
 	- Valid numeric arguments (e.g., exit 42).
 	-Invalid arguments (e.g., exit abc). 
+	- shd return 2, but it return 255 --> need to double check and fix
 */
 
 static void	print_exit_message(char **cmd)
