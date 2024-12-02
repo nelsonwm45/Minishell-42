@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:51:06 by nchok             #+#    #+#             */
-/*   Updated: 2024/12/02 17:17:38 by nchok            ###   ########.fr       */
+/*   Updated: 2024/12/02 18:14:35 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*expand_decision(t_general *utils, char *str)
 	i = 0;
 	utils->found_quote = 0;
 	utils->last_q_i = -1;
-	new = ft_strdup("\0");
+	new = NULL;
 	while (str[i])
 	{
 		if (!utils->found_quote && (str[i] == '\'' || str[i] == '\"'))
@@ -44,8 +44,10 @@ int	process_unquoted(t_general *utils, char *str, int *i, char **new)
 		tmp = ft_substr(str, utils->last_q_i + 1, *i - utils->last_q_i - 1);
 		tmp2 = replace_to_env(utils, tmp);
 		free(tmp);
-		*new = ft_strjoin(*new, tmp2);
+		tmp = ft_strjoin(*new, tmp2);
+		free(*new);
 		free(tmp2);
+		*new = tmp;
 	}
 	utils->found_quote = str[*i];
 	utils->last_q_i = *i;
@@ -62,13 +64,17 @@ int	process_quoted(t_general *utils, char *str, int *i, char **new)
 	{
 		tmp2 = replace_to_env(utils, tmp);
 		free(tmp);
-		*new = ft_strjoin(*new, tmp2);
+		tmp = ft_strjoin(*new, tmp2);
 		free(tmp2);
+		free(*new);
+		*new = tmp;
 	}
 	else
 	{
-		*new = ft_strjoin(*new, tmp);
+		tmp2 = ft_strjoin(*new, tmp);
 		free(tmp);
+		free(*new);
+		*new = tmp2;
 	}
 	utils->found_quote = 0;
 	utils->last_q_i = *i;
@@ -83,7 +89,9 @@ int	process_end(t_general *utils, char *str, int *i, char **new)
 	tmp = ft_substr(str, utils->last_q_i + 1, *i - utils->last_q_i - 1);
 	tmp2 = replace_to_env(utils, tmp);
 	free(tmp);
-	*new = ft_strjoin(*new, tmp2);
+	tmp = ft_strjoin(*new, tmp2);
 	free(tmp2);
+	free(*new);
+	*new = tmp;
 	return (0);
 }
