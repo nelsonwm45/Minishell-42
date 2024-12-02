@@ -35,19 +35,19 @@ int	find_dollar(char *str)
 /*
 	@brief
 		1. 
-		2. return the length of the exit status (in ascii) + 1
+		2. return the length of $? -> 2
 		e.g -> 123 -> 3 + 1 = 4
 */
 int	replace_question_mark(t_general *utils, char **tmp)
 {
-	int	len;
+	int	i;
 
-	len = 0;
+	i = 0;
 	free(*tmp);
 	utils->exit_status = g_ret_number;
 	*tmp = ft_itoa(g_ret_number);
-	len = ft_strlen(*tmp);
-	return (len + 1);
+	i += 2;
+	return (i);
 }
 
 /*
