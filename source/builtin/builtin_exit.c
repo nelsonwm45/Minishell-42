@@ -17,6 +17,7 @@
 	- No arguments.
 	- Valid numeric arguments (e.g., exit 42).
 	-Invalid arguments (e.g., exit abc). 
+	- shd return 2, but it return 255 --> need to double check and fix
 */
 
 static void	print_exit_message(char **cmd)
@@ -30,27 +31,33 @@ static void	print_exit_message(char **cmd)
 
 void	ft_exit(t_shell *mini, char **cmd)
 {
+	if (!cmd)
+	{
+		mini->return_code = 0;
+		exit(mini->return_code);
+	}
 	mini->exit_code = 1;
 	print_exit_message(cmd);
+	if (cmd[1] && !ft_strisnum(cmd[1]))
+	{
+		mini->return_code = 2;
+		ft_putstr_fd("minishell: exit: ", 2);
+		ft_putstr_fd(cmd[1], 2);
+		ft_putendl_fd(": numeric argument required", 2);
+		exit(mini->return_code);
+	}
 	if (cmd[1] && cmd[2])
 	{
 		mini->return_code = 1;
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
-		return ;
+		exit(mini->return_code);
 	}
-	if (cmd[1])
+	if (!cmd[1])
 	{
-		if (ft_strisnum(cmd[1]) == 0)
-		{
-			mini->return_code = 255;
-			ft_putstr_fd("minishell: exit: ", 2);
-			ft_putstr_fd(cmd[1], 2);
-			ft_putendl_fd(": numeric argument required", 2);
-			exit(mini->return_code);
-		}
-		mini->return_code = ft_atoi(cmd[1]);
-	}
-	else
+		mini->exit_code = 0;
 		mini->return_code = 0;
+		exit(mini->return_code);
+	}
+	mini->return_code = ft_atoi(cmd[1]) % 256;
 	exit(mini->return_code);
 }
