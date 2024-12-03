@@ -31,11 +31,6 @@ static void	print_exit_message(char **cmd)
 
 void	ft_exit(t_shell *mini, char **cmd)
 {
-	if (!cmd)
-	{
-		mini->return_code = 0;
-		exit(mini->return_code);
-	}
 	mini->exit_code = 1;
 	print_exit_message(cmd);
 	if (cmd[1] && !ft_strisnum(cmd[1]))
