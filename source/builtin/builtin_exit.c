@@ -31,6 +31,11 @@ static void	print_exit_message(char **cmd)
 
 void	ft_exit(t_shell *mini, char **cmd)
 {
+	if (!cmd)
+	{
+		mini->return_code = 0;
+		exit(mini->return_code);
+	}
 	mini->exit_code = 1;
 	print_exit_message(cmd);
 	if (cmd[1] && !ft_strisnum(cmd[1]))
@@ -41,7 +46,7 @@ void	ft_exit(t_shell *mini, char **cmd)
 		ft_putendl_fd(": numeric argument required", 2);
 		exit(mini->return_code);
 	}
-	if (cmd[2] != NULL)
+	if (cmd[1] && cmd[2])
 	{
 		mini->return_code = 1;
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
@@ -49,6 +54,7 @@ void	ft_exit(t_shell *mini, char **cmd)
 	}
 	if (!cmd[1])
 	{
+		mini->exit_code = 0;
 		mini->return_code = 0;
 		exit(mini->return_code);
 	}
