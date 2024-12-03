@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:11:04 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/30 17:02:01 by hheng            ###   ########.fr       */
+/*   Updated: 2024/12/03 13:55:48 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ void	exec_simple_cmd(t_general *utils, t_cmds *cmds)
 	int	status;
 
 	if (!cmds)
-	{
 		return ;
-	}
 	utils->cmds = call_expander(utils, utils->cmds);
 	if (cmds->builtin == EXIT || cmds->builtin == CD || cmds->builtin == EXPORT
 		|| cmds->builtin == UNSET)

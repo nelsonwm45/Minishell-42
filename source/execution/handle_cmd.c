@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:26:00 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/30 15:14:40 by nchok            ###   ########.fr       */
+/*   Updated: 2024/12/03 13:56:05 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ void	handle_cmd(t_general *utils, t_cmds *cmds)
 		if (check_redir(cmds))
 			exit(1);
 	if (!cmds->str || cmds->str[0] == NULL || cmds->str[0][0] == '\0')
-	{
 		exit(0);
-	}
 	if (cmds->builtin != 0)
 	{
 		exit_code = prep_builtin(utils, cmds, utils->mini);

@@ -64,7 +64,7 @@ OBJS_BONUS = $(FILES_BONUS:.c=.o)
 all: $(NAME)
 
 .c.o:
-	cc $(CFLAGS) -c $< -o $(<:.c=.o)
+	gcc $(CFLAGS) -c $< -o $(<:.c=.o)
 
 $(NAME): $(OBJS)
 	ar rcs $(NAME) $(OBJS)
