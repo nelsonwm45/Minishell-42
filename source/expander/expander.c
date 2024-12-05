@@ -70,7 +70,6 @@ int	subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
 			tmp3 = ft_strjoin(*tmp, tmp2);
 			free(*tmp);
 			*tmp = tmp3;
-			printf("tmp: %s\n", *tmp);
 			free(tmp2);
 			return (var_len + 1);
 		}
