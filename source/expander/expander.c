@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:52:07 by nchok             #+#    #+#             */
-/*   Updated: 2024/12/05 13:23:38 by nchok            ###   ########.fr       */
+/*   Updated: 2024/12/05 15:14:43 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	subs_dollar_var(t_general *utils, char *str, char **tmp, int j)
 			tmp3 = ft_strjoin(*tmp, tmp2);
 			free(*tmp);
 			*tmp = tmp3;
+			printf("tmp: %s\n", *tmp);
 			free(tmp2);
 			return (var_len + 1);
 		}
