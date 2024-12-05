@@ -81,6 +81,7 @@ int	mini_heredoc(t_general *utils, t_lexer *ptr, char *filename)
 	int	status;
 	int	have_quote;
 
+	g_ret_number = -42;
 	status = EXIT_SUCCESS;
 	if ((ptr->str[0] == '\'' && ptr->str[ft_strlen(ptr->str) - 1] == '\'')
 		|| (ptr->str[0] == '\"' && ptr->str[ft_strlen(ptr->str) - 1] == '\"'))
