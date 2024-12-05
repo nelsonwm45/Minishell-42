@@ -27,11 +27,10 @@ int	start_heredoc(t_general *utils, t_cmds *cmds)
 				free(cmds->hd_file_name);
 			cmds->hd_file_name = create_hd_filename(utils);
 			status = mini_heredoc(utils, ptr, cmds->hd_file_name);
-			if (status != EXIT_SUCCESS)
-			{
-				g_ret_number = 1;
-				return (clean_utils(utils));
-			}
+			if (g_ret_number == 130)
+                return (clean_utils(utils));
+            if (status != EXIT_SUCCESS)
+                return (clean_utils(utils));
 		}
 		ptr = ptr->next;
 	}
