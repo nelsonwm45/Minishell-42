@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:52:07 by nchok             #+#    #+#             */
-/*   Updated: 2024/12/03 13:55:17 by nchok            ###   ########.fr       */
+/*   Updated: 2024/12/05 13:23:38 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ char	*expand_str(t_general *utils, char *str)
 
 	tmp = NULL;
 	i = find_dollar(str);
-	while (str[i - 2] == '\'' && i != 0 && str[i] != '\0')
+	while (str[i] != '\0' && str[i - 2] == '\'' && i != 0)
 	{
 		tmp = replace_to_env(utils, str);
 		free(str);
