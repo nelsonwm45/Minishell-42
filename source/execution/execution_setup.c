@@ -43,7 +43,8 @@ void	exec_simple_cmd(t_general *utils, t_cmds *cmds)
 		g_ret_number = prep_builtin(utils, cmds, utils->mini);
 		return ;
 	}
-	start_heredoc(utils, cmds);
+	if (start_heredoc(utils, cmds) != EXIT_SUCCESS)
+        return;
 	pid = fork();
 	if (pid < 0)
 		error_message(5, utils);

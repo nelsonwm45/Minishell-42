@@ -32,6 +32,13 @@ g_ret_number = global variable
 
 int	g_ret_number = 0;
 
+/*
+1. Handle the signal for the parent process
+2. Restore the prompt
+3. Ignore the signal for the parent process
+4. Ignore the signal for the child process
+5
+*/
 void	run_signals(int sig)
 {
 	if (sig == 1)

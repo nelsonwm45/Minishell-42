@@ -28,7 +28,7 @@ static int	print_error(int error, const char *arg)
 		i++;
 	}
 	write(2, "\n", 1);
-	return (ERROR);
+	return (1);
 }
 
 /*
@@ -119,27 +119,26 @@ int	is_in_env(t_env *env, char *args)
 - error_ret = 1, valid , add or update
 - error_ret = 2, valid , but only KEY part
 */
-int	ft_export(char **args, t_env *env, t_env *secret)
+int ft_export(char **args, t_env *env, t_env *secret)
 {
-	int		error_ret;
-	int		new_env;
+    int error_ret;
+    int new_env;
+    int i;
+    int status;
 
-	if (!args[1])
-		return (print_sorted_env(secret), SUCCESS);
-	error_ret = is_valid_env(args[1]);
-	if (args[1][0] == '=')
-		error_ret = -3;
-	if (error_ret <= 0)
-		return (print_error(error_ret, args[1]));
-	new_env = 0;
-	if (error_ret != 2)
-		new_env = is_in_env(env, args[1]);
-	if (new_env == 0)
-	{
-		if (error_ret == 1)
-			env_add(args[1], env);
-		else
-			env_add(args[1], secret);
-	}
-	return (SUCCESS);
+    if (!args[1])
+        return (print_sorted_env(secret), SUCCESS);
+    i = 0;
+    status = SUCCESS;
+    while (args[++i])
+    {
+        error_ret = is_valid_env(args[i]);
+        if (args[i][0] == '=' || error_ret <= 0)
+            status = print_error(error_ret, args[i]);
+        else if (error_ret != 2 && !(new_env = is_in_env(env, args[i])))
+            env_add(args[i], env);
+        else if (error_ret == 2 && !(new_env = 0))
+            env_add(args[i], secret);
+    }
+    return (status);
 }
