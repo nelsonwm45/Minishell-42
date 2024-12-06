@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
+/*   By: hheng <hheng@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 02:20:36 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/29 05:31:30 by hheng            ###   ########.fr       */
+/*   Updated: 2024/12/06 12:11:54 by hheng            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ int	create_heredoc(t_general *utils, t_lexer *ptr, char *filename,
 		{
 			utils->stop_heredoc = 1;
 			unlink(filename);
-			write(STDERR_FILENO, "signal SIGINT interrupt\n", 24);
 			return (EXIT_FAILURE);
 		}
 	}
