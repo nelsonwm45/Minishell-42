@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 02:11:34 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/27 15:57:52 by nchok            ###   ########.fr       */
+/*   Updated: 2024/12/06 10:52:53 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ int	start_heredoc(t_general *utils, t_cmds *cmds)
 				free(cmds->hd_file_name);
 			cmds->hd_file_name = create_hd_filename(utils);
 			status = mini_heredoc(utils, ptr, cmds->hd_file_name);
-			if (g_ret_number == 130)
-                return (clean_utils(utils));
-            if (status != EXIT_SUCCESS)
-                return (clean_utils(utils));
+			if (status != EXIT_SUCCESS)
+			{
+				g_ret_number = 130;
+				clean_utils(utils);
+				return (EXIT_FAILURE);
+			}
 		}
 		ptr = ptr->next;
 	}
@@ -91,7 +93,7 @@ int	mini_heredoc(t_general *utils, t_lexer *ptr, char *filename)
 	remove_quotes(ptr->str, '\"');
 	utils->stop_heredoc = 0;
 	utils->in_heredoc = 1;
-	create_heredoc(utils, ptr, filename, have_quote);
+	status = create_heredoc(utils, ptr, filename, have_quote);
 	utils->in_heredoc = 0;
 	utils->heredoc = 1;
 	return (status);

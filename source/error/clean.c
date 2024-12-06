@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:10:40 by nchok             #+#    #+#             */
-/*   Updated: 2024/11/30 11:45:05 by nchok            ###   ########.fr       */
+/*   Updated: 2024/12/06 11:03:25 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	clean_cmd(t_cmds **cmds)
 
 	if (!cmds || !*cmds)
 		return ;
+	*cmds = travel_first_cmds(*cmds);
 	while (*cmds)
 	{
 		ptr = (*cmds)->next;

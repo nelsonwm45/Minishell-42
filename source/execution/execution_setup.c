@@ -6,7 +6,7 @@
 /*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:11:04 by nchok             #+#    #+#             */
-/*   Updated: 2024/12/03 13:55:48 by nchok            ###   ########.fr       */
+/*   Updated: 2024/12/06 10:54:04 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	exec_simple_cmd(t_general *utils, t_cmds *cmds)
 		g_ret_number = prep_builtin(utils, cmds, utils->mini);
 		return ;
 	}
-	if (start_heredoc(utils, cmds) != EXIT_SUCCESS)
-        return;
+	if (start_heredoc(utils, cmds) == EXIT_FAILURE)
+		return ;
 	pid = fork();
 	if (pid < 0)
 		error_message(5, utils);
@@ -66,7 +66,8 @@ int	exec_complex_cmd(t_general *utils)
 		utils->cmds = call_expander(utils, utils->cmds);
 		if (utils->cmds->next)
 			pipe(pipe_fd);
-		start_heredoc(utils, utils->cmds);
+		if (start_heredoc(utils, utils->cmds) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 		ft_fork(utils, pipe_fd, utils->cmds, fd_in);
 		close(pipe_fd[1]);
 		if (utils->cmds->prev)
