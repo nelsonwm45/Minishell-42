@@ -108,37 +108,30 @@ int	is_in_env(t_env *env, char *args)
 	return (SUCCESS);
 }
 
-/*
-- Handles the `export` command for the shell
-- Adds or updates variables in the environment or secret lis
--
-- Print an error if the variable is invalid and return
-- Check if the variable already exists in the environment
-- if no , add it to the list
-- error_ret = 0, invalid
-- error_ret = 1, valid , add or update
-- error_ret = 2, valid , but only KEY part
-*/
-int ft_export(char **args, t_env *env, t_env *secret)
+int	ft_export(char **args, t_env *env, t_env *secret)
 {
-    int error_ret;
-    int new_env;
-    int i;
-    int status;
+	int	error_ret;
+	int	new_env;
+	int	i;
+	int	status;
 
-    if (!args[1])
-        return (print_sorted_env(secret), SUCCESS);
-    i = 0;
-    status = SUCCESS;
-    while (args[++i])
-    {
-        error_ret = is_valid_env(args[i]);
-        if (args[i][0] == '=' || error_ret <= 0)
-            status = print_error(error_ret, args[i]);
-        else if (error_ret != 2 && !(new_env = is_in_env(env, args[i])))
-            env_add(args[i], env);
-        else if (error_ret == 2 && !(new_env = 0))
-            env_add(args[i], secret);
-    }
-    return (status);
+	if (!args[1])
+		return (print_sorted_env(secret), SUCCESS);
+	i = 0;
+	status = SUCCESS;
+	while (args[++i])
+	{
+		error_ret = is_valid_env(args[i]);
+		if (args[i][0] == '=' || error_ret <= 0)
+		{
+			status = print_error(error_ret, args[i]);
+			continue ;
+		}
+		new_env = is_in_env(env, args[i]);
+		if (error_ret != 2 && !new_env)
+			env_add(args[i], env);
+		else if (error_ret == 2)
+			env_add(args[i], secret);
+	}
+	return (status);
 }
