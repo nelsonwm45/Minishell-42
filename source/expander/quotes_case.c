@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_case.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchok <nchok@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: nchok <nchok@student.42kl..edu.my>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:51:06 by nchok             #+#    #+#             */
-/*   Updated: 2024/12/02 18:14:35 by nchok            ###   ########.fr       */
+/*   Updated: 2024/12/06 11:24:15 by nchok            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ char	*expand_decision(t_general *utils, char *str)
 	new = NULL;
 	while (str[i])
 	{
+		if (str[i + 1] != '\0' && str[i] == '$'
+			&& (str[i + 1] == '\'' || str[i + 1] == '\"'))
+		{
+			remove_quotes(str, str[i]);
+			i = 0;
+		}
 		if (!utils->found_quote && (str[i] == '\'' || str[i] == '\"'))
 			process_unquoted(utils, str, &i, &new);
 		else if (utils->found_quote && utils->found_quote == str[i])
